@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Admin",
+        "nomor_hp": "085691411365",
+        "email": "admin@gmail.com",
+        "password": "admin1234",
+        "alamat": "Manado",
+        "rolesId": 1
+    }
+]

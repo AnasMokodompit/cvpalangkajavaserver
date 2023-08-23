@@ -1,0 +1,44 @@
+[
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657352/cvpalangkajaya/Picture1_cktqs2.jpg",
+        "product_image_id" : null,
+        "product_id" : 1
+    },
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657352/cvpalangkajaya/Carousel1_qwxbjq.jpg",
+        "product_image_id" : null,
+        "product_id" : 2
+    },
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657354/cvpalangkajaya/Picture12_byekoi.jpg",
+        "product_image_id" : null,
+        "product_id" : 3
+    },
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657352/cvpalangkajaya/Picture2_yyz3pw.jpg",
+        "product_image_id" : null,
+        "product_id" : 4
+    },
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657352/cvpalangkajaya/Picture3_ubvosb.jpg",
+        "product_image_id" : null,
+        "product_id" : 4
+    },
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657353/cvpalangkajaya/Picture5_uqhdjc.jpg",
+        "product_image_id" : null,
+        "product_id" : 5
+    },
+    {
+        "name":"",
+        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1692657354/cvpalangkajaya/Picture11_q7pqry.jpg",
+        "product_image_id" : null,
+        "product_id" : 6
+    }
+]

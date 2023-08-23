@@ -1,0 +1,44 @@
+[
+    {
+        "name":"Meja Kerja",
+        "ukuran": "Panjang = 190 cm, Lebar = 95 cm, Tinggi = 75 cm",
+        "harga": 8000000,
+        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel.Finishing : cat kayu (Impra)",
+        "categoriesId": 1
+    },
+    {
+        "name":"Meja Kerja",
+        "ukuran": "Panjang = 120 cm, Lebar = 95 cm, Tinggi = 60 cm, Tinggi = 70 cm",
+        "harga": 8000000,
+        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel.Finishing : cat kayu (water base), clear dof Impra",
+        "categoriesId": 1
+    },
+    {
+        "name":"Kitcen Set",
+        "ukuran": "Dimensi Produk : (menyesuaikan)",
+        "harga": 2000000,
+        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel.Finishing : cat ducco/HPL",
+        "categoriesId": 2
+    },
+    {
+        "name":"Pintu",
+        "ukuran": "Dimensi Produk : 80x200 cm",
+        "harga": 5000000,
+        "Deskripsi_produk":"Bahan : kayu kelas 1 (lingua)",
+        "categoriesId": 4
+    },
+    {
+        "name":"Kosen",
+        "ukuran": "Dimensi Produk : 100 cm",
+        "harga": 250000,
+        "Deskripsi_produk":"Bahan : kayu kelas 1 (kayu besi)",
+        "categoriesId": 2
+    },
+    {
+        "name":"Partisi Ruangan",
+        "ukuran": "Dimensi Produk : (menyesuaikan)",
+        "harga": 2000000,
+        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel.Finishing : cat ducco/HPL",
+        "categoriesId": 3
+    }
+]

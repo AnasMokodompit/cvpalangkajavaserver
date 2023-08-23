@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Roles {
+  id Int @id @default(autoincrement())
+  name String
+  users Users[]
+}
+
+model Users{
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  nomor_hp String
+  alamat String
+  roles Roles? @relation(fields: [rolesId], references: [id])
+  rolesId Int
+  orders Orders[]
+}
+
+model Products {
+  id Int @id @default(autoincrement())
+  name String
+  ukuran String
+  harga Int
+  Deskripsi_produk String
+  categories Categories? @relation(fields: [categoriesId], references: [id])
+  categoriesId Int?
+  product_images Product_images[]
+  product_Orders Product_Orders[]
+}
+
+model Product_images {
+  id Int @id @default(autoincrement())
+  name String
+  url_image String
+  product_image_id Int?
+  products Products @relation(fields: [product_id], references: [id])
+  product_id Int
+}
+
+model Orders {
+  id Int @id @default(autoincrement())
+  nama_pemesan String
+  users Users ? @relation(fields: [id_user], references: [id])
+  id_user Int
+  no_hp String
+  alamat String
+  status Boolean
+  Price Int
+  jumlah Int
+  product_Orders Product_Orders[]
+}
+
+model Product_Orders {
+  id Int @id @default(autoincrement())
+  orders Orders @relation(fields: [id_orders], references: [id])
+  id_orders Int 
+  products Products @relation(fields: [id_product], references: [id])
+  id_product Int
+  Price Int
+  jumlah Int
+}
+
+model Categories {
+  id Int @id @default(autoincrement())
+  name String
+  products Products[]
+}
