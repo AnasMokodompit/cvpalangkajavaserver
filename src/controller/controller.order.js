@@ -6,6 +6,7 @@ const prisma = new PrismaClient()
 
 const createOrder = async (req, res) => {
     try{
+        
 
         const {dataOrder} = req.body
         let jumlah = 0
@@ -55,6 +56,8 @@ const createOrder = async (req, res) => {
             dataOrder.map((data) => {
                 data.id_orders = createOrder.id
                 data.Price = data.jumlahHarga
+                data.id_user = createUser.id
+                data.status = 0
                 delete data.jumlahHarga
             })
         }

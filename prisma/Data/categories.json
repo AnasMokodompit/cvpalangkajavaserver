@@ -1,14 +1,22 @@
 [
     {
-        "name":"Meja"
+        "id": 1,
+        "name":"Meja Kerja"
     },
     {
-        "name":"Kursi"
+        "id": 2,
+        "name":"Perlengkapan kantor"
     },
     {
-        "name":"Lemari"
+        "id": 3,
+        "name":"Perlengkapan dapur"
     },
     {
-        "name":"Pintu"
+        "id": 4,
+        "name":"Bangunan"
+    },
+    {
+        "id": 5,
+        "name":"Asesories"
     }
 ]

@@ -23,9 +23,31 @@ model Users{
   password String
   nomor_hp String
   alamat String
+  token String?
   roles Roles? @relation(fields: [rolesId], references: [id])
   rolesId Int
   orders Orders[]
+  reviewevUserProduct ReviewevUserProduct[]
+  product_Orders Product_Orders[]
+}
+
+model KomentarKeKontakKami{
+  id Int @id @default(autoincrement())
+  nama_lengkap String
+  email String
+  pesan String @db.Text
+}
+
+model ReviewevUserProduct{
+  id Int @id @default(autoincrement())
+  users Users? @relation(fields: [user_id], references: [id])
+  user_id Int
+  products Products? @relation(fields: [products_id], references: [id])
+  products_id Int
+  bintang Int
+  komentar String @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 }
 
 model Products {
@@ -38,16 +60,19 @@ model Products {
   categoriesId Int?
   product_images Product_images[]
   product_Orders Product_Orders[]
+  reviewevUserProduct ReviewevUserProduct[]
 }
 
 model Product_images {
   id Int @id @default(autoincrement())
   name String
   url_image String
-  product_image_id Int?
+  product_image_id String?
   products Products @relation(fields: [product_id], references: [id])
   product_id Int
 }
+
+
 
 model Orders {
   id Int @id @default(autoincrement())
@@ -68,8 +93,13 @@ model Product_Orders {
   id_orders Int 
   products Products @relation(fields: [id_product], references: [id])
   id_product Int
+  users Users ? @relation(fields: [id_user], references: [id])
+  id_user Int
+  status Int
   Price Int
   jumlah Int
+  picture_bukti_bayar String?
+  picture_bukti_bayar_id  String?
 }
 
 model Categories {

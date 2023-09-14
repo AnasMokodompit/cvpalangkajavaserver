@@ -6,6 +6,7 @@ const Producs = require('./Data/products.json')
 const Product_images = require('./Data/product_image.json')
 const Roles = require('./Data/role.json')
 const Users = require('./Data/user.json')
+const review_product = require('./Data/review_product.json')
 
 async function main() {
 
@@ -28,6 +29,10 @@ async function main() {
 
     await prisma.users.createMany({
         data: Users
+    })
+
+    await prisma.reviewevUserProduct.createMany({
+        data: review_product
     })
 }
 
