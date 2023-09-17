@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "nama": "Aktiva Lancar"
+  },
+  {
+    "id": 2,
+    "nama": "Aktiva Tetap"
+  },
+  {
+    "id": 3,
+    "nama": "Kewajiban Lancar"
+  },
+  {
+    "id": 4,
+    "nama": "Kewajiban Jangka Panjang"
+  },
+  {
+    "id": 5,
+    "nama": "Modal"
+  },
+  {
+    "id": 6,
+    "nama": "Pendapatan"
+  },
+  {
+    "id": 7,
+    "nama": "Biaya Produksi"
+  },
+  {
+    "id": 8,
+    "nama": "Biaya"
+  },
+  {
+    "id": 9,
+    "nama": "Pendapatan Lain-Lain"
+  },
+  {
+    "id": 10,
+    "nama": "Beban Lain-Lain"
+  }
+]

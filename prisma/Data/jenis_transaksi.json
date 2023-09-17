@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nama": "Pemasukan"
+  },
+  {
+    "id": 2,
+    "nama": "Pengeluaran"
+  },
+  {
+    "id": 3,
+    "nama": "Utang"
+  },
+  {
+    "id": 4,
+    "nama": "Bayar Utang"
+  },
+  {
+    "id": 5,
+    "nama": "Piutang"
+  },
+  {
+    "id": 6,
+    "nama": "Pelunasan Piutang"
+  },
+  {
+    "id": 7,
+    "nama": "Tambah Modal"
+  },
+  {
+    "id": 8,
+    "nama": "Tarik Modal"
+  },
+  {
+    "id": 9,
+    "nama": "Penyesuaian"
+  }
+]

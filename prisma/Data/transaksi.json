@@ -1,0 +1,146 @@
+[
+    {
+        "id": 1,
+        "jenis_transaksi": "PEMASUKAN",
+        "nama_akun": "Penjualan dari web"
+    },
+    {
+        "id": 2,
+        "jenis_transaksi": "PEMASUKAN",
+        "nama_akun": "Input manual"
+    },
+    {
+        "id": 3,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya bahan baku"
+    },{
+        "id": 4,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Upah pekerja"
+    }
+    ,{
+        "id": 5,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya bahan pembantu"
+    }
+    ,{
+        "id": 6,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Peralatan"
+    }
+    ,{
+        "id": 7,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Mesin"
+    }
+    ,{
+        "id": 8,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Gedung"
+    }
+    ,{
+        "id": 9,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Kendaraan"
+    }
+    ,{
+        "id": 10,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya gaji pegawai"
+    }
+    ,{
+        "id": 11,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya ATM / ATK"
+    }
+    ,{
+        "id": 12,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya perlengkapan"
+    }
+    ,{
+        "id": 13,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya listrik"
+    }
+    ,{
+        "id": 14,
+        "jenis_transaksi": "PENGELUARAN",
+        "nama_akun": "Biaya transport"
+    }
+    ,{
+        "id": 15,
+        "jenis_transaksi": "UTANG",
+        "nama_akun": "Utang usaha"
+    }
+    ,{
+        "id": 16,
+        "jenis_transaksi": "UTANG",
+        "nama_akun": "Utang bank"
+    }
+    ,{
+        "id": 17,
+        "jenis_transaksi": "BAYAR PIUTANG",
+        "nama_akun": "Utang usaha"
+    }
+    ,{
+        "id": 18,
+        "jenis_transaksi": "BAYAR PIUTANG",
+        "nama_akun": "Utang bank"
+    }
+    ,{
+        "id": 19,
+        "jenis_transaksi": "PIUTANG",
+        "nama_akun": "Utang usaha"
+    }
+    ,{
+        "id": 20,
+        "jenis_transaksi": "PELUNASAN PIUTANG",
+        "nama_akun": "Piutang usaha"
+    }
+    ,{
+        "id": 21,
+        "jenis_transaksi": "TAMBAH MODAL",
+        "nama_akun": "Modal pemilik"
+    }
+    ,{
+        "id": 22,
+        "jenis_transaksi": "TARIK MODAL",
+        "nama_akun": "Modal pemilik"
+    }
+    ,{
+        "id": 23,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Persediaan bahan jadi"
+    }
+    ,{
+        "id": 24,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Persediaan bahan baku"
+    }
+    ,{
+        "id": 25,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Persediaan bahan pembantu"
+    }
+    ,{
+        "id": 26,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Biaya penyusunan peralatan"
+    }
+    ,{
+        "id": 27,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Persediaan bahan mesin"
+    }
+    ,{
+        "id": 28,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Persediaan bahan gedung"
+    }
+    ,{
+        "id": 29,
+        "jenis_transaksi": "PENYESUAIAN",
+        "nama_akun": "Biaya penyusunan kendaraan"
+    }
+]

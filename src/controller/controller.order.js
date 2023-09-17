@@ -6,7 +6,6 @@ const prisma = new PrismaClient()
 
 const createOrder = async (req, res) => {
     try{
-        
 
         const {dataOrder} = req.body
         let jumlah = 0
@@ -47,7 +46,6 @@ const createOrder = async (req, res) => {
             id_user: createUser.id
         }
 
-
         const createOrder = await prisma.orders.create({
             data: options
         })
@@ -72,6 +70,7 @@ const createOrder = async (req, res) => {
             },
             include: {
                 users: true,
+                product_Orders: true
             }
         })
 
@@ -108,6 +107,7 @@ const getAllOrder = async (req, res) => {
             skip: page,
             take: row,
             include: {
+                users: true,
                 product_Orders: {
                     include: {
                         products: {

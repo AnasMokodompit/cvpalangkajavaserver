@@ -1,48 +1,76 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
-const Categories = require('./Data/categories.json')
-const Producs = require('./Data/products.json')
-const Product_images = require('./Data/product_image.json')
-const Roles = require('./Data/role.json')
-const Users = require('./Data/user.json')
-const review_product = require('./Data/review_product.json')
+const Categories = require("./Data/categories.json");
+const Producs = require("./Data/products.json");
+const Product_images = require("./Data/product_image.json");
+const Roles = require("./Data/role.json");
+const Users = require("./Data/user.json");
+const review_product = require("./Data/review_product.json");
+const JenisTransaksi = require("./Data/jenis_transaksi.json");
+const TipeAkunTransaksi = require("./Data/tipe_akun_transaksi.json");
+const NamaAkunTransaksi = require("./Data/nama_akun_transaksi.json");
+const NamaAkunTransaksiDalamJenisTransaksi = require("./Data/nama_akun_transaksi_dalam_jenis_transaksi.json");
 
 async function main() {
+  // Categories
+  await prisma.Categories.createMany({
+    data: Categories,
+    skipDuplicates: true,
+  });
 
-    // Categories
-    await prisma.Categories.createMany({
-        data: Categories
-    })
+  await prisma.Products.createMany({
+    data: Producs,
+    skipDuplicates: true,
+  });
 
-    await prisma.Products.createMany({
-        data: Producs
-    })
+  await prisma.Product_images.createMany({
+    data: Product_images,
+    skipDuplicates: true,
+  });
 
-    await prisma.Product_images.createMany({
-        data: Product_images
-    })
+  await prisma.roles.createMany({
+    data: Roles,
+    skipDuplicates: true,
+  });
 
-    await prisma.roles.createMany({
-        data: Roles
-    })
+  await prisma.users.createMany({
+    data: Users,
+    skipDuplicates: true,
+  });
 
-    await prisma.users.createMany({
-        data: Users
-    })
+  await prisma.reviewevUserProduct.createMany({
+    data: review_product,
+    skipDuplicates: true,
+  });
 
-    await prisma.reviewevUserProduct.createMany({
-        data: review_product
-    })
+  await prisma.jenisTransaksi.createMany({
+    data: JenisTransaksi,
+    skipDuplicates: true,
+  });
+
+  await prisma.tipeAkunTransaksi.createMany({
+    data: TipeAkunTransaksi,
+    skipDuplicates: true,
+  });
+
+  await prisma.namaAkunTransaksi.createMany({
+    data: NamaAkunTransaksi,
+    skipDuplicates: true,
+  });
+
+  await prisma.NamaAkunTransaksiDalamJenisTransaksi.createMany({
+    data: NamaAkunTransaksiDalamJenisTransaksi,
+    skipDuplicates: true,
+  });
 }
 
-
 main()
-    .catch((e) => {
-        console.error(`Error : ${e}`);
-        process.exit(1)
-    })
-    .finally(async () => {
-        console.log(`Berhasil Sedding Database`);
-        prisma.$disconnect();
-    })
+  .catch((e) => {
+    console.error(`Error : ${e}`);
+    process.exit(1);
+  })
+  .finally(async () => {
+    console.log(`Berhasil Sedding Database`);
+    prisma.$disconnect();
+  });

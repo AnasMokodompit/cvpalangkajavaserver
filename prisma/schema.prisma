@@ -85,6 +85,7 @@ model Orders {
   Price Int
   jumlah Int
   product_Orders Product_Orders[]
+  buktiBayar BuktiBayar[]
 }
 
 model Product_Orders {
@@ -98,12 +99,86 @@ model Product_Orders {
   status Int
   Price Int
   jumlah Int
+}
+
+model BuktiBayar {
+  id Int @id @default(autoincrement())
+  statusTransaksi Boolean?
   picture_bukti_bayar String?
   picture_bukti_bayar_id  String?
+  orders Orders @relation(fields: [id_orders], references: [id])
+  id_orders Int
 }
 
 model Categories {
   id Int @id @default(autoincrement())
   name String
   products Products[]
+}
+
+
+model JenisTransaksi {
+  id                                        Int                                    @id @default(autoincrement())
+  nama                                      String
+  nama_akun_transaksi_dalam_jenis_transaksi NamaAkunTransaksiDalamJenisTransaksi[]
+  Transaksi                                 Transaksi[]
+}
+
+model NamaAkunTransaksi {
+  id                                        Int                                    @id @default(autoincrement())
+  id_tipe_akun_transaksi                    Int
+  kode                                      String
+  nama                                      String
+  transaksi                                 Transaksi[]
+  tipe_akun_transaksi                       TipeAkunTransaksi?                     @relation(fields: [id_tipe_akun_transaksi], references: [id])
+  nama_akun_transaksi_dalam_jenis_transaksi NamaAkunTransaksiDalamJenisTransaksi[]
+}
+
+model TipeAkunTransaksi {
+  id                   Int                 @id @default(autoincrement())
+  nama                 String
+  jenis_akun_transaksi NamaAkunTransaksi[]
+}
+
+model NamaAkunTransaksiDalamJenisTransaksi {
+  id                     Int               @id @default(autoincrement())
+  id_jenis_transaksi     Int
+  id_nama_akun_transaksi Int
+  jenis_akun_transaksi   JenisTransaksi    @relation(fields: [id_jenis_transaksi], references: [id])
+  nama_akun_transaksi    NamaAkunTransaksi @relation(fields: [id_nama_akun_transaksi], references: [id])
+}
+
+// model KategoriAkunTransaksi {
+//   id                   Int               @id @default(autoincrement())
+//   id_jenis_transaksi   Int
+//   kode_akun            String
+//   nama                 String
+//   jenis_akun_transaksi NamaAkunTransaksi @relation(fields: [id_jenis_transaksi], references: [id])
+// }
+
+model Transaksi {
+  id                     Int                @id @default(autoincrement())
+  id_jenis_transaksi     Int
+  id_nama_akun_transaksi Int
+  keterangan             String             @db.Text
+  jumlah                 Int
+  tanggal                DateTime           @default(now())
+  jenis_transaksi        JenisTransaksi?    @relation(fields: [id_jenis_transaksi], references: [id])
+  nama_akun_transaksi    NamaAkunTransaksi? @relation(fields: [id_nama_akun_transaksi], references: [id])
+}
+
+
+model Saldo {
+  id Int @id @default(autoincrement())
+  total_uang Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+model Bahan {
+  id Int @id @default(autoincrement())
+  nama_barang String
+  stok Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 }
