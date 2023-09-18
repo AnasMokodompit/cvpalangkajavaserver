@@ -144,4 +144,9 @@
     "id_jenis_transaksi": 9,
     "id_nama_akun_transaksi": 33
   }
+  ,{
+    "id": 30,
+    "id_jenis_transaksi": 1,
+    "id_nama_akun_transaksi": 36
+  }
 ]
