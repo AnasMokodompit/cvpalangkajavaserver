@@ -11,6 +11,9 @@ const JenisTransaksi = require("./Data/jenis_transaksi.json");
 const TipeAkunTransaksi = require("./Data/tipe_akun_transaksi.json");
 const NamaAkunTransaksi = require("./Data/nama_akun_transaksi.json");
 const NamaAkunTransaksiDalamJenisTransaksi = require("./Data/nama_akun_transaksi_dalam_jenis_transaksi.json");
+const BahanBakuProduk = require('./Data/bahan_baku_produk.json')
+const BahanBaku = require('./Data/bahan_baku.json')
+const PersediaanBahanBaku = require('./Data/persediaan-bahan-baku.json')
 
 async function main() {
   // Categories
@@ -63,6 +66,22 @@ async function main() {
     data: NamaAkunTransaksiDalamJenisTransaksi,
     skipDuplicates: true,
   });
+
+  await prisma.bahanBaku.createMany({
+    data: BahanBaku,
+    skipDuplicates: true
+  })
+
+  await prisma.persediaanBahanBaku.createMany({
+    data: PersediaanBahanBaku,
+    skipDuplicates: true
+  })
+
+  await prisma.bahanBakuProduk.createMany({
+    data: BahanBakuProduk,
+    skipDuplicates: true
+  })
+  
 }
 
 main()

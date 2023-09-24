@@ -12,6 +12,8 @@ const transaksiPengeluaran = require('./transaksiPengeluaran')
 const buktiBayar = require('./buktiBayar')
 const jenisTransaksi = require('./jenistransaksi')
 const transaksi = require("./transaksi");
+const bahanBaku = require('./bahanBaku')
+const persediaanBahanBaku = require('./persediaanBahanBaku')
 
 
 router.use(`${process.env.URL_ROUTER_USER}`, user)
@@ -25,6 +27,8 @@ router.use(`${process.env.URL_ROUTER_TRANSAKSI_PENGELUARAN}`, transaksiPengeluar
 router.use(`${process.env.URL_ROUTER_BUKTI_BAYAR}`, buktiBayar)
 router.use(`${process.env.URL_ROUTER_JENIS_TRANSAKSI}`, jenisTransaksi);
 router.use(`${process.env.URL_ROUTER_TRANSAKSI}`, transaksi);
+router.use(`${process.env.URL_ROUTER_BAHAN_BAKU}`, bahanBaku);
+router.use(`${process.env.URL_ROUTER_PERSEDIAAN_BAHAN_BAKU}`, persediaanBahanBaku);
 
 
 

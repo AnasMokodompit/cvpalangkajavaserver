@@ -1,0 +1,110 @@
+[
+    {
+        "id_produk": 1,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 1,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 2,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 2,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 3,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 3,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 4,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 4,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 5,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 5,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 6,
+        "id_bahan_baku": 2,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 7,
+        "id_bahan_baku": 3,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 8,
+        "id_bahan_baku": 2,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 9,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 9,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 10,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+    ,{
+        "id_produk": 10,
+        "id_bahan_baku": 4,
+        "jumlah": 5,
+        "satuan": "lembar"
+    }
+    ,{
+        "id_produk": 11,
+        "id_bahan_baku": 1,
+        "jumlah": 5,
+        "satuan": "kubik"
+    }
+]

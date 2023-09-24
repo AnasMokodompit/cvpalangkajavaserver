@@ -146,6 +146,99 @@ const getAllOrder = async (req, res) => {
     }
 }
 
+const updateOrder = async (req, res) => {
+    try{
+        const {id} = req.params
+        const {statusTransaksi} = req.body
+
+        console.log(id, statusTransaksi)
+
+        const options = {
+            where: {
+                id: Number(id)
+            },
+            data: {}
+        }
+
+        // Cek Produk Order dengan Id Oder yang sama
+        const produk_order = await prisma.product_Orders.findMany({
+            where: {
+                id_orders: Number(id)
+            },
+            include: {
+                products: {
+                    select: {
+                        id: true
+                    }
+                }
+            }
+        })
+
+        produk_order.map(async(data, key) => {
+            
+            const cekBahanBakuProduk = await prisma.bahanBakuProduk.findMany({
+                where: {
+                    id_produk: data.id_product
+                }
+            })
+
+            cekBahanBakuProduk.map(async (dataa, key) => {
+                dataa.jumlah = data.jumlah * dataa.jumlah
+
+                const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
+                    where: {
+                        id_bahan_baku:  dataa.id_bahan_baku,
+                        satuan: dataa.satuan
+                    },
+                    include: {
+                        bahanBaku: {
+                            select: {
+                                nama: true
+                            }
+                        }
+                    }
+                })
+
+                
+                const resultJumlah = cekPersediaanBahanBaku[0].jumlah - dataa.jumlah
+
+                // console.log(cekPersediaanBahanBaku, cekPersediaanBahanBaku[0].id, resultJumlah, dataa.jumlah)
+
+                await prisma.persediaanBahanBaku.update({
+                    where: {
+                        id: cekPersediaanBahanBaku[0].id
+                    },
+                    data: {
+                        jumlah: resultJumlah
+                    }
+                })
+                
+
+            })
+        })
+
+
+        // return 
+
+        if (statusTransaksi == true) {
+            options.data.IsPembayaranLunas = true
+        }else{
+            options.data.IsPembayaranDP = true
+        }
+
+        const updateIsPemabayaran = await prisma.orders.update(options)
+
+        res.status(200).json(response.success(200, updateIsPemabayaran))
+
+    }catch(err){
+        // menampilkan error di console log
+        console.log(err)
+
+        // menampilkan response semua data jika gagal
+        return res.status(500).json(response.error(500, 'Internal Server Error'))
+    }
+}
+
 const deleteOrder = async (req, res) => {
     try{
 
@@ -179,5 +272,6 @@ const deleteOrder = async (req, res) => {
 module.exports = {
     createOrder,
     getAllOrder,
+    updateOrder,
     deleteOrder
 }

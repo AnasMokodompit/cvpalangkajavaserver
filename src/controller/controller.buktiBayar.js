@@ -9,9 +9,21 @@ const prisma = new PrismaClient()
 
 const createBuktiBayar = async (req, res) => {
     try{
+
+        let productOrder = []
+        const statusTransaksi = JSON.parse(req.body.statusTransaksi)
+
         
         if (req.file) {
+
+            const cekBuktiBayarByIdOrder = await prisma.buktiBayar.findMany({
+                where: {
+                    id_orders: Number(req.body.id_orders),
+                    statusTransaksi:  statusTransaksi
+                }
+            })
                 
+            // return console.log(cekBuktiBayarByIdOrder)
             const optionsCloudinary =  {
                 type: "image",
                 folder: "cvtalangkajaya/image/buktiBayar"
@@ -37,17 +49,35 @@ const createBuktiBayar = async (req, res) => {
         
             fs.unlinkSync(req.file.path)  
         
-            const productOrder = await prisma.buktiBayar.create({
-                data: {
-                    statusTransaksi: JSON.parse(req.body.statusTransaksi),
-                    id_orders: Number(req.body.id_orders),
-                    picture_bukti_bayar: picture_bukti_bayar,
-                    picture_bukti_bayar_id: picture_bukti_bayar_id
-                }
-            })
+            if (cekBuktiBayarByIdOrder.length !== 0) {
+
+                productOrder = await prisma.buktiBayar.update({
+                    where: {
+                        id: cekBuktiBayarByIdOrder[0].id
+                    },
+                    data: {
+                        picture_bukti_bayar: picture_bukti_bayar,
+                        picture_bukti_bayar_id: picture_bukti_bayar_id
+                    }
+                })
+                
+            }else{
+
+                productOrder = await prisma.buktiBayar.create({
+                    data: {
+                        statusTransaksi: statusTransaksi,
+                        id_orders: Number(req.body.id_orders),
+                        picture_bukti_bayar: picture_bukti_bayar,
+                        picture_bukti_bayar_id: picture_bukti_bayar_id
+                    }
+                })
+            }
+
         
             return res.status(200).json(response.success(200, productOrder))
             
+        }else{
+            return res.status(404).json(response.error(404, 'Mohon Masukan FIle'))
         }
 
     }catch(err){

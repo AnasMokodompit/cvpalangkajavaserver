@@ -108,23 +108,161 @@ const getAllProductOrderByIdOrder = async ( req, res) => {
 }
 
 
+const getAllProductOrderById = async ( req, res) => {
+    try{
+        const {id} = req.params
+        const user = req.user[0]
+
+        // return console.log(user, order_id, id_user)
+
+        const options = {
+            where: {
+                id: Number(id)
+            },
+            include: {
+                products: {
+                    include: {
+                        categories: true,
+                        product_images: true
+                    }
+                },
+                orders: {
+                    include: {
+                        buktiBayar: true
+                    }
+                }
+            }
+        }
+
+        if (user.rolesId !== 1) {
+            options.where.id_user= user.id
+        }
+        
+     
+
+        const cekProductOrderUserPesananById = await prisma.product_Orders.findUnique(options)
+
+
+        console.log(cekProductOrderUserPesananById)
+
+        res.status(200).json(response.success(200, cekProductOrderUserPesananById))
+
+    }catch(err){
+        // menampilkan error di console log
+        console.log(err)
+
+        // menampilkan response semua data jika gagal
+        return res.status(500).json(response.error(500, 'Internal Server Error'))
+    }
+}
+
+
+
 const updatbyIdProductOrder = async (req, res) => {
     try{
         const product_order_id = req.params.id
 
-        // if (req.body.status) {
+        const CekproductOrder = await prisma.product_Orders.findUnique({
+            where: {
+                id: Number(product_order_id)
+            },
+            include: {
+                products: {
+                    select: {
+                        id: true
+                    }
+                }
+            }
+        })
 
-            const productOrder = await prisma.product_Orders.update({
+        // Pengecekan Persediaan Barang Jika produk Diterima
+        console.log(req.body.status)
+        let ResultError = []
+        if (req.body.status == 2) {
+            const idProductOrder = CekproductOrder.products.id
+
+            const cekBahanBakuProduk = await prisma.bahanBakuProduk.findMany({
                 where: {
-                  id: Number(product_order_id)
-                },
-                data: {
-                    status: req.body.status
+                    id_produk: idProductOrder
                 }
             })
-              
-          
-            return res.status(200).json(response.success(200, productOrder))
+
+
+
+            await Promise.all(cekBahanBakuProduk.map(async data => {
+                data.jumlah = data.jumlah * CekproductOrder.jumlah
+                // id_bahan_baku.push(data.id_bahan_baku)
+
+                const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
+                    where: {
+                        id_bahan_baku:  data.id_bahan_baku,
+                        satuan: data.satuan
+                    },
+                    include: {
+                        bahanBaku: {
+                            select: {
+                                nama: true
+                            }
+                        }
+                    }
+                })
+
+
+                cekPersediaanBahanBaku[0].idProductOrder = idProductOrder
+
+                const resultJumlah = cekPersediaanBahanBaku[0].jumlah - data.jumlah
+
+                console.log(cekPersediaanBahanBaku[0], resultJumlah)
+
+                console.log(resultJumlah < 0 )
+                if (resultJumlah < 0 ) {
+                    // console.log(cekPersediaanBahanBaku[0])
+                    return ResultError.push(cekPersediaanBahanBaku[0])
+                }
+            }))
+        }
+
+
+        if (ResultError.length !== 0) {
+            console.log(ResultError)
+            return res.status(404).json(response.error(404, ResultError))
+        }
+
+        const productOrder = await prisma.product_Orders.update({
+            where: {
+                id: Number(product_order_id)
+            },
+            data: {
+                status: req.body.status
+            },
+            include: {
+                orders: true
+            }
+        })
+
+        const dataUpdateOrder =  {}
+
+        if (CekproductOrder.status === 1 && req.body.status === 2) { 
+            dataUpdateOrder.jumlah = productOrder.orders.jumlah + CekproductOrder.jumlah
+            dataUpdateOrder.Price = productOrder.orders.Price + CekproductOrder.Price
+        }else if(CekproductOrder.status === 2 && req.body.status === 1){
+            dataUpdateOrder.jumlah = productOrder.orders.jumlah - CekproductOrder.jumlah
+            dataUpdateOrder.Price = productOrder.orders.Price - CekproductOrder.Price
+        }else if (CekproductOrder.status == 0 && req.body.status === 1) {
+            dataUpdateOrder.jumlah = productOrder.orders.jumlah - CekproductOrder.jumlah
+            dataUpdateOrder.Price = productOrder.orders.Price - CekproductOrder.Price
+        }
+
+
+        await prisma.orders.update({
+            where: {
+                id: productOrder.id_orders
+            },
+            data: dataUpdateOrder
+        })
+            
+        
+        return res.status(200).json(response.success(200, productOrder))
         // }
         
 
@@ -141,5 +279,6 @@ const updatbyIdProductOrder = async (req, res) => {
 module.exports = {
     getAllProductOrder,
     getAllProductOrderByIdOrder,
+    getAllProductOrderById,
     updatbyIdProductOrder,
 }

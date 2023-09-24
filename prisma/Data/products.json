@@ -3,7 +3,7 @@
         "id": 1,
         "name":"Meja Pimpinan",
         "ukuran": "Panjang = 190 cm Lebar = 95 cm Tinggi = 75 cm",
-        "harga": 80000000,
+        "harga": 8000000,
         "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat kayu (Impra)",
         "categoriesId": 1
     },
@@ -11,7 +11,7 @@
         "id": 2,
         "name":"Meja Rapat",
         "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
-        "harga": 300000025000000 ,
+        "harga": 10000000,
         "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat kayu (Impra / Cat Duco",
         "categoriesId": 1
     },
@@ -44,7 +44,7 @@
         "name":"Pintu",
         "ukuran": "Dimensi Produk : 80x200 cm",
         "harga": 5000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 1 (lingua)",
+        "Deskripsi_produk":"Bahan : kayu kelas 1 (linggua)",
         "categoriesId": 4
     },
     {
@@ -83,7 +83,7 @@
         "id": 11,
         "name":"Mimbar / Podium",
         "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
-        "harga": 15000000,
+        "harga": 50000000,
         "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka) / Kayu Kelas 1 (linggua) ,kunci + engsel. Finishing : cat Ducco/HPL/Cat Kayu",
         "categoriesId": 5
     }

@@ -24,8 +24,8 @@ const getAllProduct = async (req, res) => {
             orderBy: {
                 id: "asc"
             },
-            skip: page,
-            take: row,
+            // skip: page,
+            // take: row,
             include: {
                 product_images: true,
                 categories: true

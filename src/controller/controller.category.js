@@ -7,7 +7,23 @@ const prisma = new PrismaClient()
 
 const getAllCategories = async (req, res) => {
     try{
-        const getDataCategoryAll = await prisma.categories.findMany()
+        const {searchName} = req.query
+
+        const options = {
+            where: {},
+            include: {
+
+            }
+        }
+        if (searchName) {
+            options.where.name = {
+                contains: searchName
+            }
+        }
+
+        console.log(options)
+
+        const getDataCategoryAll = await prisma.categories.findMany(options)
 
         res.status(200).json(response.success(200, getDataCategoryAll))
 
