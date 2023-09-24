@@ -11,111 +11,108 @@ datasource db {
 }
 
 model Roles {
-  id Int @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String
   users Users[]
 }
 
-model Users{
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  password String
-  nomor_hp String
-  alamat String
-  token String?
-  roles Roles? @relation(fields: [rolesId], references: [id])
-  rolesId Int
-  orders Orders[]
+model Users {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  email               String                @unique
+  password            String
+  nomor_hp            String
+  alamat              String
+  token               String?
+  roles               Roles?                @relation(fields: [rolesId], references: [id])
+  rolesId             Int
+  orders              Orders[]
   reviewevUserProduct ReviewevUserProduct[]
-  product_Orders Product_Orders[]
+  product_Orders      Product_Orders[]
 }
 
-model KomentarKeKontakKami{
-  id Int @id @default(autoincrement())
+model KomentarKeKontakKami {
+  id           Int    @id @default(autoincrement())
   nama_lengkap String
-  email String
-  pesan String @db.Text
+  email        String
+  pesan        String @db.Text
 }
 
-model ReviewevUserProduct{
-  id Int @id @default(autoincrement())
-  users Users? @relation(fields: [user_id], references: [id])
-  user_id Int
-  products Products? @relation(fields: [products_id], references: [id])
+model ReviewevUserProduct {
+  id          Int       @id @default(autoincrement())
+  users       Users?    @relation(fields: [user_id], references: [id])
+  user_id     Int
+  products    Products? @relation(fields: [products_id], references: [id])
   products_id Int
-  bintang Int
-  komentar String @db.Text
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
+  bintang     Int
+  komentar    String    @db.Text
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now()) @updatedAt
 }
 
 model Products {
-  id Int @id @default(autoincrement())
-  name String
-  ukuran String
-  harga Int
-  Deskripsi_produk String
-  categories Categories? @relation(fields: [categoriesId], references: [id])
-  categoriesId Int?
-  product_images Product_images[]
-  product_Orders Product_Orders[]
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  ukuran              String
+  harga               Int
+  Deskripsi_produk    String
+  categories          Categories?           @relation(fields: [categoriesId], references: [id])
+  categoriesId        Int?
+  product_images      Product_images[]
+  product_Orders      Product_Orders[]
   reviewevUserProduct ReviewevUserProduct[]
 }
 
 model Product_images {
-  id Int @id @default(autoincrement())
-  name String
-  url_image String
+  id               Int      @id @default(autoincrement())
+  name             String
+  url_image        String
   product_image_id String?
-  products Products @relation(fields: [product_id], references: [id])
-  product_id Int
+  products         Products @relation(fields: [product_id], references: [id])
+  product_id       Int
 }
 
-
-
 model Orders {
-  id Int @id @default(autoincrement())
-  nama_pemesan String
-  users Users ? @relation(fields: [id_user], references: [id])
-  id_user Int
-  no_hp String
-  alamat String
-  status Boolean
-  Price Int
-  jumlah Int
+  id             Int              @id @default(autoincrement())
+  nama_pemesan   String
+  users          Users?           @relation(fields: [id_user], references: [id])
+  id_user        Int
+  no_hp          String
+  alamat         String
+  status         Boolean
+  Price          Int
+  jumlah         Int
   product_Orders Product_Orders[]
-  buktiBayar BuktiBayar[]
+  buktiBayar     BuktiBayar[]
 }
 
 model Product_Orders {
-  id Int @id @default(autoincrement())
-  orders Orders @relation(fields: [id_orders], references: [id])
-  id_orders Int 
-  products Products @relation(fields: [id_product], references: [id])
+  id         Int      @id @default(autoincrement())
+  orders     Orders   @relation(fields: [id_orders], references: [id])
+  id_orders  Int
+  products   Products @relation(fields: [id_product], references: [id])
   id_product Int
-  users Users ? @relation(fields: [id_user], references: [id])
-  id_user Int
-  status Int
-  Price Int
-  jumlah Int
+  users      Users?   @relation(fields: [id_user], references: [id])
+  id_user    Int
+  status     Int
+  Price      Int
+  jumlah     Int
 }
 
 model BuktiBayar {
-  id Int @id @default(autoincrement())
-  statusTransaksi Boolean?
-  picture_bukti_bayar String?
-  picture_bukti_bayar_id  String?
-  orders Orders @relation(fields: [id_orders], references: [id])
-  id_orders Int
+  id                     Int      @id @default(autoincrement())
+  statusTransaksi        Boolean?
+  picture_bukti_bayar    String?
+  picture_bukti_bayar_id String?
+  orders                 Orders   @relation(fields: [id_orders], references: [id])
+  id_orders              Int
 }
 
 model Categories {
-  id Int @id @default(autoincrement())
-  name String
+  id       Int        @id @default(autoincrement())
+  name     String
   products Products[]
 }
-
 
 model JenisTransaksi {
   id                                        Int                                    @id @default(autoincrement())
@@ -126,7 +123,7 @@ model JenisTransaksi {
 
 model NamaAkunTransaksi {
   id                                        Int                                    @id @default(autoincrement())
-  id_tipe_akun_transaksi                    Int
+  id_tipe_akun_transaksi                    Int?
   kode                                      String
   nama                                      String
   transaksi                                 Transaksi[]
@@ -167,18 +164,17 @@ model Transaksi {
   nama_akun_transaksi    NamaAkunTransaksi? @relation(fields: [id_nama_akun_transaksi], references: [id])
 }
 
-
 model Saldo {
-  id Int @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   total_uang Int
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
 
 model Bahan {
-  id Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   nama_barang String
-  stok Int
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
+  stok        Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
 }
