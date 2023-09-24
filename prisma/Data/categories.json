@@ -1,22 +1,22 @@
 [
-    {
-        "id": 1,
-        "name":"Meja Kerja"
-    },
-    {
-        "id": 2,
-        "name":"Perlengkapan kantor"
-    },
-    {
-        "id": 3,
-        "name":"Perlengkapan dapur"
-    },
-    {
-        "id": 4,
-        "name":"Bangunan"
-    },
-    {
-        "id": 5,
-        "name":"Asesories"
-    }
+  {
+    "id": 1,
+    "name": "Meja Kerja"
+  },
+  {
+    "id": 2,
+    "name": "Perlengkapan kantor"
+  },
+  {
+    "id": 3,
+    "name": "Perlengkapan dapur"
+  },
+  {
+    "id": 4,
+    "name": "Bangunan"
+  },
+  {
+    "id": 5,
+    "name": "Asesories"
+  }
 ]

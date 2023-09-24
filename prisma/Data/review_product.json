@@ -1,38 +1,38 @@
 [
-    {
-        "user_id": 2,
-        "products_id": 4,
-        "bintang": 4,
-        "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
-    },
-    {
-        "user_id": 3,
-        "products_id": 4,
-        "bintang": 5,
-        "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
-    },
-    {
-        "user_id": 4,
-        "products_id": 4,
-        "bintang": 5,
-        "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
-    },
-    {
-        "user_id": 2,
-        "products_id": 5,
-        "bintang": 4,
-        "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
-    },
-    {
-        "user_id": 3,
-        "products_id": 5,
-        "bintang": 5,
-        "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
-    },
-    {
-        "user_id": 4,
-        "products_id": 5,
-        "bintang": 3,
-        "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
-    }
+  {
+    "user_id": 2,
+    "products_id": 4,
+    "bintang": 4,
+    "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
+  },
+  {
+    "user_id": 3,
+    "products_id": 4,
+    "bintang": 5,
+    "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
+  },
+  {
+    "user_id": 4,
+    "products_id": 4,
+    "bintang": 5,
+    "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
+  },
+  {
+    "user_id": 2,
+    "products_id": 5,
+    "bintang": 4,
+    "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
+  },
+  {
+    "user_id": 3,
+    "products_id": 5,
+    "bintang": 5,
+    "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
+  },
+  {
+    "user_id": 4,
+    "products_id": 5,
+    "bintang": 3,
+    "komentar": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, nulla! Provident quod ullam hic? Illo ipsa voluptates dolore veniam ullam?"
+  }
 ]

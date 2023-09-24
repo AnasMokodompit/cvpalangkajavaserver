@@ -208,8 +208,8 @@
     "id_tipe_akun_transaksi": 10,
     "kode": "9-2000",
     "nama": "Beban Bunga"
-  }
-  ,{
+  },
+  {
     "id": 36,
     "id_tipe_akun_transaksi": 6,
     "kode": "4-2000",

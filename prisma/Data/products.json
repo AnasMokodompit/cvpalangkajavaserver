@@ -1,90 +1,90 @@
 [
-    {
-        "id": 1,
-        "name":"Meja Pimpinan",
-        "ukuran": "Panjang = 190 cm Lebar = 95 cm Tinggi = 75 cm",
-        "harga": 80000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat kayu (Impra)",
-        "categoriesId": 1
-    },
-    {
-        "id": 2,
-        "name":"Meja Rapat",
-        "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
-        "harga": 300000025000000 ,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat kayu (Impra / Cat Duco",
-        "categoriesId": 1
-    },
-    {
-        "id": 3,
-        "name":"Meja ½ Biro",
-        "ukuran": "Panjang = 120 cm Lebar = 95 cm Tinggi = 60 cm Tinggi = 70 cm",
-        "harga": 2000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel. Finishing : cat kayu (water base), clear dof Impra",
-        "categoriesId": 1
-    },
-    {
-        "id": 4,
-        "name":"Lemari Arsip/lemari Kantor",
-        "ukuran": "Dimensi Produk : 204x190x48 cm",
-        "harga": 8500000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm. Finishing : cat ducco + kayu. Warna : putih hitam",
-        "categoriesId": 2
-    },
-    {
-        "id": 5,
-        "name":"Kitcen Set",
-        "ukuran": "Dimensi Produk : (menyesuaikan)",
-        "harga": 2000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel. Finishing : cat ducco/HPL",
-        "categoriesId": 3
-    },
-    {
-        "id": 6,
-        "name":"Pintu",
-        "ukuran": "Dimensi Produk : 80x200 cm",
-        "harga": 5000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 1 (lingua)",
-        "categoriesId": 4
-    },
-    {
-        "id": 7,
-        "name":"Kosen",
-        "ukuran": "Dimensi Produk : 100 cm",
-        "harga": 250000,
-        "Deskripsi_produk":"Bahan : kayu kelas 1 (kayu besi)",
-        "categoriesId": 4
-    },
-    {
-        "id": 8,
-        "name":"Jendela",
-        "ukuran": "Dimensi Produk : 100 cm",
-        "harga": 250000,
-        "Deskripsi_produk":"Bahan : kayu kelas 1 (kayu Linggua)",
-        "categoriesId": 4
-    },
-    {
-        "id": 9,
-        "name":"Set Kamar Tidur",
-        "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
-        "harga": 2000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat ducco/HPL/Cat Kayu",
-        "categoriesId": 4
-    },
-    {
-        "id": 10,
-        "name":"Backdrop / Partisi Ruangan / Mini Bar",
-        "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
-        "harga": 2000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat ducco/HPL",
-        "categoriesId": 5
-    },
-    {
-        "id": 11,
-        "name":"Mimbar / Podium",
-        "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
-        "harga": 15000000,
-        "Deskripsi_produk":"Bahan : kayu kelas 2 (cempaka) / Kayu Kelas 1 (linggua) ,kunci + engsel. Finishing : cat Ducco/HPL/Cat Kayu",
-        "categoriesId": 5
-    }
+  {
+    "id": 1,
+    "name": "Meja Pimpinan",
+    "ukuran": "Panjang = 190 cm Lebar = 95 cm Tinggi = 75 cm",
+    "harga": 8000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat kayu (Impra)",
+    "categoriesId": 1
+  },
+  {
+    "id": 2,
+    "name": "Meja Rapat",
+    "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
+    "harga": 10000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat kayu (Impra / Cat Duco",
+    "categoriesId": 1
+  },
+  {
+    "id": 3,
+    "name": "Meja ½ Biro",
+    "ukuran": "Panjang = 120 cm Lebar = 95 cm Tinggi = 60 cm Tinggi = 70 cm",
+    "harga": 2000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel. Finishing : cat kayu (water base), clear dof Impra",
+    "categoriesId": 1
+  },
+  {
+    "id": 4,
+    "name": "Lemari Arsip/lemari Kantor",
+    "ukuran": "Dimensi Produk : 204x190x48 cm",
+    "harga": 8500000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm. Finishing : cat ducco + kayu. Warna : putih hitam",
+    "categoriesId": 2
+  },
+  {
+    "id": 5,
+    "name": "Kitcen Set",
+    "ukuran": "Dimensi Produk : (menyesuaikan)",
+    "harga": 2000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel. Finishing : cat ducco/HPL",
+    "categoriesId": 3
+  },
+  {
+    "id": 6,
+    "name": "Pintu",
+    "ukuran": "Dimensi Produk : 80x200 cm",
+    "harga": 5000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 1 (linggua)",
+    "categoriesId": 4
+  },
+  {
+    "id": 7,
+    "name": "Kosen",
+    "ukuran": "Dimensi Produk : 100 cm",
+    "harga": 250000,
+    "Deskripsi_produk": "Bahan : kayu kelas 1 (kayu besi)",
+    "categoriesId": 4
+  },
+  {
+    "id": 8,
+    "name": "Jendela",
+    "ukuran": "Dimensi Produk : 100 cm",
+    "harga": 250000,
+    "Deskripsi_produk": "Bahan : kayu kelas 1 (kayu Linggua)",
+    "categoriesId": 4
+  },
+  {
+    "id": 9,
+    "name": "Set Kamar Tidur",
+    "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
+    "harga": 2000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat ducco/HPL/Cat Kayu",
+    "categoriesId": 4
+  },
+  {
+    "id": 10,
+    "name": "Backdrop / Partisi Ruangan / Mini Bar",
+    "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
+    "harga": 2000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat ducco/HPL",
+    "categoriesId": 5
+  },
+  {
+    "id": 11,
+    "name": "Mimbar / Podium",
+    "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
+    "harga": 50000000,
+    "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka) / Kayu Kelas 1 (linggua) ,kunci + engsel. Finishing : cat Ducco/HPL/Cat Kayu",
+    "categoriesId": 5
+  }
 ]

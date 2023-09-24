@@ -3,8 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const postTransaksi = async (req, res) => {
-  const { id_jenis_transaksi, id_nama_akun_transaksi, keterangan, jumlah } =
-    req.body;
+  const { id_jenis_transaksi, id_nama_akun_transaksi, keterangan, jumlah } = req.body;
 
   try {
     await prisma.transaksi.create({

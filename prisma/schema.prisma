@@ -61,6 +61,7 @@ model Products {
   product_images      Product_images[]
   product_Orders      Product_Orders[]
   reviewevUserProduct ReviewevUserProduct[]
+  bahanBakuProduk     BahanBakuProduk[]
 }
 
 model Product_images {
@@ -73,17 +74,19 @@ model Product_images {
 }
 
 model Orders {
-  id             Int              @id @default(autoincrement())
-  nama_pemesan   String
-  users          Users?           @relation(fields: [id_user], references: [id])
-  id_user        Int
-  no_hp          String
-  alamat         String
-  status         Boolean
-  Price          Int
-  jumlah         Int
-  product_Orders Product_Orders[]
-  buktiBayar     BuktiBayar[]
+  id                Int              @id @default(autoincrement())
+  nama_pemesan      String
+  users             Users?           @relation(fields: [id_user], references: [id])
+  id_user           Int
+  no_hp             String
+  alamat            String
+  status            Boolean
+  Price             Int
+  jumlah            Int
+  IsPembayaranDP    Boolean?         @default(false)
+  IsPembayaranLunas Boolean?         @default(false)
+  product_Orders    Product_Orders[]
+  buktiBayar        BuktiBayar[]
 }
 
 model Product_Orders {
@@ -171,10 +174,29 @@ model Saldo {
   updated_at DateTime @default(now()) @updatedAt
 }
 
-model Bahan {
-  id          Int      @id @default(autoincrement())
-  nama_barang String
-  stok        Int
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now()) @updatedAt
+model BahanBakuProduk {
+  id            Int       @id @default(autoincrement())
+  products      Products  @relation(fields: [id_produk], references: [id])
+  id_produk     Int
+  bahanBaku     BahanBaku @relation(fields: [id_bahan_baku], references: [id])
+  id_bahan_baku Int
+  jumlah        Int
+  satuan        String
+}
+
+model BahanBaku {
+  id                  Int                   @id @default(autoincrement())
+  nama                String
+  created_at          DateTime              @default(now())
+  updated_at          DateTime              @default(now()) @updatedAt
+  persediaanBahanBaku PersediaanBahanBaku[]
+  bahanBakuProduk     BahanBakuProduk[]
+}
+
+model PersediaanBahanBaku {
+  id            Int       @id @default(autoincrement())
+  bahanBaku     BahanBaku @relation(fields: [id_bahan_baku], references: [id])
+  id_bahan_baku Int
+  jumlah        Int
+  satuan        String
 }

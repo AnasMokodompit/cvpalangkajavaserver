@@ -1,164 +1,164 @@
 [
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/Meja_Kerja_Pimpina_d9390u.jpg",
-        "product_image_id" : null,
-        "product_id" : 1
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_kerja_pimpinan_1_ijrovb.jpg",
-        "product_image_id" : null,
-        "product_id" : 1
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986558/cvpalangkajaya/meja_rapat_faf9pw.jpg",
-        "product_image_id" : null,
-        "product_id" : 2
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_rapat_1_f5syri.jpg",
-        "product_image_id" : null,
-        "product_id" : 2
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_rapat_2_iszcvk.jpg",
-        "product_image_id" : null,
-        "product_id" : 2
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_rapat_3_jk3j2b.jpg",
-        "product_image_id" : null,
-        "product_id" : 2
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Meja_Kerja_Biro_hwog6q.jpg",
-        "product_image_id" : null,
-        "product_id" : 3
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Meja_Kerja_Biro_1_prnixd.jpg",
-        "product_image_id" : null,
-        "product_id" : 3
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/Meja_Kerja_Biro_3_h5wwre.jpg",
-        "product_image_id" : null,
-        "product_id" : 3
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Lemari_Kantor_umnzjv.jpg",
-        "product_image_id" : null,
-        "product_id" : 4
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kitchen_Set_jsbmfk.jpg",
-        "product_image_id" : null,
-        "product_id" : 5
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kitchen_Set_1_ktkzfr.jpg",
-        "product_image_id" : null,
-        "product_id" : 5
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986562/cvpalangkajaya/pintu_xpqix7.jpg",
-        "product_image_id" : null,
-        "product_id" : 6
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986561/cvpalangkajaya/pintu_1_kakffk.jpg",
-        "product_image_id" : null,
-        "product_id" : 6
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kosen_dan_Jendela_lguvat.jpg",
-        "product_image_id" : null,
-        "product_id" : 7
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kosen_dan_Jendela_lguvat.jpg",
-        "product_image_id" : null,
-        "product_id" : 8
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986563/cvpalangkajaya/Set_Kamar_st61vq.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986562/cvpalangkajaya/Set_Kamar_1_rfqzcu.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986563/cvpalangkajaya/Set_Kamar_2_nwt3pe.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986559/cvpalangkajaya/Set_Kamar_3_ge4vdp.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986560/cvpalangkajaya/Setkamar_4_dzyvk6.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986560/cvpalangkajaya/Set_Kamar_5_w9aomm.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986561/cvpalangkajaya/Set_Kamar_6_guarnm.jpg",
-        "product_image_id" : null,
-        "product_id" : 9
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986559/cvpalangkajaya/Partisi_l1a6qh.jpg",
-        "product_image_id" : null,
-        "product_id" : 10
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986558/cvpalangkajaya/Partisi_1_hihrpl.jpg",
-        "product_image_id" : null,
-        "product_id" : 10
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986558/cvpalangkajaya/Partisi_2_rqetr6.jpg",
-        "product_image_id" : null,
-        "product_id" : 10
-    },
-    {
-        "name":"",
-        "url_image" : "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986562/cvpalangkajaya/Podium_atau_Mimbar_bz2ve1.jpg",
-        "product_image_id" : null,
-        "product_id" : 11
-    }
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/Meja_Kerja_Pimpina_d9390u.jpg",
+    "product_image_id": null,
+    "product_id": 1
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_kerja_pimpinan_1_ijrovb.jpg",
+    "product_image_id": null,
+    "product_id": 1
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986558/cvpalangkajaya/meja_rapat_faf9pw.jpg",
+    "product_image_id": null,
+    "product_id": 2
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_rapat_1_f5syri.jpg",
+    "product_image_id": null,
+    "product_id": 2
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_rapat_2_iszcvk.jpg",
+    "product_image_id": null,
+    "product_id": 2
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/meja_rapat_3_jk3j2b.jpg",
+    "product_image_id": null,
+    "product_id": 2
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Meja_Kerja_Biro_hwog6q.jpg",
+    "product_image_id": null,
+    "product_id": 3
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Meja_Kerja_Biro_1_prnixd.jpg",
+    "product_image_id": null,
+    "product_id": 3
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986557/cvpalangkajaya/Meja_Kerja_Biro_3_h5wwre.jpg",
+    "product_image_id": null,
+    "product_id": 3
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Lemari_Kantor_umnzjv.jpg",
+    "product_image_id": null,
+    "product_id": 4
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kitchen_Set_jsbmfk.jpg",
+    "product_image_id": null,
+    "product_id": 5
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kitchen_Set_1_ktkzfr.jpg",
+    "product_image_id": null,
+    "product_id": 5
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986562/cvpalangkajaya/pintu_xpqix7.jpg",
+    "product_image_id": null,
+    "product_id": 6
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986561/cvpalangkajaya/pintu_1_kakffk.jpg",
+    "product_image_id": null,
+    "product_id": 6
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kosen_dan_Jendela_lguvat.jpg",
+    "product_image_id": null,
+    "product_id": 7
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986556/cvpalangkajaya/Kosen_dan_Jendela_lguvat.jpg",
+    "product_image_id": null,
+    "product_id": 8
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986563/cvpalangkajaya/Set_Kamar_st61vq.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986562/cvpalangkajaya/Set_Kamar_1_rfqzcu.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986563/cvpalangkajaya/Set_Kamar_2_nwt3pe.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986559/cvpalangkajaya/Set_Kamar_3_ge4vdp.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986560/cvpalangkajaya/Setkamar_4_dzyvk6.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986560/cvpalangkajaya/Set_Kamar_5_w9aomm.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986561/cvpalangkajaya/Set_Kamar_6_guarnm.jpg",
+    "product_image_id": null,
+    "product_id": 9
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986559/cvpalangkajaya/Partisi_l1a6qh.jpg",
+    "product_image_id": null,
+    "product_id": 10
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986558/cvpalangkajaya/Partisi_1_hihrpl.jpg",
+    "product_image_id": null,
+    "product_id": 10
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986558/cvpalangkajaya/Partisi_2_rqetr6.jpg",
+    "product_image_id": null,
+    "product_id": 10
+  },
+  {
+    "name": "",
+    "url_image": "https://res.cloudinary.com/politeknik-negeri-manado/image/upload/v1693986562/cvpalangkajaya/Podium_atau_Mimbar_bz2ve1.jpg",
+    "product_image_id": null,
+    "product_id": 11
+  }
 ]
