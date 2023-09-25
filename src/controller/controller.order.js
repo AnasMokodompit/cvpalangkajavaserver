@@ -17,22 +17,12 @@ const createOrder = async (req, res) => {
       delete data.tipe;
       delete data.harga;
       delete data.id;
+      delete data.IsPermeter
     });
 
     dataOrder.map((data) => {
       jumlah += data.jumlah;
       jumlahHarga += data.jumlahHarga;
-    });
-
-    const createUser = await prisma.users.create({
-      data: {
-        name: req.body.namePemesan,
-        email: req.body.email,
-        rolesId: 2,
-        nomor_hp: req.body.noHp,
-        alamat: req.body.alamat,
-        password: "customers1234",
-      },
     });
 
     const options = {
@@ -42,8 +32,36 @@ const createOrder = async (req, res) => {
       status: false,
       Price: jumlahHarga,
       jumlah: jumlah,
-      id_user: createUser.id,
     };
+
+    const cekUser = await prisma.users.findMany({
+      where: {
+        email: {
+          contains: req.body.email
+        }
+      }
+    })
+
+    console.log(cekUser)
+
+    let createUser = []
+    if (cekUser.length == 0) {
+      
+      createUser = await prisma.users.create({
+        data: {
+          name: req.body.namePemesan,
+          email: req.body.email,
+          rolesId: 2,
+          nomor_hp: req.body.noHp,
+          alamat: req.body.alamat,
+          password: "customers1234",
+        },
+      });
+
+      options.id_user = createUser.id
+    }else{      
+      options.id_user = cekUser[0].id
+    }
 
     const createOrder = await prisma.orders.create({
       data: options,
@@ -51,9 +69,13 @@ const createOrder = async (req, res) => {
 
     if (createOrder) {
       dataOrder.map((data) => {
+        if (cekUser.length == 0) {
+          data.id_user = createUser.id;
+        }else{
+          data.id_user = cekUser[0].id
+        }
         data.id_orders = createOrder.id;
         data.Price = data.jumlahHarga;
-        data.id_user = createUser.id;
         data.status = 0;
         delete data.jumlahHarga;
       });

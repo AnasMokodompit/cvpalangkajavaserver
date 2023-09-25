@@ -150,9 +150,9 @@ const updatePersediaanBahanBakuAndBahanBaku = async (req, res) => {
         },
       });
 
-      if (cekSatuanId_bahan_baku.length !== 0) {
-        return res.status(404).json(response.error(404, "Satuan Telah Ada"));
-      }
+      // if (cekSatuanId_bahan_baku.length !== 0) {
+      //   return res.status(404).json(response.error(404, "Satuan Telah Ada"));
+      // }
     } else {
       const createBahanBaku = await prisma.bahanBaku.create({
         data: {

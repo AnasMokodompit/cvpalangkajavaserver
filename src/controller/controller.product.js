@@ -68,6 +68,7 @@ const getByIdProduct = async (req, res) => {
             users: true,
           },
         },
+        bahanBakuProduk: true
       },
     };
 

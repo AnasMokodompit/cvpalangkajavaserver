@@ -56,6 +56,7 @@ model Products {
   ukuran              String
   harga               Int
   Deskripsi_produk    String
+  IsPermeter          Boolean @default(false)
   categories          Categories?           @relation(fields: [categoriesId], references: [id])
   categoriesId        Int?
   product_images      Product_images[]
@@ -100,6 +101,7 @@ model Product_Orders {
   status     Int
   Price      Int
   jumlah     Int
+  jumlah_meter      Int?
 }
 
 model BuktiBayar {
