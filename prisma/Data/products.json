@@ -36,6 +36,7 @@
     "name": "Kitcen Set",
     "ukuran": "Dimensi Produk : (menyesuaikan)",
     "harga": 2000000,
+    "IsPermeter": true,
     "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel. Finishing : cat ducco/HPL",
     "categoriesId": 3
   },
@@ -68,6 +69,7 @@
     "name": "Set Kamar Tidur",
     "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
     "harga": 2000000,
+    "IsPermeter": true,
     "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat ducco/HPL/Cat Kayu",
     "categoriesId": 4
   },
@@ -76,6 +78,7 @@
     "name": "Backdrop / Partisi Ruangan / Mini Bar",
     "ukuran": "Dimensi Produk : (menyesuaikan model dan ukuran)",
     "harga": 2000000,
+    "IsPermeter": true,
     "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel. Finishing : cat ducco/HPL",
     "categoriesId": 5
   },

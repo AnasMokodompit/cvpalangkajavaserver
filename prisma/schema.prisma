@@ -57,6 +57,7 @@ model Products {
   harga               Int
   Deskripsi_produk    String
   IsPermeter          Boolean @default(false)
+  IsProductCustom     Boolean @default(false)
   categories          Categories?           @relation(fields: [categoriesId], references: [id])
   categoriesId        Int?
   product_images      Product_images[]
