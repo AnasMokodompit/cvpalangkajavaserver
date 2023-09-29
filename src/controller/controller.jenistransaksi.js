@@ -94,6 +94,7 @@ const listNamaAkunTransaksiByJenisTransaksi = async (req, res) => {
         nama: true,
         nama_akun_transaksi_dalam_jenis_transaksi: {
           select: {
+            id: true,
             nama: true,
             akunTransaksi: {
               select: {

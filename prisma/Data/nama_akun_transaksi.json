@@ -209,4 +209,10 @@
         "nama": "Beban Bunga",
         "id_tipe_akun_transaksi": 10
     }
+    ,{
+        "id": 36,
+        "kode": "9-3000",
+        "nama": "Piutang",
+        "id_tipe_akun_transaksi": 2
+    }
 ]
