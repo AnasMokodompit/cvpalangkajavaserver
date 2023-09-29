@@ -31,6 +31,26 @@ const listTransaksi = async (req, res) => {
 
     const  {search, firstDate, lastDate} = req.query
     const {page, row} = pagination(req.query.page, req.query.row)
+    const idNamaAkunDalamJenisTransaksiInSearch = []
+
+    
+    if (search) {
+      const dataSearch = await prisma.namaAkunTransaksiDalamJenisTransaksi.findMany({
+        where: {
+          nama: {
+            contains: search
+          },
+        },
+        select: {
+          id: true
+        }
+      })
+
+
+      
+      idNamaAkunDalamJenisTransaksiInSearch.push(dataSearch.map(data => data.id))
+      
+    }
 
     const option = {
       where: {},
@@ -63,11 +83,6 @@ const listTransaksi = async (req, res) => {
       take: row,
     }
 
-    // if (search) {
-      // option.where.jenis_transaksi = {
-      //   contains: searchJudul
-      // }
-    // }
 
     if (firstDate && lastDate) {
       option.where.AND = {
@@ -75,6 +90,12 @@ const listTransaksi = async (req, res) => {
           gte: new Date(firstDate).toISOString(),
           lte: new Date (lastDate).toISOString()
         }
+      }
+    }
+
+    if (search) {
+      option.where.id_nama_akun_jenis_transaksi = {
+          in: idNamaAkunDalamJenisTransaksiInSearch[0]
       }
     }
 
