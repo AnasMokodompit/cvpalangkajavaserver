@@ -83,6 +83,8 @@ const listNamaAkunTransaksiByJenisTransaksi = async (req, res) => {
   try {
     const { id } = req.params;
 
+    // return console.log(id)
+
     const listNamaAkunTransaksiByJenisTransaksi = await prisma.jenisTransaksi.findUnique({
       where: {
         id: Number(id),
@@ -92,11 +94,17 @@ const listNamaAkunTransaksiByJenisTransaksi = async (req, res) => {
         nama: true,
         nama_akun_transaksi_dalam_jenis_transaksi: {
           select: {
-            nama_akun_transaksi: {
+            nama: true,
+            akunTransaksi: {
               select: {
                 id: true,
-                kode: true,
-                nama: true,
+                saldo: true,
+                namaAkunTransaksi: {
+                  include: {
+                    tipe_akun_transaksi: true
+                  }
+                },
+                kategori_akun: true
               },
             },
           },

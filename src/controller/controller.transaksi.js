@@ -3,13 +3,13 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const postTransaksi = async (req, res) => {
-  const { id_jenis_transaksi, id_nama_akun_transaksi, keterangan, jumlah } = req.body;
+  const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah } = req.body;
 
   try {
     await prisma.transaksi.create({
       data: {
         id_jenis_transaksi: Number(id_jenis_transaksi),
-        id_nama_akun_transaksi: Number(id_nama_akun_transaksi),
+        id_nama_akun_jenis_transaksi: Number(id_nama_akun_jenis_transaksi),
         keterangan,
         jumlah,
       },
@@ -36,10 +36,19 @@ const listTransaksi = async (req, res) => {
             nama: true,
           },
         },
-        nama_akun_transaksi: {
-          select: {
-            nama: true,
-          },
+        namaAkunTransaksiDalamJenisTransaksi: {
+          include: {
+            akunTransaksi: {
+              include: {
+                kategori_akun: true,
+                namaAkunTransaksi: {
+                  include: {
+                    tipe_akun_transaksi: true
+                  }
+                }
+              }
+            }
+          }
         },
         tanggal: true,
       },

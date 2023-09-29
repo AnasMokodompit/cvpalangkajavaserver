@@ -1,0 +1,382 @@
+[
+  {
+    "id": 1,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 1,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 2,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 1,
+    "kode_nama_akun_transaksi": "4-1000",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 3,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 3,
+    "kode_nama_akun_transaksi": "5-1000",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 4,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 3,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 5,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 4,
+    "kode_nama_akun_transaksi": "5-2000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 6,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 4,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 7,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 5,
+    "kode_nama_akun_transaksi": "5-3000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 8,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 5,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 9,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 6,
+    "kode_nama_akun_transaksi": "1-1900",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 10,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 6,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 11,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 7,
+    "kode_nama_akun_transaksi": "1-1800",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 12,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 7,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 13,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 8,
+    "kode_nama_akun_transaksi": "1-1700",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 14,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 8,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 15,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 9,
+    "kode_nama_akun_transaksi": "1-2000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 16,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 9,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 17,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 10,
+    "kode_nama_akun_transaksi": "6-2000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 18,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 10,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 19,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 11,
+    "kode_nama_akun_transaksi": "6-7000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 20,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 11,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 21,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 12,
+    "kode_nama_akun_transaksi": "6-3000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 22,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 12,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 23,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 13,
+    "kode_nama_akun_transaksi": "6-6000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 24,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 13,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 25,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 14,
+    "kode_nama_akun_transaksi": "6-1000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 26,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 14,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 27,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 30,
+    "kode_nama_akun_transaksi": "6-8000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 28,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 30,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 29,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 15,
+    "kode_nama_akun_transaksi": "5-1000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 30,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 15,
+    "kode_nama_akun_transaksi": "2-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 31,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 16,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 32,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 16,
+    "kode_nama_akun_transaksi": "2-1200",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 33,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 17,
+    "kode_nama_akun_transaksi": "1-1200",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 34,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 17,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 35,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 18,
+    "kode_nama_akun_transaksi": "2-1200",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 36,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 18,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 37,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 19,
+    "kode_nama_akun_transaksi": "1-1200",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 38,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 19,
+    "kode_nama_akun_transaksi": "4-1000",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 39,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 20,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 40,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 20,
+    "kode_nama_akun_transaksi": "1-1200",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 41,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 21,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 42,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 21,
+    "kode_nama_akun_transaksi": "3-1000",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 42,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 22,
+    "kode_nama_akun_transaksi": "3-1000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 43,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 22,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 44,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 23
+  }
+  ,{
+    "id": 45,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 24
+  }
+  ,{
+    "id": 46,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 25
+  }
+  ,{
+    "id": 47,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 26,
+    "kode_nama_akun_transaksi": "8-1000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 48,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 26,
+    "kode_nama_akun_transaksi": "1-1910",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 49,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 27,
+    "kode_nama_akun_transaksi": "8-2000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 50,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 27,
+    "kode_nama_akun_transaksi": "1-1810",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 51,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 28,
+    "kode_nama_akun_transaksi": "8-4000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 52,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 28,
+    "kode_nama_akun_transaksi": "1-1710",
+    "id_kategori_akun": 2
+  }
+  ,{
+    "id": 53,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 29,
+    "kode_nama_akun_transaksi": "8-3000",
+    "id_kategori_akun": 1
+  }
+  ,{
+    "id": 54,
+    "saldo": 0,
+    "id_nama_akun_jenis_transaksi": 29,
+    "kode_nama_akun_transaksi": "1-2010",
+    "id_kategori_akun": 2
+  }
+ 
+]

@@ -14,6 +14,8 @@ const NamaAkunTransaksiDalamJenisTransaksi = require("./Data/nama_akun_transaksi
 const BahanBakuProduk = require("./Data/bahan_baku_produk.json");
 const BahanBaku = require("./Data/bahan_baku.json");
 const PersediaanBahanBaku = require("./Data/persediaan-bahan-baku.json");
+const kategoriAkun = require('./Data/kategoriAkun.json')
+const akunTransaksi = require('./Data/akun_transaksi.json')
 
 async function main() {
   // Categories
@@ -66,6 +68,16 @@ async function main() {
     data: NamaAkunTransaksiDalamJenisTransaksi,
     skipDuplicates: true,
   });
+
+  await prisma.kategoriAkun.createMany({
+    data: kategoriAkun,
+    skipDuplicates: true,
+  })
+
+  await prisma.akunTransaksi.createMany({
+    data: akunTransaksi,
+    skipDuplicates: true,
+  })
 
   await prisma.bahanBaku.createMany({
     data: BahanBaku,
