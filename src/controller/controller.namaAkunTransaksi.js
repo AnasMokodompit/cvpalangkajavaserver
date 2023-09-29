@@ -69,7 +69,11 @@ const deleteNamaAkunTransaksi = async (req, res) => {
 
 const listNamaAkunTransaksi = async (req, res) => {
   try {
-    const listNamaAkunTransaksi = await prisma.namaAkunTransaksi.findMany();
+    const listNamaAkunTransaksi = await prisma.namaAkunTransaksi.findMany({
+      include: {
+        akunTransaksi: true
+      }
+    });
 
     res.status(200).json({
       status: 200,

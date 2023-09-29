@@ -54,6 +54,10 @@ const listTransaksi = async (req, res) => {
 
     const option = {
       where: {},
+      orderBy: {
+        // id: "asc",
+        id: "desc",
+      },
       select: {
         id: true,
         keterangan: true,
