@@ -1,4 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
+const pagination = require('../utility/pagination')
+
 
 const prisma = new PrismaClient();
 
@@ -26,7 +28,12 @@ const postTransaksi = async (req, res) => {
 
 const listTransaksi = async (req, res) => {
   try {
-    const listTransaksi = await prisma.transaksi.findMany({
+
+    const  {search, firstDate, lastDate} = req.query
+    const {page, row} = pagination(req.query.page, req.query.row)
+
+    const option = {
+      where: {},
       select: {
         id: true,
         keterangan: true,
@@ -52,7 +59,27 @@ const listTransaksi = async (req, res) => {
         },
         tanggal: true,
       },
-    });
+      skip: page,
+      take: row,
+    }
+
+    // if (search) {
+      // option.where.jenis_transaksi = {
+      //   contains: searchJudul
+      // }
+    // }
+
+    if (firstDate && lastDate) {
+      option.where.AND = {
+        tanggal: {
+          gte: new Date(firstDate).toISOString(),
+          lte: new Date (lastDate).toISOString()
+        }
+      }
+    }
+
+
+    const listTransaksi = await prisma.transaksi.findMany(option);
 
     res.status(200).json({
       status: 200,
