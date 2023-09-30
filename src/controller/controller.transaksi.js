@@ -8,14 +8,42 @@ const postTransaksi = async (req, res) => {
   const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah } = req.body;
 
   try {
-    await prisma.transaksi.create({
+    const dataCreate = await prisma.transaksi.create({
       data: {
         id_jenis_transaksi: Number(id_jenis_transaksi),
         id_nama_akun_jenis_transaksi: Number(id_nama_akun_jenis_transaksi),
         keterangan,
         jumlah,
       },
+      select: {
+        namaAkunTransaksiDalamJenisTransaksi: {
+          select: {
+            akunTransaksi: {
+              select: {
+                id: true,
+                kode_nama_akun_transaksi: true
+              }
+            }
+          }
+        }
+      }
     });
+
+    if (dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi) {
+
+      dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi.map(async(data) => {
+        await prisma.saldoAkunTransaksi.create({
+          data: {
+            saldo: jumlah,
+            kode_nama_akun_transaksi: data.kode_nama_akun_transaksi,
+            id_akun_transaksi: data.id
+          }
+        })
+      })
+    }
+
+
+    console.log(dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi)
 
     res.status(201).json({
       status: 201,
@@ -30,6 +58,7 @@ const listTransaksi = async (req, res) => {
   try {
 
     const  {search, firstDate, lastDate} = req.query
+    const rowKirim = req.query.row
     const {page, row} = pagination(req.query.page, req.query.row)
     const idNamaAkunDalamJenisTransaksiInSearch = []
 
@@ -83,8 +112,12 @@ const listTransaksi = async (req, res) => {
         },
         tanggal: true,
       },
-      skip: page,
-      take: row,
+    }
+
+    if (rowKirim) {
+      console.log(rowKirim)
+      option.skip = page
+      option.take = row
     }
 
 
