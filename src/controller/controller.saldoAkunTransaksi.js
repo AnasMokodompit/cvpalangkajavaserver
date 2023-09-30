@@ -59,6 +59,11 @@ const getNamaAkunByTipe = async (req, res) => {
     }
 
     const cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+    const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
+      select: {
+        tanggal: true,
+      },
+    });
 
     // console.log(cekAkunTransaksi);
 
@@ -77,28 +82,93 @@ const getNamaAkunByTipe = async (req, res) => {
       return totalSaldo;
     }
 
-    const kasDebit = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Kas", "Debit");
-    const kasKredit = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Kas", "Kredit");
-    const piutangUsaha = filterTransactionsAndCalculateTotal(
+    const saldoKasDebit = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Kas", "Debit");
+    const saldoKasKredit = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Kas", "Kredit");
+    const saldoPiutangUsaha = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Piutang Usaha",
       "Debit",
     );
-    const persediaanBarangJadi = filterTransactionsAndCalculateTotal(
+    const saldoPersediaanBarangJadi = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Persediaan Barang Jadi",
       "Debit",
     );
-    const persediaanBahanBaku = filterTransactionsAndCalculateTotal(
+    const saldoPersediaanBahanBaku = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Persediaan Bahan Baku",
       "Debit",
     );
-    const persediaanBahanPembantu = filterTransactionsAndCalculateTotal(
+    const saldoPersediaanBahanPembantu = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Persediaan Bahan Pembantu",
       "Debit",
     );
+    const saldoTanah = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Tanah", "Debit");
+    const saldoGedung = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Gedung", "Debit");
+    const saldoAkumulasiPenyusutanGedung = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Akumulasi Penyusutan Gedung",
+      "Kredit",
+    );
+    const saldoMesin = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Mesin", "Debit");
+    const saldoAkumulasiPenyusutanMesin = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Akumulasi Penyusutan Mesin",
+      "Kredit",
+    );
+    const saldoPeralatan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Peralatan",
+      "Debit",
+    );
+    const saldoAkumulasiPenyusutanPeralatan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Akumulasi Penyusutan Peralatan",
+      "Kredit",
+    );
+    const saldoKendaraan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Kendaraan",
+      "Debit",
+    );
+    const saldoAkumulasiPenyusutanKendaraan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Akumulasi Penyusutan Kendaraan",
+      "Kredit",
+    );
+    const saldoUtangUsaha = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Utang Usaha",
+      "Kredit",
+    );
+    const saldoUtangBank = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Utang Bank",
+      "Kredit",
+    );
+    const saldoModalPemilikKredit = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Modal Pemilik",
+      "Kredit",
+    );
+    const saldoModalPemilikDebit = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Modal Pemilik",
+      "Debit",
+    );
+
+    let tanggalArray = [];
+
+    for (const transaction of cekTanggal) {
+      if (transaction.hasOwnProperty("tanggal")) {
+        tanggalArray.push(transaction.tanggal);
+      }
+    }
+
+    const parsedDates = tanggalArray.map((dateString) => new Date(dateString));
+    const oldestDate = new Date(Math.min.apply(null, parsedDates));
+    oldestDate.setHours(0, 0, 0, 0);
 
     const posisiKeuangan = [
       {
@@ -106,30 +176,107 @@ const getNamaAkunByTipe = async (req, res) => {
         akun: [
           {
             namaAkunTransaksi: "Kas",
-            saldo: kasDebit - kasKredit,
+            saldo: saldoKasDebit - saldoKasKredit,
           },
           {
             namaAkunTransaksi: "Piutang Usaha",
-            saldo: piutangUsaha,
+            saldo: saldoPiutangUsaha,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
-            saldo: persediaanBarangJadi,
+            saldo: saldoPersediaanBarangJadi,
           },
           {
             namaAkunTransaksi: "Persediaan Bahan Baku",
-            saldo: persediaanBahanBaku,
+            saldo: saldoPersediaanBahanBaku,
           },
           {
             namaAkunTransaksi: "Persediaan Bahan Pembantu",
-            saldo: persediaanBahanPembantu,
+            saldo: saldoPersediaanBahanPembantu,
           },
         ],
+      },
+      {
+        tipeAkunTransaksi: "Aktiva Tetap",
+        akun: [
+          {
+            namaAkunTransaksi: "Tanah",
+            saldo: saldoTanah,
+          },
+          {
+            namaAkunTransaksi: "Gedung",
+            saldo: saldoGedung,
+          },
+          {
+            namaAkunTransaksi: "Akumulasi Penyusutan Gedung",
+            saldo: saldoAkumulasiPenyusutanGedung,
+          },
+          {
+            namaAkunTransaksi: "Mesin",
+            saldo: saldoMesin,
+          },
+          {
+            namaAkunTransaksi: "Akumulasi Penyusutan Mesin",
+            saldo: saldoAkumulasiPenyusutanMesin,
+          },
+          {
+            namaAkunTransaksi: "Peralatan",
+            saldo: saldoPeralatan,
+          },
+          {
+            namaAkunTransaksi: "Akumulasi Penyusutan Peralatan",
+            saldo: saldoAkumulasiPenyusutanPeralatan,
+          },
+          {
+            namaAkunTransaksi: "Kendaraan",
+            saldo: saldoKendaraan,
+          },
+          {
+            namaAkunTransaksi: "Akumulasi Penyusutan Kendaraan",
+            saldo: saldoAkumulasiPenyusutanKendaraan,
+          },
+        ],
+      },
+      {
+        tipeAkunTransaksi: "Kewajiban Lancar",
+        akun: [
+          {
+            namaAkunTransaksi: "Utang Usaha",
+            saldo: saldoUtangUsaha,
+          },
+        ],
+      },
+      {
+        tipeAkunTransaksi: "Kewajiban Jangka Panjang",
+        akun: [
+          {
+            namaAkunTransaksi: "Utang Bank",
+            saldo: saldoUtangBank,
+          },
+        ],
+      },
+      {
+        tipeAkunTransaksi: "Modal",
+        akun: [
+          {
+            namaAkunTransaksi: "Modal Pemilik",
+            saldo: saldoModalPemilikKredit - saldoModalPemilikDebit,
+          },
+        ],
+      },
+      {
+        oldestDate: firstDate,
       },
     ];
 
     // res.status(200).json(response.success(200, cekAkunTransaksi));
-    res.status(200).json(response.success(200, posisiKeuangan));
+    res.status(200).json(
+      response.success(200, {
+        posisiKeuangan,
+        oldestDate: oldestDate,
+      }),
+    );
+    // res.status(200).json(response.success(200, minDate));
   } catch (err) {
     // menampilkan error di console log
     console.log(err);
