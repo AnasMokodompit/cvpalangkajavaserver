@@ -149,13 +149,25 @@ model NamaAkunTransaksiDalamJenisTransaksi {
 
 model AkunTransaksi {
   id                                        Int                                    @id @default(autoincrement())
-  saldo                                     Int @default(0)
   id_nama_akun_jenis_transaksi              Int
   kode_nama_akun_transaksi                  String?
   id_kategori_akun                          Int?
   namaAkunTransaksi                         NamaAkunTransaksi?                    @relation(fields: [kode_nama_akun_transaksi], references: [kode])
   nama_akun_jenis_transaksi                 NamaAkunTransaksiDalamJenisTransaksi  @relation(fields: [id_nama_akun_jenis_transaksi], references: [id])
   kategori_akun                             KategoriAkun?                         @relation(fields: [id_kategori_akun], references: [id])
+  saldoAkunTransaksi SaldoAkunTransaksi[]
+}
+
+
+model SaldoAkunTransaksi {
+  id                                        Int                                    @id @default(autoincrement())
+  saldo                                     Int
+  kode_nama_akun_transaksi                  String
+  tanggal                DateTime           @default(now())
+  id_akun_transaksi                         Int
+  namaAkunTransaksi                         NamaAkunTransaksi                         @relation(fields: [kode_nama_akun_transaksi], references: [kode])
+  akunTransaksi                             AkunTransaksi                             @relation(fields: [id_akun_transaksi], references: [id])
+
 }
 
 
@@ -166,6 +178,7 @@ model NamaAkunTransaksi {
   id_tipe_akun_transaksi                    Int
   tipe_akun_transaksi                       TipeAkunTransaksi                     @relation(fields: [id_tipe_akun_transaksi], references: [id])
   akunTransaksi                             AkunTransaksi[]
+  saldoAkunTransaksi                        SaldoAkunTransaksi[]
 }
 
 model TipeAkunTransaksi {
