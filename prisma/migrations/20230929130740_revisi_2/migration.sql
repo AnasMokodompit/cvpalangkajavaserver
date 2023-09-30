@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `transaksi` MODIFY `tanggal` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP(3);

@@ -11,17 +11,17 @@
   },
   {
     "id": 3,
-    "nama": "Biaya bahan baku",
+    "nama": "Biaya Bahan Baku",
     "id_jenis_transaksi": 2
   },
   {
     "id": 4,
-    "nama": "Upah pekerja",
+    "nama": "Upah Pekerja",
     "id_jenis_transaksi": 2
   },
   {
     "id": 5,
-    "nama": "Biaya bahan pembantu",
+    "nama": "Biaya Bahan Pembantu",
     "id_jenis_transaksi": 2
   },
   {
@@ -46,7 +46,7 @@
   },
   {
     "id": 10,
-    "nama": "Biaya gaji pegawai",
+    "nama": "Biaya Gaji Pegawai",
     "id_jenis_transaksi": 2
   },
   {
@@ -56,37 +56,37 @@
   },
   {
     "id": 12,
-    "nama": "Biaya perlengkapan",
+    "nama": "Biaya Perlengkapan",
     "id_jenis_transaksi": 2
   },
   {
     "id": 13,
-    "nama": "Biaya listrik",
+    "nama": "Biaya Listrik",
     "id_jenis_transaksi": 2
   },
   {
     "id": 14,
-    "nama": "Biaya tansport",
+    "nama": "Biaya Transport",
     "id_jenis_transaksi": 2
   },
   {
     "id": 15,
-    "nama": "Utang usaha",
+    "nama": "Utang Usaha",
     "id_jenis_transaksi": 3
   },
   {
     "id": 16,
-    "nama": "Utang bank",
+    "nama": "Utang Bank",
     "id_jenis_transaksi": 3
   },
   {
     "id": 17,
-    "nama": "Utang usaha",
+    "nama": "Utang Usaha",
     "id_jenis_transaksi": 4
   },
   {
     "id": 18,
-    "nama": "Utang bank",
+    "nama": "Utang Bank",
     "id_jenis_transaksi": 4
   },
   {
@@ -111,42 +111,42 @@
   },
   {
     "id": 23,
-    "nama": "Persediaan barang jadi",
+    "nama": "Persediaan Barang Jadi",
     "id_jenis_transaksi": 9
   },
   {
     "id": 24,
-    "nama": "Persediaan bahan baku",
+    "nama": "Persediaan Bahan Baku",
     "id_jenis_transaksi": 9
   },
   {
     "id": 25,
-    "nama": "Persediaan bahan pembantu",
+    "nama": "Persediaan Bahan Pembantu",
     "id_jenis_transaksi": 9
   },
   {
     "id": 26,
-    "nama": "Penyusutan peralatan",
+    "nama": "Penyusutan Peralatan",
     "id_jenis_transaksi": 9
   },
   {
     "id": 27,
-    "nama": "Penyusutan mesin",
+    "nama": "Penyusutan Mesin",
     "id_jenis_transaksi": 9
   },
   {
     "id": 28,
-    "nama": "Penyusutan gedung",
+    "nama": "Penyusutan Gedung",
     "id_jenis_transaksi": 9
   },
   {
     "id": 29,
-    "nama": "Penyusutan kendaraan",
+    "nama": "Penyusutan Kendaraan",
     "id_jenis_transaksi": 9
-  }
-  ,{
+  },
+  {
     "id": 30,
-    "nama": "Biaya lain-lain",
+    "nama": "Biaya Lain-Lain",
     "id_jenis_transaksi": 2
   }
 ]

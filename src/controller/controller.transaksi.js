@@ -1,6 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const pagination = require('../utility/pagination')
-
+const pagination = require("../utility/pagination");
 
 const prisma = new PrismaClient();
 
@@ -21,29 +20,27 @@ const postTransaksi = async (req, res) => {
             akunTransaksi: {
               select: {
                 id: true,
-                kode_nama_akun_transaksi: true
-              }
-            }
-          }
-        }
-      }
+                kode_nama_akun_transaksi: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi) {
-
-      dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi.map(async(data) => {
+      dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi.map(async (data) => {
         await prisma.saldoAkunTransaksi.create({
           data: {
             saldo: jumlah,
             kode_nama_akun_transaksi: data.kode_nama_akun_transaksi,
-            id_akun_transaksi: data.id
-          }
-        })
-      })
+            id_akun_transaksi: data.id,
+          },
+        });
+      });
     }
 
-
-    console.log(dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi)
+    console.log(dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi);
 
     res.status(201).json({
       status: 201,
@@ -56,29 +53,24 @@ const postTransaksi = async (req, res) => {
 
 const listTransaksi = async (req, res) => {
   try {
+    const { search, firstDate, lastDate } = req.query;
+    const rowKirim = req.query.row;
+    const { page, row } = pagination(req.query.page, req.query.row);
+    const idNamaAkunDalamJenisTransaksiInSearch = [];
 
-    const  {search, firstDate, lastDate} = req.query
-    const rowKirim = req.query.row
-    const {page, row} = pagination(req.query.page, req.query.row)
-    const idNamaAkunDalamJenisTransaksiInSearch = []
-
-    
     if (search) {
       const dataSearch = await prisma.namaAkunTransaksiDalamJenisTransaksi.findMany({
         where: {
           nama: {
-            contains: search
+            contains: search,
           },
         },
         select: {
-          id: true
-        }
-      })
+          id: true,
+        },
+      });
 
-
-      
-      idNamaAkunDalamJenisTransaksiInSearch.push(dataSearch.map(data => data.id))
-      
+      idNamaAkunDalamJenisTransaksiInSearch.push(dataSearch.map((data) => data.id));
     }
 
     const option = {
@@ -103,39 +95,37 @@ const listTransaksi = async (req, res) => {
                 kategori_akun: true,
                 namaAkunTransaksi: {
                   include: {
-                    tipe_akun_transaksi: true
-                  }
-                }
-              }
-            }
-          }
+                    tipe_akun_transaksi: true,
+                  },
+                },
+              },
+            },
+          },
         },
         tanggal: true,
       },
-    }
+    };
 
     if (rowKirim) {
-      console.log(rowKirim)
-      option.skip = page
-      option.take = row
+      console.log(rowKirim);
+      option.skip = page;
+      option.take = row;
     }
-
 
     if (firstDate && lastDate) {
       option.where.AND = {
         tanggal: {
           gte: new Date(firstDate).toISOString(),
-          lte: new Date (lastDate).toISOString()
-        }
-      }
+          lte: new Date(lastDate).toISOString(),
+        },
+      };
     }
 
     if (search) {
       option.where.id_nama_akun_jenis_transaksi = {
-          in: idNamaAkunDalamJenisTransaksiInSearch[0]
-      }
+        in: idNamaAkunDalamJenisTransaksiInSearch[0],
+      };
     }
-
 
     const listTransaksi = await prisma.transaksi.findMany(option);
 

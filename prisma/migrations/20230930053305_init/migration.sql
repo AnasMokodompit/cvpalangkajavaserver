@@ -122,6 +122,7 @@ CREATE TABLE `Categories` (
 CREATE TABLE `Transaksi` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `id_jenis_transaksi` INTEGER NOT NULL,
+    `id_nama_akun_jenis_transaksi` INTEGER NOT NULL,
     `keterangan` TEXT NOT NULL,
     `jumlah` INTEGER NOT NULL,
     `tanggal` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -149,10 +150,20 @@ CREATE TABLE `NamaAkunTransaksiDalamJenisTransaksi` (
 -- CreateTable
 CREATE TABLE `AkunTransaksi` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `saldo` INTEGER NOT NULL DEFAULT 0,
     `id_nama_akun_jenis_transaksi` INTEGER NOT NULL,
     `kode_nama_akun_transaksi` VARCHAR(191) NULL,
-    `id_kategori_akun` INTEGER NOT NULL,
+    `id_kategori_akun` INTEGER NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `SaldoAkunTransaksi` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `saldo` INTEGER NOT NULL,
+    `kode_nama_akun_transaksi` VARCHAR(191) NOT NULL,
+    `tanggal` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `id_akun_transaksi` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -259,6 +270,9 @@ ALTER TABLE `BuktiBayar` ADD CONSTRAINT `BuktiBayar_id_orders_fkey` FOREIGN KEY 
 ALTER TABLE `Transaksi` ADD CONSTRAINT `Transaksi_id_jenis_transaksi_fkey` FOREIGN KEY (`id_jenis_transaksi`) REFERENCES `JenisTransaksi`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Transaksi` ADD CONSTRAINT `Transaksi_id_nama_akun_jenis_transaksi_fkey` FOREIGN KEY (`id_nama_akun_jenis_transaksi`) REFERENCES `NamaAkunTransaksiDalamJenisTransaksi`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `NamaAkunTransaksiDalamJenisTransaksi` ADD CONSTRAINT `NamaAkunTransaksiDalamJenisTransaksi_id_jenis_transaksi_fkey` FOREIGN KEY (`id_jenis_transaksi`) REFERENCES `JenisTransaksi`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -268,7 +282,13 @@ ALTER TABLE `AkunTransaksi` ADD CONSTRAINT `AkunTransaksi_kode_nama_akun_transak
 ALTER TABLE `AkunTransaksi` ADD CONSTRAINT `AkunTransaksi_id_nama_akun_jenis_transaksi_fkey` FOREIGN KEY (`id_nama_akun_jenis_transaksi`) REFERENCES `NamaAkunTransaksiDalamJenisTransaksi`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `AkunTransaksi` ADD CONSTRAINT `AkunTransaksi_id_kategori_akun_fkey` FOREIGN KEY (`id_kategori_akun`) REFERENCES `KategoriAkun`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `AkunTransaksi` ADD CONSTRAINT `AkunTransaksi_id_kategori_akun_fkey` FOREIGN KEY (`id_kategori_akun`) REFERENCES `KategoriAkun`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `SaldoAkunTransaksi` ADD CONSTRAINT `SaldoAkunTransaksi_kode_nama_akun_transaksi_fkey` FOREIGN KEY (`kode_nama_akun_transaksi`) REFERENCES `NamaAkunTransaksi`(`kode`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `SaldoAkunTransaksi` ADD CONSTRAINT `SaldoAkunTransaksi_id_akun_transaksi_fkey` FOREIGN KEY (`id_akun_transaksi`) REFERENCES `AkunTransaksi`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `NamaAkunTransaksi` ADD CONSTRAINT `NamaAkunTransaksi_id_tipe_akun_transaksi_fkey` FOREIGN KEY (`id_tipe_akun_transaksi`) REFERENCES `TipeAkunTransaksi`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
