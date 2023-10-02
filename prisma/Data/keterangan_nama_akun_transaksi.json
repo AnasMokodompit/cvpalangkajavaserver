@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "saldoNormal": "Debit",
+        "post": "Laporan Posisi Keuangan"
+    }
+    ,{
+        "id": 2,
+        "saldoNormal": "Kredit",
+        "post": "Laporan Posisi Keuangan"
+    }
+    ,{
+        "id": 3,
+        "saldoNormal": "Debit",
+        "post": "Laporan Laba Rugi"
+    }
+    ,{
+        "id": 4,
+        "saldoNormal": "Kredit",
+        "post": "Laporan Laba Rugi"
+    }
+]
