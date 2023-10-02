@@ -286,6 +286,72 @@ const getNamaAkunByTipe = async (req, res) => {
   }
 };
 
+const GetAllRekapJurnal = async (req, res) => {
+  try{
+    const {firstDate, lastDate} = req.query
+
+    const option = {
+      where: {},
+      include: {
+        namaAkunTransaksi: true,
+        akunTransaksi: {
+          include: {
+            kategori_akun: true
+          }
+        }
+      }
+    }
+
+    if (firstDate && lastDate) {
+      option.where.AND = {
+        tanggal: {
+          gte: new Date(firstDate).toISOString(),
+          lte: new Date(lastDate).toISOString(),
+        },
+      };
+    }
+
+    const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
+
+    const dataResponse = []
+    saldoAwalTransaksi.forEach((data) => {
+      saldoAwalTransaksi.filter((value) => {
+            if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
+              const cekIndexData = dataResponse.findIndex((dataa) => dataa.namaAkunTransaksi == data.namaAkunTransaksi.nama)
+              
+              if (cekIndexData < 0) {
+                dataResponse.push({
+                  namaAkunTransaksi: data.namaAkunTransaksi.nama,
+                  saldo: 0
+                })
+              }
+              
+            }
+          })
+    })
+
+    dataResponse.map((data, index) => {
+      saldoAwalTransaksi.filter(value => {
+        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi.kategori_akun.id === 1) {
+          dataResponse[index].saldo += value.saldo
+        }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi.kategori_akun.id === 2) {
+          dataResponse[index].saldo -= value.saldo
+        }
+      })
+    })
+
+    res.status(200).json(response.success(200, dataResponse));
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+};
+
 module.exports = {
   getNamaAkunByTipe,
+  GetAllRekapJurnal
 };
