@@ -16,6 +16,8 @@ const BahanBaku = require("./Data/bahan_baku.json");
 const PersediaanBahanBaku = require("./Data/persediaan-bahan-baku.json");
 const kategoriAkun = require('./Data/kategoriAkun.json')
 const akunTransaksi = require('./Data/akun_transaksi.json')
+const keteranganAkunTransaksi = require('./Data/keterangan_nama_akun_transaksi.json')
+const saldoAwal = require('./Data/saldoAwal.json')
 
 async function main() {
   // Categories
@@ -63,6 +65,11 @@ async function main() {
     data: NamaAkunTransaksi,
     skipDuplicates: true,
   });
+  
+  // await prisma.keteranganNamaAkunTransaksi.createMany({
+  //   data: keteranganAkunTransaksi,
+  //   skipDuplicates: true
+  // })
 
   await prisma.NamaAkunTransaksiDalamJenisTransaksi.createMany({
     data: NamaAkunTransaksiDalamJenisTransaksi,
@@ -79,6 +86,7 @@ async function main() {
     skipDuplicates: true,
   })
 
+
   await prisma.bahanBaku.createMany({
     data: BahanBaku,
     skipDuplicates: true,
@@ -93,6 +101,11 @@ async function main() {
     data: BahanBakuProduk,
     skipDuplicates: true,
   });
+
+  await prisma.saldoAkunTransaksi.createMany({
+    data: saldoAwal,
+    skipDuplicates: true
+  })
 }
 
 main()

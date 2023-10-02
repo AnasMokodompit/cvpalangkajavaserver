@@ -293,7 +293,11 @@ const GetAllRekapJurnal = async (req, res) => {
     const option = {
       where: {},
       include: {
-        namaAkunTransaksi: true,
+        namaAkunTransaksi: {
+          include: {
+            // keteranganNamaAkunTransaksi: true
+          }
+        },
         akunTransaksi: {
           include: {
             kategori_akun: true
@@ -312,6 +316,23 @@ const GetAllRekapJurnal = async (req, res) => {
     }
 
     const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
+    const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
+      select: {
+        tanggal: true,
+      },
+    });
+
+    let tanggalArray = [];
+
+    for (const transaction of cekTanggal) {
+      if (transaction.hasOwnProperty("tanggal")) {
+        tanggalArray.push(transaction.tanggal);
+      }
+    }
+
+    const parsedDates = tanggalArray.map((dateString) => new Date(dateString));
+    const oldestDate = new Date(Math.min.apply(null, parsedDates));
+    oldestDate.setHours(0, 0, 0, 0);
 
     const dataResponse = []
     saldoAwalTransaksi.forEach((data) => {
@@ -330,15 +351,20 @@ const GetAllRekapJurnal = async (req, res) => {
           })
     })
 
+    console.log(dataResponse.length)
     dataResponse.map((data, index) => {
       saldoAwalTransaksi.filter(value => {
-        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi.kategori_akun.id === 1) {
+        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi?.kategori_akun?.id === 1) {
           dataResponse[index].saldo += value.saldo
-        }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi.kategori_akun.id === 2) {
+        }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi?.kategori_akun?.id === 2) {
           dataResponse[index].saldo -= value.saldo
         }
       })
     })
+
+    dataResponse.push({
+      oldestDate: firstDate,
+    },)
 
     res.status(200).json(response.success(200, dataResponse));
 
@@ -351,7 +377,95 @@ const GetAllRekapJurnal = async (req, res) => {
   }
 };
 
+
+const getAllSaldoAwal = async (req, res) => {
+  try{
+
+    const dataAllSaldoAwal = await prisma.saldoAkunTransaksi.findMany({
+      where: {
+        statusSaldoAwal: true
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            tipe_akun_transaksi: true,
+            // keteranganNamaAkunTransaksi: true
+          }
+        }
+      }
+    })
+
+    res.status(200).json(response.success(200, dataAllSaldoAwal));
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
+const getByIdSaldowAwal = async (req, res) => {
+  try{
+    const {id} = req.params
+
+    const dataAllSaldoAwal = await prisma.saldoAkunTransaksi.findUnique({
+      where: {
+        id: Number(id)
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            tipe_akun_transaksi: true,
+            // keteranganNamaAkunTransaksi: true
+          }
+        }
+      }
+    })
+
+    res.status(200).json(response.success(200, dataAllSaldoAwal));
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
+const updateSaldoAwal = async (req, res) => {
+  try{
+    const {saldo} = req.body
+    const {id} = req.params
+
+
+    const updateSaldoAwal = await prisma.saldoAkunTransaksi.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        saldo: saldo
+      }
+    })
+
+    res.status(200).json(response.success(200, updateSaldoAwal));
+
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+} 
+
 module.exports = {
   getNamaAkunByTipe,
-  GetAllRekapJurnal
+  GetAllRekapJurnal,
+  getAllSaldoAwal,
+  getByIdSaldowAwal,
+  updateSaldoAwal
 };
