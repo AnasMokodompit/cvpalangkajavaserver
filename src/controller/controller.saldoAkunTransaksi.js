@@ -358,11 +358,12 @@ const GetAllRekapJurnal = async (req, res) => {
           dataResponse[index].saldo += value.saldo
         }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi?.kategori_akun?.id === 2) {
           dataResponse[index].saldo -= value.saldo
-        }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi?.keteranganNamaAkunTransaksi?.saldoNormal === "Debit") {
-          dataResponse[index].saldo += value.saldo
-        }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi?.keteranganNamaAkunTransaksi?.saldoNormal === "Kredit") {
-          dataResponse[index].saldo -= value.saldo
         }
+        // else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi?.keteranganNamaAkunTransaksi?.saldoNormal === "Debit") {
+        //   dataResponse[index].saldo += value.saldo
+        // }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi?.keteranganNamaAkunTransaksi?.saldoNormal === "Kredit") {
+        //   dataResponse[index].saldo -= value.saldo
+        // }
       })
     })
 
