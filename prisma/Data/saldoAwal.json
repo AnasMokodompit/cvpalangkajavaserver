@@ -2,26 +2,31 @@
     {
         "saldo": 0,
         "kode_nama_akun_transaksi": "1-1100",
-        "statusSaldoAwal": true
+        "statusSaldoAwal": true,
+        "id_akun_transaksi": 1
     },
     {
         "saldo": 0,
         "kode_nama_akun_transaksi": "1-1900",
-        "statusSaldoAwal": true
+        "statusSaldoAwal": true,
+        "id_akun_transaksi": 6
     }
     ,{
         "saldo": 0,
         "kode_nama_akun_transaksi": "1-1400",
-        "statusSaldoAwal": true
+        "statusSaldoAwal": true,
+        "id_akun_transaksi": 45
     }
     ,{
         "saldo": 0,
         "kode_nama_akun_transaksi": "1-1300",
-        "statusSaldoAwal": true
+        "statusSaldoAwal": true,
+        "id_akun_transaksi": 49
     }
     ,{
         "saldo": 0,
         "kode_nama_akun_transaksi": "3-1000",
-        "statusSaldoAwal": true
+        "statusSaldoAwal": true,
+        "id_akun_transaksi": 42
     }
 ]

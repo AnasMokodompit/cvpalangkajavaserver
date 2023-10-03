@@ -159,7 +159,7 @@ const updatbyIdProductOrder = async (req, res) => {
     });
 
     // Pengecekan Persediaan Barang Jika produk Diterima
-    console.log(req.body.status);
+    // console.log(req.body.status);
     let ResultError = [];
     if (req.body.status == 2) {
       const idProductOrder = CekproductOrder.products.id;
@@ -174,7 +174,7 @@ const updatbyIdProductOrder = async (req, res) => {
         cekBahanBakuProduk.map(async (data) => {
           data.jumlah = data.jumlah * CekproductOrder.jumlah;
           // id_bahan_baku.push(data.id_bahan_baku)
-
+          
           const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
             where: {
               id_bahan_baku: data.id_bahan_baku,
@@ -188,7 +188,7 @@ const updatbyIdProductOrder = async (req, res) => {
               },
             },
           });
-
+          
           cekPersediaanBahanBaku[0].idProductOrder = idProductOrder;
 
           const resultJumlah = cekPersediaanBahanBaku[0].jumlah - data.jumlah;
@@ -203,6 +203,7 @@ const updatbyIdProductOrder = async (req, res) => {
         }),
       );
     }
+
 
     if (ResultError.length !== 0) {
       console.log(ResultError);

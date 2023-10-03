@@ -61,15 +61,15 @@ async function main() {
     skipDuplicates: true,
   });
 
+  await prisma.keteranganNamaAkunTransaksi.createMany({
+    data: keteranganAkunTransaksi,
+    skipDuplicates: true
+  })
+
   await prisma.namaAkunTransaksi.createMany({
     data: NamaAkunTransaksi,
     skipDuplicates: true,
   });
-  
-  // await prisma.keteranganNamaAkunTransaksi.createMany({
-  //   data: keteranganAkunTransaksi,
-  //   skipDuplicates: true
-  // })
 
   await prisma.NamaAkunTransaksiDalamJenisTransaksi.createMany({
     data: NamaAkunTransaksiDalamJenisTransaksi,

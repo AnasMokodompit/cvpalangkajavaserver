@@ -4,9 +4,10 @@ const pagination = require("../utility/pagination");
 const prisma = new PrismaClient();
 
 const postTransaksi = async (req, res) => {
-  const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah } = req.body;
-
   try {
+
+    const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah } = req.body;
+    
     const dataCreate = await prisma.transaksi.create({
       data: {
         id_jenis_transaksi: Number(id_jenis_transaksi),
