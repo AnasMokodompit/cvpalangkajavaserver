@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const getNamaAkunByTipe = async (req, res) => {
   try {
-    const {firstDate, lastDate } = req.query;
+    const { firstDate, lastDate } = req.query;
 
     const option = {
       where: {},
@@ -261,8 +261,8 @@ const getNamaAkunByTipe = async (req, res) => {
 };
 
 const GetLaporanLabaRugi = async (req, res) => {
-  try{
-    const {firstDate, lastDate} = req.query
+  try {
+    const { firstDate, lastDate } = req.query;
 
     const option = {
       where: {},
@@ -306,23 +306,18 @@ const GetLaporanLabaRugi = async (req, res) => {
         return (
           transaction.namaAkunTransaksi.nama === accountName &&
           transaction.akunTransaksi?.kategori_akun.nama === transactionCategory
-          );
+        );
       });
-        
 
-        // return console.log(filteredTransactions)
-        
-        
+      // return console.log(filteredTransactions)
+
       const totalSaldo = filteredTransactions.reduce((total, transaction) => {
         if (transaction.akunTransaksi?.nama_akun_jenis_transaksi?.nama === "Pendapatan DP") {
-          return total + (transaction.saldo / 0.3);
-          
-        }else{
+          return total + transaction.saldo / 0.3;
+        } else {
           return total + transaction.saldo;
-
         }
         // return console.log(transaction.akunTransaksi.nama_akun_jenis_transaksi.nama === "Pendapatan DP")
-        
       }, 0);
 
       return totalSaldo;
@@ -336,14 +331,13 @@ const GetLaporanLabaRugi = async (req, res) => {
 
     // return saldoPendapatan
 
-    
     const saldoPersediaanBahanBaku = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Persediaan Bahan Baku",
       "Debit",
-      );
-      
-      // return console.log(saldoPersediaanBahanBaku)
+    );
+
+    // return console.log(saldoPersediaanBahanBaku)
     const saldoPersediaanBahanJadi = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Persediaan Barang Jadi",
@@ -464,7 +458,6 @@ const GetLaporanLabaRugi = async (req, res) => {
     const oldestDate = new Date(Math.min.apply(null, parsedDates));
     oldestDate.setHours(0, 0, 0, 0);
 
-
     const labaRugi = [
       {
         judulAkunTransaksi: "Pendapatan",
@@ -472,7 +465,7 @@ const GetLaporanLabaRugi = async (req, res) => {
           {
             namaAkunTransaksi: "Pendapatan",
             saldo: saldoPendapatan,
-          }
+          },
         ],
       },
       {
@@ -480,13 +473,13 @@ const GetLaporanLabaRugi = async (req, res) => {
         akun: [
           {
             namaAkunTransaksi: "Persediaan Bahan Baku",
-            saldo: saldoPersediaanBahanBaku
-          }
-          ,{
+            saldo: saldoPersediaanBahanBaku,
+          },
+          {
             namaAkunTransaksi: "Persediaan Barang Jadi",
-            saldo: saldoPersediaanBahanJadi
-          }
-        ]
+            saldo: saldoPersediaanBahanJadi,
+          },
+        ],
       },
       {
         judulAkunTransaksi: "Biaya Produksi",
@@ -502,7 +495,7 @@ const GetLaporanLabaRugi = async (req, res) => {
           {
             namaAkunTransaksi: "Biaya Bahan Pembantu",
             saldo: saldoBiayaBahanPembantu,
-          }
+          },
         ],
       },
       {
@@ -511,51 +504,51 @@ const GetLaporanLabaRugi = async (req, res) => {
           {
             namaAkunTransaksi: "Biaya Transportasi",
             saldo: saldoBiayaTransportasi,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Gaji Pegawai",
             saldo: saldoBiayaGajiPegawai,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Perlengkapan",
             saldo: saldoBiayaPerlengkapan,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Sewa",
             saldo: saldoBiayaSewa,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Telepon",
             saldo: saldoBiayaTelepon,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Listrik",
             saldo: saldoBiayaListrik,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya ATM/ATK",
             saldo: saldoBiayaATMATK,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Lain-Lain",
             saldo: saldoBiayaLainLain,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Penyusutan Peralatan",
             saldo: saldoBiayaPenyusutanPeralatan,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Penyusutan Mesin",
             saldo: saldoBiayaPenyusutanMesin,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Penyusutan Kendaraan",
             saldo: saldoBiayaPenyusutanKendaraan,
-          }
-          ,{
+          },
+          {
             namaAkunTransaksi: "Biaya Penyusutan Gedung",
             saldo: saldoBiayaPenyusutanGedung,
-          }
+          },
         ],
       },
       {
@@ -583,38 +576,52 @@ const GetLaporanLabaRugi = async (req, res) => {
         oldestDate: oldestDate,
       }),
     );
-
-  }catch(err){
+  } catch (err) {
     // menampilkan error di console log
     console.log(err);
 
     // menampilkan response semua data jika gagal
     return res.status(500).json(response.error(500, "Internal Server Error"));
   }
-}
+};
 
 const GetAllRekapJurnal = async (req, res) => {
-  try{
-    const {firstDate, lastDate} = req.query
+  try {
+    const { firstDate, lastDate } = req.query;
 
     const option = {
       where: {
-        kode_nama_akun_transaksi: {in : ["1-1100", "1-1400", "1-1300", "1-1900", "3-1000", "4-1000", "5-1000", "5-2000", "5-3000", "6-2000", "6-7000", "6-6000"]}
+        kode_nama_akun_transaksi: {
+          in: [
+            "1-1100",
+            "1-1400",
+            "1-1300",
+            "1-1900",
+            "3-1000",
+            "4-1000",
+            "5-1000",
+            "5-2000",
+            "5-3000",
+            "6-2000",
+            "6-7000",
+            "6-6000",
+          ],
+        },
       },
       include: {
         namaAkunTransaksi: {
           include: {
-            keteranganNamaAkunTransaksi: true
-          }
+            keteranganNamaAkunTransaksi: true,
+          },
         },
         akunTransaksi: {
           include: {
             kategori_akun: true,
-            nama_akun_jenis_transaksi: true
-          }
-        }
-      }
-    }
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    };
 
     if (firstDate && lastDate) {
       option.where.AND = {
@@ -625,7 +632,7 @@ const GetAllRekapJurnal = async (req, res) => {
       };
     }
 
-    const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
+    const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
     const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
       select: {
         tanggal: true,
@@ -644,56 +651,91 @@ const GetAllRekapJurnal = async (req, res) => {
     const oldestDate = new Date(Math.min.apply(null, parsedDates));
     oldestDate.setHours(0, 0, 0, 0);
 
-
-    const dataResponse = []
+    const dataResponse = [];
     saldoAwalTransaksi.forEach((data) => {
       saldoAwalTransaksi.filter((value) => {
-            if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
-              const cekIndexData = dataResponse.findIndex((dataa) => dataa.namaAkunTransaksi == data.namaAkunTransaksi.nama)
-              
-              if (cekIndexData < 0) {
-                dataResponse.push({
-                  namaAkunTransaksi: data.namaAkunTransaksi.nama,
-                  saldo: 0,
-                  keteranganAkun: data.namaAkunTransaksi.keteranganNamaAkunTransaksi
-                })
-              }
-              
-            }
-          })
-    })
+        if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
+          const cekIndexData = dataResponse.findIndex(
+            (dataa) => dataa.namaAkunTransaksi == data.namaAkunTransaksi.nama,
+          );
+
+          if (cekIndexData < 0) {
+            dataResponse.push({
+              namaAkunTransaksi: data.namaAkunTransaksi.nama,
+              saldo: 0,
+              keteranganAkun: data.namaAkunTransaksi.keteranganNamaAkunTransaksi,
+            });
+          }
+        }
+      });
+    });
 
     // return console.log(saldoAwalTransaksi)
 
     dataResponse.map((data, index) => {
-      saldoAwalTransaksi.filter(value => {
-        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.id === 1 && value.akunTransaksi?.kategori_akun?.id == 1) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua" )
-          dataResponse[index].saldo += value.saldo
+      saldoAwalTransaksi.filter((value) => {
+        if (
+          data.namaAkunTransaksi === value.namaAkunTransaksi.nama &&
+          value.namaAkunTransaksi.id === 1 &&
+          value.akunTransaksi?.kategori_akun?.id == 1
+        ) {
+          console.log(
+            data.namaAkunTransaksi,
+            value.namaAkunTransaksi.nama,
+            value.akunTransaksi?.kategori_akun?.id,
+            "Tambah Debit Semua",
+          );
+          dataResponse[index].saldo += value.saldo;
+        } else if (
+          data.namaAkunTransaksi === value.namaAkunTransaksi.nama &&
+          value.namaAkunTransaksi.id === 1 &&
+          value.akunTransaksi?.kategori_akun?.id === 2
+        ) {
+          console.log(
+            data.namaAkunTransaksi,
+            value.namaAkunTransaksi.nama,
+            value.akunTransaksi?.kategori_akun?.id,
+            value.namaAkunTransaksi.id,
+            "Kurang Debit dengan Kredit Semua Kas",
+          );
+          dataResponse[index].saldo -= value.saldo;
+        } else if (
+          data.namaAkunTransaksi === value.namaAkunTransaksi.nama &&
+          value.namaAkunTransaksi.id !== 1 &&
+          value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal &&
+          value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP"
+        ) {
+          console.log(
+            data.namaAkunTransaksi,
+            value.namaAkunTransaksi.nama,
+            value.akunTransaksi?.kategori_akun?.id,
+            value.namaAkunTransaksi.id,
+            "Kurang Debit dengan Kredit Semua Kas",
+          );
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3;
+        } else if (
+          data.namaAkunTransaksi === value.namaAkunTransaksi.nama &&
+          value.namaAkunTransaksi.id !== 1 &&
+          value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal
+        ) {
+          console.log(
+            data.namaAkunTransaksi,
+            value.namaAkunTransaksi.nama,
+            value.akunTransaksi?.kategori_akun?.nama,
+            data.keteranganAkun.saldoNormal,
+          );
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo;
         }
-        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.id === 1 && value.akunTransaksi?.kategori_akun?.id === 2) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id,value.namaAkunTransaksi.id, "Kurang Debit dengan Kredit Semua Kas" )
-          dataResponse[index].saldo -= value.saldo
-        }
-        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP")) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id,value.namaAkunTransaksi.id, "Kurang Debit dengan Kredit Semua Kas" )
-          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
-        }
-        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
-          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
-        }
-      })
-    })
-        
+      });
+    });
+
     // return console.log(dataResponse)
     dataResponse.push({
-      oldestDate: firstDate,
-    },)
+      oldestDate: oldestDate,
+    });
 
     res.status(200).json(response.success(200, dataResponse));
-
-  }catch(err){
+  } catch (err) {
     // menampilkan error di console log
     console.log(err);
 
@@ -702,90 +744,83 @@ const GetAllRekapJurnal = async (req, res) => {
   }
 };
 
-
 const getAllSaldoAwal = async (req, res) => {
-  try{
-
+  try {
     const dataAllSaldoAwal = await prisma.saldoAkunTransaksi.findMany({
       where: {
-        statusSaldoAwal: true
+        statusSaldoAwal: true,
       },
       include: {
         namaAkunTransaksi: {
           include: {
             tipe_akun_transaksi: true,
-            keteranganNamaAkunTransaksi: true
-          }
-        }
-      }
-    })
+            keteranganNamaAkunTransaksi: true,
+          },
+        },
+      },
+    });
 
     res.status(200).json(response.success(200, dataAllSaldoAwal));
-
-  }catch(err){
+  } catch (err) {
     // menampilkan error di console log
     console.log(err);
 
     // menampilkan response semua data jika gagal
     return res.status(500).json(response.error(500, "Internal Server Error"));
   }
-}
+};
 
 const getByIdSaldowAwal = async (req, res) => {
-  try{
-    const {id} = req.params
+  try {
+    const { id } = req.params;
 
     const dataAllSaldoAwal = await prisma.saldoAkunTransaksi.findUnique({
       where: {
-        id: Number(id)
+        id: Number(id),
       },
       include: {
         namaAkunTransaksi: {
           include: {
             tipe_akun_transaksi: true,
-            keteranganNamaAkunTransaksi: true
-          }
-        }
-      }
-    })
+            keteranganNamaAkunTransaksi: true,
+          },
+        },
+      },
+    });
 
     res.status(200).json(response.success(200, dataAllSaldoAwal));
-
-  }catch(err){
+  } catch (err) {
     // menampilkan error di console log
     console.log(err);
 
     // menampilkan response semua data jika gagal
     return res.status(500).json(response.error(500, "Internal Server Error"));
   }
-}
+};
 
 const updateSaldoAwal = async (req, res) => {
-  try{
-    const {saldo} = req.body
-    const {id} = req.params
-
+  try {
+    const { saldo } = req.body;
+    const { id } = req.params;
 
     const updateSaldoAwal = await prisma.saldoAkunTransaksi.update({
       where: {
-        id: Number(id)
+        id: Number(id),
       },
       data: {
-        saldo: saldo
-      }
-    })
+        saldo: saldo,
+      },
+    });
 
     res.status(200).json(response.success(200, updateSaldoAwal));
-
-
-  }catch(err){
+  } catch (err) {
     // menampilkan error di console log
     console.log(err);
 
     // menampilkan response semua data jika gagal
     return res.status(500).json(response.error(500, "Internal Server Error"));
   }
-} 
+};
 
 module.exports = {
   getNamaAkunByTipe,
@@ -793,5 +828,5 @@ module.exports = {
   GetAllRekapJurnal,
   getAllSaldoAwal,
   getByIdSaldowAwal,
-  updateSaldoAwal
+  updateSaldoAwal,
 };
