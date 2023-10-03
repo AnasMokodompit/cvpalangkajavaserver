@@ -4,9 +4,10 @@ const pagination = require("../utility/pagination");
 const prisma = new PrismaClient();
 
 const postTransaksi = async (req, res) => {
-  const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah } = req.body;
-
   try {
+
+    const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah, bahanBaku } = req.body;
+
     const dataCreate = await prisma.transaksi.create({
       data: {
         id_jenis_transaksi: Number(id_jenis_transaksi),
@@ -27,6 +28,31 @@ const postTransaksi = async (req, res) => {
         },
       },
     });
+
+
+    if (bahanBaku?.length !== 0 && bahanBaku !== undefined && Number(id_nama_akun_jenis_transaksi) == 3) {
+      bahanBaku.map(async (data) => {
+
+        const cekIdBahanBaku = await prisma.persediaanBahanBaku.findMany({
+          where: {
+            id_bahan_baku: data.id_bahan_baku,
+            satuan: data.satuan
+          }
+        })
+
+
+
+        await prisma.persediaanBahanBaku.update({
+          where: {
+            id: cekIdBahanBaku[0].id
+          },
+          data: {
+            jumlah: cekIdBahanBaku[0].jumlah + Number(data.jumlah)
+          }
+        })
+        
+      })
+    }
 
     if (dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi) {
       dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi.map(async (data) => {

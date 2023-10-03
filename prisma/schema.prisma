@@ -180,16 +180,16 @@ model NamaAkunTransaksi {
   tipe_akun_transaksi                       TipeAkunTransaksi                     @relation(fields: [id_tipe_akun_transaksi], references: [id])
   akunTransaksi                             AkunTransaksi[]
   saldoAkunTransaksi                        SaldoAkunTransaksi[]
-  // id_keterangan                             Int?
-  // keteranganNamaAkunTransaksi               KeteranganNamaAkunTransaksi?                    @relation(fields: [id_keterangan], references: [id])
+  id_keterangan                             Int?
+  keteranganNamaAkunTransaksi               KeteranganNamaAkunTransaksi?                    @relation(fields: [id_keterangan], references: [id])
 }
 
-// model KeteranganNamaAkunTransaksi{
-  // id                                        Int                                    @id @default(autoincrement())
-  // saldoNormal                               String
-  // post                                      String
-  // namaAkunTransaksi                         NamaAkunTransaksi[]
-// }
+model KeteranganNamaAkunTransaksi {
+  id                                        Int                                    @id @default(autoincrement())
+  saldoNormal                               String
+  post                                      String
+  namaAkunTransaksi                         NamaAkunTransaksi[]
+}
 
 model TipeAkunTransaksi {
   id                   Int                 @id @default(autoincrement())

@@ -63,19 +63,19 @@
     "id_produk": 6,
     "id_bahan_baku": 2,
     "jumlah": 5,
-    "satuan": "lembar"
+    "satuan": "kubik"
   },
   {
     "id_produk": 7,
     "id_bahan_baku": 3,
     "jumlah": 5,
-    "satuan": "lembar"
+    "satuan": "kubik"
   },
   {
     "id_produk": 8,
     "id_bahan_baku": 2,
     "jumlah": 5,
-    "satuan": "lembar"
+    "satuan": "kubik"
   },
   {
     "id_produk": 9,

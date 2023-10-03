@@ -5,36 +5,10 @@ const prisma = new PrismaClient();
 
 const getNamaAkunByTipe = async (req, res) => {
   try {
-    const { tipe, firstDate, lastDate } = req.query;
-    const idType = [];
-
-    const cekIdTipe = await prisma.tipeAkunTransaksi.findMany({
-      where: {
-        nama: {
-          contains: tipe,
-        },
-      },
-    });
-
-    idType.push(cekIdTipe.map((data) => data.id));
-
-    const kodeNamaAkun = [];
-    const cekNamaAkun = await prisma.namaAkunTransaksi.findMany({
-      where: {
-        id_tipe_akun_transaksi: {
-          in: idType[0],
-        },
-      },
-    });
-
-    kodeNamaAkun.push(cekNamaAkun.map((data) => data.kode));
+    const {firstDate, lastDate } = req.query;
 
     const option = {
-      where: {
-        kode_nama_akun_transaksi: {
-          in: kodeNamaAkun[0],
-        },
-      },
+      where: {},
       include: {
         namaAkunTransaksi: {
           include: {
@@ -286,7 +260,7 @@ const getNamaAkunByTipe = async (req, res) => {
   }
 };
 
-const GetAllRekapJurnal = async (req, res) => {
+const GetLaporanLabaRugi = async (req, res) => {
   try{
     const {firstDate, lastDate} = req.query
 
@@ -295,12 +269,348 @@ const GetAllRekapJurnal = async (req, res) => {
       include: {
         namaAkunTransaksi: {
           include: {
-            // keteranganNamaAkunTransaksi: true
+            tipe_akun_transaksi: true,
+          },
+        },
+        akunTransaksi: {
+          include: {
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    };
+
+    if (firstDate && lastDate) {
+      option.where.AND = {
+        tanggal: {
+          gte: new Date(firstDate).toISOString(),
+          lte: new Date(lastDate).toISOString(),
+        },
+      };
+    }
+
+    const cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+
+    const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
+      select: {
+        tanggal: true,
+      },
+    });
+
+    // console.log(cekAkunTransaksi);
+
+    function filterTransactionsAndCalculateTotal(data, accountName, transactionCategory) {
+      // return console.log(data)
+      const filteredTransactions = data.filter((transaction) => {
+        return (
+          transaction.namaAkunTransaksi.nama === accountName &&
+          transaction.akunTransaksi?.kategori_akun.nama === transactionCategory
+          );
+      });
+        
+
+        // return console.log(filteredTransactions)
+        
+        
+      const totalSaldo = filteredTransactions.reduce((total, transaction) => {
+        if (transaction.akunTransaksi?.nama_akun_jenis_transaksi?.nama === "Pendapatan DP") {
+          return total + (transaction.saldo / 0.3);
+          
+        }else{
+          return total + transaction.saldo;
+
+        }
+        // return console.log(transaction.akunTransaksi.nama_akun_jenis_transaksi.nama === "Pendapatan DP")
+        
+      }, 0);
+
+      return totalSaldo;
+    }
+
+    const saldoPendapatan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Pendapatan",
+      "Kredit",
+    );
+
+    // return saldoPendapatan
+
+    
+    const saldoPersediaanBahanBaku = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Persediaan Bahan Baku",
+      "Debit",
+      );
+      
+      // return console.log(saldoPersediaanBahanBaku)
+    const saldoPersediaanBahanJadi = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Persediaan Barang Jadi",
+      "Debit",
+    );
+
+    const saldoBiayaBahanBaku = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Bahan Baku",
+      "Debit",
+    );
+
+    const saldoUpahPekerja = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Upah Pekerja",
+      "Debit",
+    );
+
+    const saldoBiayaBahanPembantu = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Bahan Pembantu",
+      "Debit",
+    );
+
+    const saldoBiayaTransportasi = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Transportasi",
+      "Debit",
+    );
+
+    const saldoBiayaGajiPegawai = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Gaji Pegawai",
+      "Debit",
+    );
+
+    const saldoBiayaPerlengkapan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Perlengkapan",
+      "Debit",
+    );
+
+    const saldoBiayaSewa = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Sewa",
+      "Debit",
+    );
+
+    const saldoBiayaTelepon = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Telepon",
+      "Debit",
+    );
+
+    const saldoBiayaListrik = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Listrik",
+      "Debit",
+    );
+
+    const saldoBiayaATMATK = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya ATM/ATK",
+      "Debit",
+    );
+
+    const saldoBiayaLainLain = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Lain-Lain",
+      "Debit",
+    );
+
+    const saldoBiayaPenyusutanPeralatan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Penyusutan Peralatan",
+      "Debit",
+    );
+
+    const saldoBiayaPenyusutanMesin = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Penyusutan Mesin",
+      "Debit",
+    );
+
+    const saldoBiayaPenyusutanKendaraan = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Penyusutan Kendaraan",
+      "Debit",
+    );
+
+    const saldoBiayaPenyusutanGedung = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Biaya Penyusutan Gedung",
+      "Debit",
+    );
+
+    const saldoPendapatanBunga = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Pendapatan Bunga",
+      "Debit",
+    );
+
+    const saldoBebanBunga = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Beban Bunga",
+      "Debit",
+    );
+
+    let tanggalArray = [];
+
+    for (const transaction of cekTanggal) {
+      if (transaction.hasOwnProperty("tanggal")) {
+        tanggalArray.push(transaction.tanggal);
+      }
+    }
+
+    const parsedDates = tanggalArray.map((dateString) => new Date(dateString));
+    const oldestDate = new Date(Math.min.apply(null, parsedDates));
+    oldestDate.setHours(0, 0, 0, 0);
+
+
+    const labaRugi = [
+      {
+        judulAkunTransaksi: "Pendapatan",
+        akun: [
+          {
+            namaAkunTransaksi: "Pendapatan",
+            saldo: saldoPendapatan,
+          }
+        ],
+      },
+      {
+        judulAkunTransaksi: "Harga Pokok Penjualan",
+        akun: [
+          {
+            namaAkunTransaksi: "Persediaan Bahan Baku",
+            saldo: saldoPersediaanBahanBaku
+          }
+          ,{
+            namaAkunTransaksi: "Persediaan Barang Jadi",
+            saldo: saldoPersediaanBahanJadi
+          }
+        ]
+      },
+      {
+        judulAkunTransaksi: "Biaya Produksi",
+        akun: [
+          {
+            namaAkunTransaksi: "Biaya Bahan Baku",
+            saldo: saldoBiayaBahanBaku,
+          },
+          {
+            namaAkunTransaksi: "Upah Pekerja",
+            saldo: saldoUpahPekerja,
+          },
+          {
+            namaAkunTransaksi: "Biaya Bahan Pembantu",
+            saldo: saldoBiayaBahanPembantu,
+          }
+        ],
+      },
+      {
+        judulAkunTransaksi: "Biaya Operasi",
+        akun: [
+          {
+            namaAkunTransaksi: "Biaya Transportasi",
+            saldo: saldoBiayaTransportasi,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Gaji Pegawai",
+            saldo: saldoBiayaGajiPegawai,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Perlengkapan",
+            saldo: saldoBiayaPerlengkapan,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Sewa",
+            saldo: saldoBiayaSewa,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Telepon",
+            saldo: saldoBiayaTelepon,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Listrik",
+            saldo: saldoBiayaListrik,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya ATM/ATK",
+            saldo: saldoBiayaATMATK,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Lain-Lain",
+            saldo: saldoBiayaLainLain,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Penyusutan Peralatan",
+            saldo: saldoBiayaPenyusutanPeralatan,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Penyusutan Mesin",
+            saldo: saldoBiayaPenyusutanMesin,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Penyusutan Kendaraan",
+            saldo: saldoBiayaPenyusutanKendaraan,
+          }
+          ,{
+            namaAkunTransaksi: "Biaya Penyusutan Gedung",
+            saldo: saldoBiayaPenyusutanGedung,
+          }
+        ],
+      },
+      {
+        judulAkunTransaksi: "Pendapatan dan Beban Lain-Lain",
+        akun: [
+          {
+            namaAkunTransaksi: "Pendapatan Bunga",
+            saldo: saldoPendapatanBunga,
+          },
+          {
+            namaAkunTransaksi: "Beban Bunga",
+            saldo: saldoBebanBunga,
+          },
+        ],
+      },
+      {
+        oldestDate: firstDate,
+      },
+    ];
+
+    // res.status(200).json(response.success(200, cekAkunTransaksi));
+    res.status(200).json(
+      response.success(200, {
+        labaRugi,
+        oldestDate: oldestDate,
+      }),
+    );
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
+const GetAllRekapJurnal = async (req, res) => {
+  try{
+    const {firstDate, lastDate} = req.query
+
+    const option = {
+      where: {
+        kode_nama_akun_transaksi: {in : ["1-1100", "1-1400", "1-1300", "1-1900", "3-1000", "4-1000", "5-1000", "5-2000", "5-3000", "6-2000", "6-7000", "6-6000"]}
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            keteranganNamaAkunTransaksi: true
           }
         },
         akunTransaksi: {
           include: {
-            kategori_akun: true
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true
           }
         }
       }
@@ -334,6 +644,7 @@ const GetAllRekapJurnal = async (req, res) => {
     const oldestDate = new Date(Math.min.apply(null, parsedDates));
     oldestDate.setHours(0, 0, 0, 0);
 
+
     const dataResponse = []
     saldoAwalTransaksi.forEach((data) => {
       saldoAwalTransaksi.filter((value) => {
@@ -343,7 +654,8 @@ const GetAllRekapJurnal = async (req, res) => {
               if (cekIndexData < 0) {
                 dataResponse.push({
                   namaAkunTransaksi: data.namaAkunTransaksi.nama,
-                  saldo: 0
+                  saldo: 0,
+                  keteranganAkun: data.namaAkunTransaksi.keteranganNamaAkunTransaksi
                 })
               }
               
@@ -351,22 +663,30 @@ const GetAllRekapJurnal = async (req, res) => {
           })
     })
 
-    console.log(dataResponse.length)
+    // return console.log(saldoAwalTransaksi)
+
     dataResponse.map((data, index) => {
       saldoAwalTransaksi.filter(value => {
-        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi?.kategori_akun?.id === 1) {
+        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.id === 1 && value.akunTransaksi?.kategori_akun?.id == 1) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua" )
           dataResponse[index].saldo += value.saldo
-        }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.akunTransaksi?.kategori_akun?.id === 2) {
+        }
+        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.id === 1 && value.akunTransaksi?.kategori_akun?.id === 2) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id,value.namaAkunTransaksi.id, "Kurang Debit dengan Kredit Semua Kas" )
           dataResponse[index].saldo -= value.saldo
         }
-        // else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi?.keteranganNamaAkunTransaksi?.saldoNormal === "Debit") {
-        //   dataResponse[index].saldo += value.saldo
-        // }else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi?.keteranganNamaAkunTransaksi?.saldoNormal === "Kredit") {
-        //   dataResponse[index].saldo -= value.saldo
-        // }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP")) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id,value.namaAkunTransaksi.id, "Kurang Debit dengan Kredit Semua Kas" )
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
+        }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
+        }
       })
     })
-
+        
+    // return console.log(dataResponse)
     dataResponse.push({
       oldestDate: firstDate,
     },)
@@ -394,7 +714,7 @@ const getAllSaldoAwal = async (req, res) => {
         namaAkunTransaksi: {
           include: {
             tipe_akun_transaksi: true,
-            // keteranganNamaAkunTransaksi: true
+            keteranganNamaAkunTransaksi: true
           }
         }
       }
@@ -423,7 +743,7 @@ const getByIdSaldowAwal = async (req, res) => {
         namaAkunTransaksi: {
           include: {
             tipe_akun_transaksi: true,
-            // keteranganNamaAkunTransaksi: true
+            keteranganNamaAkunTransaksi: true
           }
         }
       }
@@ -469,6 +789,7 @@ const updateSaldoAwal = async (req, res) => {
 
 module.exports = {
   getNamaAkunByTipe,
+  GetLaporanLabaRugi,
   GetAllRekapJurnal,
   getAllSaldoAwal,
   getByIdSaldowAwal,

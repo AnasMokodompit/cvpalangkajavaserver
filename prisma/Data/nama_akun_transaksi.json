@@ -3,216 +3,252 @@
         "id": 1, 
         "kode": "1-1100",
         "nama": "Kas",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 1
     }
     ,{
         "id": 2, 
         "kode": "1-1200",
         "nama": "Piutang Usaha",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 1
     }
     ,{
         "id": 3,
         "kode": "1-1300",
         "nama": "Persediaan Barang Jadi",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 1
     }
     ,{
         "id": 4,
         "kode": "1-1400",
         "nama": "Persediaan Bahan Baku",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 1
     }
     ,{
         "id": 5,
         "kode": "1-1500",
         "nama": "Persediaan Bahan Pembantu",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 1
     }
     ,{
         "id": 6,
         "kode": "1-1600",
         "nama": "Tanah",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 7,
         "kode": "1-1700",
         "nama": "Gedung",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 8,
         "kode": "1-1710",
         "nama": "Akumulasi Penyusutan Gedung",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 9,
         "kode": "1-1800",
         "nama": "Mesin",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 10,
         "kode": "1-1810",
         "nama": "Akumulasi Penyusutan Mesin",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 11,
         "kode": "1-1900",
         "nama": "Peralatan",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 12,
         "kode": "1-1910",
         "nama": "Akumulasi Penyusutan Peralatan",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 13,
         "kode": "1-2000",
         "nama": "Kendaraan",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 14,
         "kode": "1-2010",
         "nama": "Akumulasi Penyusutan Kendaraan",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 2
     },
     {
         "id": 15,
         "kode": "2-1100",
         "nama": "Utang Usaha",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 3
     },
     {
         "id": 16,
         "kode": "2-1200",
         "nama": "Utang Bank",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 4
     },
     {
         "id": 17,
         "kode": "3-1000",
         "nama": "Modal Pemilik",
+        "id_keterangan": 2,
         "id_tipe_akun_transaksi": 5
     },
     {
         "id": 18,
         "kode": "4-1000",
         "nama": "Pendapatan",
+        "id_keterangan": 4,
         "id_tipe_akun_transaksi": 6
     },
     {
         "id": 19,
         "kode": "5-1000",
         "nama": "Biaya Bahan Baku",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 7
     },
     {
         "id": 20,
         "kode": "5-2000",
         "nama": "Upah Pekerja",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 7
     },
     {
         "id": 21,
         "kode": "5-3000",
         "nama": "Biaya Bahan Pembantu",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 7
     },
     {
         "id": 22,
         "kode": "6-1000",
         "nama": "Biaya Transportasi",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 23,
         "kode": "6-2000",
         "nama": "Biaya Gaji Pegawai",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 24,
         "kode": "6-3000",
         "nama": "Biaya Perlengkapan",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 25,
         "kode": "6-4000",
         "nama": "Biaya Sewa",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 26,
         "kode": "6-5000",
         "nama": "Biaya Telepon",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 27,
         "kode": "6-6000",
         "nama": "Biaya Listrik",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 28,
         "kode": "6-7000",
         "nama": "Biaya ATM/ATK",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 29,
         "kode": "6-8000",
         "nama": "Biaya Lain-Lain",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 30,
         "kode": "8-1000",
         "nama": "Biaya Penyusutan Peralatan",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 31,
         "kode": "8-2000",
         "nama": "Biaya Penyusutan Mesin",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 32,
         "kode": "8-3000",
         "nama": "Biaya Penyusutan Kendaraan",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 33,
         "kode": "8-4000",
         "nama": "Biaya Penyusutan Gedung",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 8
     },
     {
         "id": 34,
         "kode": "9-1000",
         "nama": "Pendapatan Bunga",
+        "id_keterangan": 4,
         "id_tipe_akun_transaksi": 9
     },
     {
         "id": 35,
         "kode": "9-2000",
         "nama": "Beban Bunga",
+        "id_keterangan": 3,
         "id_tipe_akun_transaksi": 10
     }
     ,{
         "id": 36,
         "kode": "9-3000",
         "nama": "Piutang",
+        "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     }
 ]
