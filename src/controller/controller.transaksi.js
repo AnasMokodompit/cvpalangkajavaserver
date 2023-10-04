@@ -154,11 +154,27 @@ const listTransaksi = async (req, res) => {
     }
 
     const listTransaksi = await prisma.transaksi.findMany(option);
+    const listTanggalTransaksi = await prisma.transaksi.findMany({ select: { tanggal: true } });
+
+    let tanggalArray = [];
+
+    for (const transaction of listTanggalTransaksi) {
+      if (transaction.hasOwnProperty("tanggal")) {
+        tanggalArray.push(transaction.tanggal);
+      }
+    }
+
+    const parsedDates = tanggalArray.map((dateString) => new Date(dateString));
+    const oldestDate = new Date(Math.min.apply(null, parsedDates));
+    oldestDate.setHours(0, 0, 0, 0);
 
     res.status(200).json({
       status: 200,
       message: "OK",
-      data: listTransaksi,
+      data: {
+        listTransaksi,
+        oldestDate,
+      },
     });
   } catch (error) {
     console.log(error);
