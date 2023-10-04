@@ -688,7 +688,7 @@ const GetAllRekapJurnal = async (req, res) => {
         
     // return console.log(dataResponse)
     dataResponse.push({
-      oldestDate: firstDate,
+      oldestDate: oldestDate,
     },)
 
     res.status(200).json(response.success(200, dataResponse));

@@ -51,7 +51,7 @@ const getAllProductOrder = async (req, res) => {
 
 const getAllProductOrderByIdOrder = async (req, res) => {
   try {
-    const { order_id, id_user } = req.query;
+    const { order_id, id_user, statusKategori} = req.query;
     const user = req.user[0];
 
     // return console.log(user, order_id, id_user)
@@ -75,6 +75,18 @@ const getAllProductOrderByIdOrder = async (req, res) => {
 
     if (user.rolesId !== 1) {
       options.where.id_user = user.id;
+
+      console.log(statusKategori)
+      if (statusKategori == "Daftar Pesanan") {
+        options.where.pesan_status = null
+        options.where.tanggal_pengerjaan = null
+      }else if (statusKategori == "Pesanan Diproses") {
+        options.where.NOT = { pesan_status: null }
+        options.where.NOT = { tanggal_pengerjaan: null }
+      }else if (statusKategori == "Pesanan Selesai"){
+        options.where.NOT = { pesan_status: null }
+        options.where.tanggal_pengerjaan = null
+      }
     }
 
     if (order_id) {
@@ -85,9 +97,9 @@ const getAllProductOrderByIdOrder = async (req, res) => {
 
     const cekProductUserPesanan = await prisma.product_Orders.findMany(options);
 
-    console.log(cekProductUserPesanan);
+    // console.log(cekProductUserPesanan);
 
-    res.status(200).json(response.success(200, cekProductUserPesanan));
+    return res.status(200).json(response.success(200, cekProductUserPesanan));
   } catch (err) {
     // menampilkan error di console log
     console.log(err);
@@ -253,9 +265,70 @@ const updatbyIdProductOrder = async (req, res) => {
   }
 };
 
+const getAllProdukOrderDiterimaById = async (req, res) => {
+  try{
+    const {id_orders} = req.query
+
+    const dataProdukOrderByidOrderTerima = await prisma.product_Orders.findMany({
+      where: {
+        id_orders: Number(id_orders),
+        status: 2
+      },
+      select: {
+        id: true,
+        products: {
+          select: {
+            name: true
+          },
+        }
+      }
+    })
+
+    // console.log(dataProdukOrderByidOrderTerima)
+    return res.status(200).json(response.success(200, dataProdukOrderByidOrderTerima));
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
+const updateProdukOrderDiterimaById = async (req, res) => {
+  try{
+    const {id} = req.params
+    const {pesan_status, tanggal_pengerjaan} = req.body
+
+    console.log(id)
+
+    const upateProdukOrder = await prisma.product_Orders.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        pesan_status: pesan_status,
+        tanggal_pengerjaan: tanggal_pengerjaan
+      }
+    })
+
+    return res.status(200).json(response.success(200, upateProdukOrder));
+
+  }catch(err){
+      // menampilkan error di console log
+      console.log(err);
+
+      // menampilkan response semua data jika gagal
+      return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
 module.exports = {
   getAllProductOrder,
   getAllProductOrderByIdOrder,
   getAllProductOrderById,
   updatbyIdProductOrder,
+  getAllProdukOrderDiterimaById,
+  updateProdukOrderDiterimaById
 };

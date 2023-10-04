@@ -103,6 +103,8 @@ model Product_Orders {
   Price      Int
   jumlah     Int
   jumlah_meter      Int?
+  tanggal_pengerjaan DateTime?
+  pesan_status String?
 }
 
 model BuktiBayar {

@@ -6,13 +6,19 @@ const {
   getAllProductOrderByIdOrder,
   getAllProductOrderById,
   updatbyIdProductOrder,
+  getAllProdukOrderDiterimaById,
+  updateProdukOrderDiterimaById
 } = require("../controller/controller.productOrder");
 const { upload, MulterError } = require("../middleware/multer");
 const validate = require("../middleware/expressValidator");
 
 router.get(`/`, authJWT, authJWT, getAllProductOrder);
+router.patch(`/:id`, authJWT, updatbyIdProductOrder);
 router.get(`/customers`, authJWT, getAllProductOrderByIdOrder);
 router.get(`/customers/:id`, authJWT, getAllProductOrderById);
-router.patch(`/:id`, authJWT, updatbyIdProductOrder);
+
+router.get('/ProdukOrderTerima', authJWT, getAllProdukOrderDiterimaById)
+router.patch('/ProdukOrderTerima/:id', authJWT, updateProdukOrderDiterimaById)
+
 
 module.exports = router;
