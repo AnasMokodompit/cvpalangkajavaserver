@@ -6,6 +6,29 @@ const prisma = new PrismaClient();
 
 const getAllContactUs = async (req, res) => {
   try {
+    const searchByNameQuery = req.query.search;
+    const { page, row } = pagination(req.query.page, req.query.row);
+
+    const option = {
+      where: {},
+      orderBy: {
+        // id: "asc",
+        id: "desc",
+      },
+      skip: page,
+      take: row,
+    }
+
+    if (searchByNameQuery) {
+      option.where.nama_lengkap = {
+        contains: searchByNameQuery,
+      };
+    }
+
+    const dataSemuaPesan = await prisma.komentarKeKontakKami.findMany(option)
+
+    res.status(200).json(response.success(200, dataSemuaPesan));
+
   } catch (err) {
     // menampilkan error di console log
     console.log(err);
@@ -14,6 +37,7 @@ const getAllContactUs = async (req, res) => {
     return res.status(500).json(response.error(500, "Internal Server Error"));
   }
 };
+
 
 const createContatUs = async (req, res) => {
   try {
@@ -30,7 +54,7 @@ const createContatUs = async (req, res) => {
       data: options,
     });
 
-    res.status(200).json(response.success(200, dataCreateContatUs));
+    res.status(201).json(response.success(201, dataCreateContatUs));
   } catch (err) {
     // menampilkan error di console log
     console.log(err);
@@ -40,7 +64,29 @@ const createContatUs = async (req, res) => {
   }
 };
 
+const deleteContatUs = async (req, res) => {
+  try{
+    const {id} = req.params
+
+    const deleteContatcUs = await prisma.komentarKeKontakKami.delete({
+      where: {
+        id: Number(id)
+      }
+    })
+
+    res.status(201).json(response.success(201, deleteContatcUs));
+
+  }catch (err) {
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
 module.exports = {
   getAllContactUs,
   createContatUs,
+  deleteContatUs
 };
