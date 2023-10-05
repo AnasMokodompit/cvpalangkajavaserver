@@ -105,6 +105,7 @@ model Product_Orders {
   jumlah_meter      Int?
   tanggal_pengerjaan DateTime?
   pesan_status String?
+  statusReview Boolean @default(false)
 }
 
 model BuktiBayar {
