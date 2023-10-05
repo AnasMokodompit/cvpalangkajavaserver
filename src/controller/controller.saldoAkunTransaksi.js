@@ -265,7 +265,11 @@ const GetLaporanLabaRugi = async (req, res) => {
     const {firstDate, lastDate} = req.query
 
     const option = {
-      where: {},
+      where: {
+        NOT: {
+          id: {in: [3, 4]}
+        }
+      },
       include: {
         namaAkunTransaksi: {
           include: {
@@ -346,6 +350,11 @@ const GetLaporanLabaRugi = async (req, res) => {
         saldo: true
       }
     })
+
+
+    // const getPersediaanBahanBakuBiayaProduksi = await prisma.saldoAkunTransaksi.findUnique(option.where.NOT = {id:3})
+
+    // const getPersediaanBahanJadiBiayaProduksi = await prisma.saldoAkunTransaksi.findUnique(option.where.NOT = {id:4})
 
     const saldoPendapatan = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
