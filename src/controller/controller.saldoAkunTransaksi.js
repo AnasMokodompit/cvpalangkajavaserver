@@ -328,6 +328,25 @@ const GetLaporanLabaRugi = async (req, res) => {
       return totalSaldo;
     }
 
+    const getPersediaanBahanBakuSaldoAwal = await prisma.saldoAkunTransaksi.findUnique({
+      where: {
+        id: 3
+      },
+      select: {
+        saldo: true
+      }
+    })
+
+
+    const getPersediaanBahanJadiSaldoAwal = await prisma.saldoAkunTransaksi.findUnique({
+      where: {
+        id: 4
+      },
+      select: {
+        saldo: true
+      }
+    })
+
     const saldoPendapatan = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Pendapatan",
@@ -480,12 +499,12 @@ const GetLaporanLabaRugi = async (req, res) => {
         akun: [
           {
             namaAkunTransaksi: "Persediaan Bahan Baku",
-            saldo: saldoPersediaanBahanBaku
-          }
-          ,{
+            saldo: getPersediaanBahanBakuSaldoAwal.saldo,
+          },
+          {
             namaAkunTransaksi: "Persediaan Barang Jadi",
-            saldo: saldoPersediaanBahanJadi
-          }
+            saldo: getPersediaanBahanJadiSaldoAwal.saldo,
+          },
         ]
       },
       {
@@ -502,6 +521,14 @@ const GetLaporanLabaRugi = async (req, res) => {
           {
             namaAkunTransaksi: "Biaya Bahan Pembantu",
             saldo: saldoBiayaBahanPembantu,
+          }
+          ,{
+            namaAkunTransaksi: "Persediaan Bahan Baku",
+            saldo: saldoPersediaanBahanBaku
+          }
+          ,{
+            namaAkunTransaksi: "Persediaan Barang Jadi",
+            saldo: saldoPersediaanBahanJadi
           }
         ],
       },
