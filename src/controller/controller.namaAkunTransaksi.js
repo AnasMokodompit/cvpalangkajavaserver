@@ -1,15 +1,19 @@
 const { PrismaClient } = require("@prisma/client");
+const pagination = require("./../utility/pagination");
+
 
 const prisma = new PrismaClient();
 
 const createNamaAkunTransaksi = async (req, res) => {
   try {
-    const { kode, nama } = req.body;
+    const { kode, nama, id_keterangan, id_tipe_akun_transaksi } = req.body;
 
     const createNamaAkunTransaksi = await prisma.namaAkunTransaksi.create({
       data: {
         kode: kode,
         nama: nama,
+        id_keterangan: id_keterangan,
+        id_tipe_akun_transaksi: id_tipe_akun_transaksi
       },
     });
 
@@ -26,7 +30,7 @@ const createNamaAkunTransaksi = async (req, res) => {
 const updateNamaAkunTransaksi = async (req, res) => {
   try {
     const { id } = req.params;
-    const { kode, nama } = req.body;
+    const { kode, nama, id_keterangan, id_tipe_akun_transaksi } = req.body;
 
     const updateNamaAkunTransaksi = await prisma.namaAkunTransaksi.update({
       where: {
@@ -35,6 +39,8 @@ const updateNamaAkunTransaksi = async (req, res) => {
       data: {
         kode: kode,
         nama: nama,
+        id_keterangan: id_keterangan,
+        id_tipe_akun_transaksi: id_tipe_akun_transaksi
       },
     });
 
@@ -69,11 +75,28 @@ const deleteNamaAkunTransaksi = async (req, res) => {
 
 const listNamaAkunTransaksi = async (req, res) => {
   try {
-    const listNamaAkunTransaksi = await prisma.namaAkunTransaksi.findMany({
+    const { page, row } = pagination(req.query.page, req.query.row);
+    const searchByNameQuery = req.query.search;
+
+    const options = {
+      where: {},
       include: {
-        akunTransaksi: true
-      }
-    });
+        tipe_akun_transaksi: true,
+        keteranganNamaAkunTransaksi: true
+      },
+      skip: page,
+      take: row,
+    }
+
+
+    if (searchByNameQuery) {
+      options.where.nama = {
+        contains: searchByNameQuery,
+      };
+    }
+
+
+    const listNamaAkunTransaksi = await prisma.namaAkunTransaksi.findMany(options);
 
     res.status(200).json({
       status: 200,
