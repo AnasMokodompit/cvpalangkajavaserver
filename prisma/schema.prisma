@@ -80,15 +80,26 @@ model Orders {
   nama_pemesan      String
   users             Users?           @relation(fields: [id_user], references: [id])
   id_user           Int
+  pajakOrder        Pajak_Order?          @relation(fields: [id_pajak_order], references: [id])
+  id_pajak_order    Int? @unique
   no_hp             String
   alamat            String
-  status            Boolean
+  status            Int @default(0)
   Price             Int
   jumlah            Int
   IsPembayaranDP    Boolean?         @default(false)
   IsPembayaranLunas Boolean?         @default(false)
   product_Orders    Product_Orders[]
   buktiBayar        BuktiBayar[]
+  created_at        DateTime @default(now())
+}
+
+model Pajak_Order {
+  id                Int              @id @default(autoincrement())
+  DPP               Int
+  PPN               Int
+  PPh_22            Int
+  Orders Orders?
 }
 
 model Product_Orders {

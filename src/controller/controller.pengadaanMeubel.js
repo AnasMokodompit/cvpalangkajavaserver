@@ -1,13 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 const response = require("../utility/responModel");
-const pagination = require("./../utility/pagination");
 
 const prisma = new PrismaClient();
 
-
-const createPesananCustom = async (req, res) => {
+const createPengadaanMeubel = async (req, res) => {
     try{
         const {user, order} = req.body
+
+        // return console.log(user, order)
 
         const optionsCreateOrder = {
             nama_pemesan: user.nama,
@@ -55,10 +55,27 @@ const createPesananCustom = async (req, res) => {
             optionsCreateOrder.Price += data.jumlahHarga
         })
 
+        const optionPajakOrder = {
+            DPP: optionsCreateOrder.Price / 1.125,
+            PPN: 0,
+            PPh_22: 0
+        }
+
+        optionPajakOrder.PPN = 0.11 * optionPajakOrder.DPP 
+        optionPajakOrder.PPh_22 = 0.015 * optionPajakOrder.DPP
+
+
+        const createPajakOrder = await prisma.pajak_Order.create({
+            data: optionPajakOrder
+        })
+
+        if (createPajakOrder) {
+            optionsCreateOrder.id_pajak_order = createPajakOrder.id
+        }
+
         const createOrder = await prisma.orders.create({
             data: optionsCreateOrder
         });
-
 
 
         order.map(async (data, key) => {
@@ -128,15 +145,17 @@ const createPesananCustom = async (req, res) => {
 
         res.status(201).json(response.success(201, cekDataDibuat));
 
+
     }catch(err){
         // menampilkan error di console log
         console.log(err);
 
         // menampilkan response semua data jika gagal
         return res.status(500).json(response.error(500, "Internal Server Error"));
-    }
+        }
 }
 
+
 module.exports = {
-     createPesananCustom
+    createPengadaanMeubel
 }

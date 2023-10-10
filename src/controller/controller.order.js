@@ -29,7 +29,7 @@ const createOrder = async (req, res) => {
       nama_pemesan: req.body.namePemesan,
       no_hp: req.body.noHp,
       alamat: req.body.alamat,
-      status: false,
+      status: req.body.status,
       Price: jumlahHarga,
       jumlah: jumlah,
     };
