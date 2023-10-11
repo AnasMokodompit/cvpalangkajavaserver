@@ -10,18 +10,22 @@ const getAllProduct = async (req, res) => {
   try {
     const { page, row } = pagination(req.query.page, req.query.row);
     const categoryIdByQuery = +req.query.category;
-    const searchByNameQuery = req.query.search;
+    const {search} = req.query;
 
     console.log(page, row);
 
+    // return console.log(search.length)
+
     const options = {
-      where: {},
+      where: {
+        IsProductCustom: false
+      },
       orderBy: {
         // id: "asc",
         id: "desc",
       },
-      // skip: page,
-      // take: row,
+      skip: page,
+      take: row,
       include: {
         product_images: true,
         categories: true,
@@ -32,14 +36,16 @@ const getAllProduct = async (req, res) => {
       options.where.categoriesId = categoryIdByQuery;
     }
 
-    if (searchByNameQuery) {
+    if (search) {
       options.where.name = {
-        contains: searchByNameQuery,
+        contains: search,
       };
     }
 
     // memangil semua data di tabel product dan foreign keynya
     const getDataProductAll = await prisma.products.findMany(options);
+
+    console.log(getDataProductAll)
 
     // menampilkan response semua data jika berhasil
     res.status(200).json(response.success(200, getDataProductAll));
