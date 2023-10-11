@@ -25,6 +25,16 @@ const getAllProduct = async (req, res) => {
       include: {
         product_images: true,
         categories: true,
+        bahanBakuProduk: {
+          include: {
+            bahanBaku: {
+              select: {
+                id: true,
+                nama: true,
+              },
+            },
+          },
+        },
       },
     };
 
@@ -74,11 +84,11 @@ const getByIdProduct = async (req, res) => {
             bahanBaku: {
               select: {
                 id: true,
-                nama: true
-              }
-            }
-          }
-        }
+                nama: true,
+              },
+            },
+          },
+        },
       },
     };
 
@@ -98,10 +108,9 @@ const getByIdProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { nama, ukuran, harga, Deskripsi_produk, categoriesId, bahanBakuProduk} = req.body;
+    const { nama, ukuran, harga, Deskripsi_produk, categoriesId, bahanBakuProduk } = req.body;
     const IsPermeter = JSON.parse(req.body.IsPermeter);
 
-    
     const files = req.files;
 
     if (files?.length === 0 || !files) {
@@ -114,7 +123,7 @@ const createProduct = async (req, res) => {
       harga: Number(harga),
       Deskripsi_produk: Deskripsi_produk,
       categoriesId: Number(categoriesId),
-      IsPermeter: IsPermeter
+      IsPermeter: IsPermeter,
     };
 
     const createProduct = await prisma.products.create({
@@ -123,17 +132,17 @@ const createProduct = async (req, res) => {
 
     // Create Bahan Baku Produk
     bahanBakuProduk.map((data, key) => {
-      data.id_produk = createProduct.id
-      data.id_bahan_baku = Number(data.idBahanBaku)
-      data.jumlah =  Number(data.jumlah)
-      delete data.idDraf
-      delete data.nama
-      delete data.idBahanBaku
-    })
+      data.id_produk = createProduct.id;
+      data.id_bahan_baku = Number(data.idBahanBaku);
+      data.jumlah = Number(data.jumlah);
+      delete data.idDraf;
+      delete data.nama;
+      delete data.idBahanBaku;
+    });
 
     await prisma.bahanBakuProduk.createMany({
-      data: bahanBakuProduk
-    })
+      data: bahanBakuProduk,
+    });
 
     // Akhir
 
@@ -204,9 +213,9 @@ const updateProductById = async (req, res) => {
   try {
     const product_id = req.params.id;
 
-    const { nama, ukuran, harga, Deskripsi_produk, categoriesId} = req.body;
+    const { nama, ukuran, harga, Deskripsi_produk, categoriesId } = req.body;
     const IsPermeter = JSON.parse(req.body.IsPermeter);
-    
+
     const files = req.files;
 
     const dataProductUpdate = {
@@ -215,7 +224,7 @@ const updateProductById = async (req, res) => {
       harga: Number(harga),
       Deskripsi_produk: Deskripsi_produk,
       categoriesId: Number(categoriesId),
-      IsPermeter: IsPermeter
+      IsPermeter: IsPermeter,
     };
 
     if (files?.length === 0) {
@@ -316,9 +325,9 @@ const deleteProductById = async (req, res) => {
 
     const deleteBahanBakuProduk = await prisma.bahanBakuProduk.deleteMany({
       where: {
-        id_produk: Number(product_id)
-      }
-    })
+        id_produk: Number(product_id),
+      },
+    });
 
     if (deleteProductImage && deleteBahanBakuProduk) {
       const deleteProduct = await prisma.products.delete({
