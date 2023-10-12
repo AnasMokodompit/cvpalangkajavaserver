@@ -179,6 +179,7 @@ const updateOrder = async (req, res) => {
     const produk_order = await prisma.product_Orders.findMany({
       where: {
         id_orders: Number(id),
+        status: 2
       },
       include: {
         products: {
@@ -190,6 +191,7 @@ const updateOrder = async (req, res) => {
     });
 
     produk_order.map(async (data, key) => {
+
       const cekBahanBakuProduk = await prisma.bahanBakuProduk.findMany({
         where: {
           id_produk: data.id_product,
@@ -197,7 +199,17 @@ const updateOrder = async (req, res) => {
       });
 
       cekBahanBakuProduk.map(async (dataa, key) => {
+
+
         dataa.jumlah = data.jumlah * dataa.jumlah;
+        
+        if (data.jumlah_meter?.length !== 0 && data.jumlah_meter !== null) {
+          console.log('tes')
+          dataa.jumlah = dataa.jumlah * data.jumlah_meter
+        }
+        
+        // return console.log(data, dataa)
+        // console.log(dataa.jumlah, "Order")
 
         const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
           where: {
@@ -215,7 +227,9 @@ const updateOrder = async (req, res) => {
 
         const resultJumlah = cekPersediaanBahanBaku[0].jumlah - dataa.jumlah;
 
-        // console.log(cekPersediaanBahanBaku, cekPersediaanBahanBaku[0].id, resultJumlah, dataa.jumlah)
+        // console.log(resultJumlah)
+
+        console.log(cekPersediaanBahanBaku[0].jumlah - resultJumlah, dataa.jumlah)
 
         await prisma.persediaanBahanBaku.update({
           where: {

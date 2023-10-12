@@ -7,7 +7,7 @@ const createPengadaanMeubel = async (req, res) => {
     try{
         const {user, order} = req.body
 
-        // return console.log(user, order)
+        // return console.log(user, order[1].bahanBakuProduk)
 
         const optionsCreateOrder = {
             nama_pemesan: user.nama,
@@ -102,7 +102,7 @@ const createPengadaanMeubel = async (req, res) => {
                     data: {
                         id_produk: createProduct.id,
                         id_bahan_baku: Number(dataBahanBaku.id_bahan_baku),
-                        jumlah: Number(dataBahanBaku.jumlah),
+                        jumlah: Number(dataBahanBaku.jumlah) * data.jumlah,
                         satuan: dataBahanBaku.satuan
                     }
                 })

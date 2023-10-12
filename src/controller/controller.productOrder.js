@@ -186,7 +186,13 @@ const updatbyIdProductOrder = async (req, res) => {
         cekBahanBakuProduk.map(async (data) => {
           data.jumlah = data.jumlah * CekproductOrder.jumlah;
           // id_bahan_baku.push(data.id_bahan_baku)
+
+          if (CekproductOrder.jumlah_meter) {
+            data.jumlah = data.jumlah * CekproductOrder.jumlah_meter
+          }
           
+          console.log(data.jumlah, "ProdukOrder")
+
           const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
             where: {
               id_bahan_baku: data.id_bahan_baku,

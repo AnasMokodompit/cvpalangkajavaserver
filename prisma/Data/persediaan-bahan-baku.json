@@ -1,22 +1,22 @@
 [
   {
     "id_bahan_baku": 1,
-    "jumlah": 150,
+    "jumlah": 500,
     "satuan": "kubik"
   },
   {
     "id_bahan_baku": 2,
-    "jumlah": 150,
+    "jumlah": 500,
     "satuan": "kubik"
   },
   {
     "id_bahan_baku": 3,
-    "jumlah": 150,
+    "jumlah": 500,
     "satuan": "kubik"
   },
   {
     "id_bahan_baku": 4,
-    "jumlah": 150,
+    "jumlah": 500,
     "satuan": "lembar"
   }
 ]
