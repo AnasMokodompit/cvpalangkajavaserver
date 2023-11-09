@@ -3,6 +3,117 @@ const response = require("../utility/responModel");
 
 const prisma = new PrismaClient();
 
+const tutupBuku = async (req, res) => {
+  try{
+    const tahun = new Date().getFullYear()
+
+    const option = {
+      where: {},
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            keteranganNamaAkunTransaksi: true,
+          },
+        },
+        akunTransaksi: {
+          include: {
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    };
+
+
+    const dataSaldoAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
+
+    const dataResponse = []
+    // return console.log(dataSaldoAkunTransaksi)
+    dataSaldoAkunTransaksi.forEach((data) => {
+      dataSaldoAkunTransaksi.filter((value) => {
+            if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
+              const cekIndexData = dataResponse.findIndex((dataa) => dataa.namaAkunTransaksi == data.namaAkunTransaksi.nama)
+              
+              if (cekIndexData < 0) {
+                dataResponse.push({
+                  namaAkunTransaksi: data.namaAkunTransaksi.nama,
+                  kode_nama_akun_transaksi: data.namaAkunTransaksi.kode,
+                  saldo: 0,
+                  keteranganAkun: data.namaAkunTransaksi.keteranganNamaAkunTransaksi,
+                  id_akun_transaksi: data.akunTransaksi.id,
+                  statusSaldoAwal: true
+
+                })
+              }
+              
+            }
+          })
+    })
+
+    // return console.log(dataResponse)
+
+    dataResponse.map((data, index) => {
+      dataSaldoAkunTransaksi.filter(value => {
+        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id == 1) {
+          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua Hanya Untuk Kas" )
+          dataResponse[index].saldo += value.saldo
+        }
+        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id === 2) {
+          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.id, "Kurang Debit dengan Kredit Semua Kas" )
+          dataResponse[index].saldo -= value.saldo
+        }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP")) {
+          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, "Kurang Debit dengan Kredit Semua Kas" )
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
+        }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
+        }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo
+        }
+      })
+    })
+
+    console.log(dataResponse)
+
+    dataResponse.map(data => {
+      delete data.namaAkunTransaksi
+      delete data.keteranganAkun
+    })
+
+    await prisma.saldoAkunTransaksi.deleteMany({
+      where: {
+        statusSaldoAwal: true
+      }
+    })
+
+    await prisma.saldoAkunTransaksi.updateMany({
+      where: {
+        statusSaldoAwal: false
+      },
+      data: {
+        statusTutupBuku: 1
+      } 
+    })
+
+    await prisma.saldoAkunTransaksi.createMany({
+      data: dataResponse
+    })
+
+    res.status(200).json(response.success(200, "Data Saldo Awal Berhasil Diberbarui")); 
+
+  }catch(err){
+    // menampilkan error di console log
+    console.log(err);
+
+    // menampilkan response semua data jika gagal
+    return res.status(500).json(response.error(500, "Internal Server Error"));
+  }
+}
+
 const getNamaAkunByTipe = async (req, res) => {
   try {
     const {firstDate, lastDate, year } = req.query;
@@ -529,11 +640,11 @@ const GetLaporanLabaRugi = async (req, res) => {
         akun: [
           {
             namaAkunTransaksi: "Persediaan Bahan Baku",
-            saldo: getPersediaanBahanBakuSaldoAwal.saldo,
+            saldo: getPersediaanBahanBakuSaldoAwal?.saldo,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
-            saldo: getPersediaanBahanJadiSaldoAwal.saldo,
+            saldo: getPersediaanBahanJadiSaldoAwal?.saldo,
           },
         ]
       },
@@ -699,8 +810,17 @@ const GetAllRekapJurnal = async (req, res) => {
       };
     }
 
+    if ((!firstDate || !lastDate) || (!firstDate && !lastDate)) {
+     option.where.NOT = {
+      statusTutupBuku : 1
+     }
+    }
+
     const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
 
+    // return console.log(saldoAwalTransaksi)
+
+    console.log(saldoAwalTransaksi)
  
     const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
       select: {
@@ -722,7 +842,7 @@ const GetAllRekapJurnal = async (req, res) => {
 
 
     const dataResponse = []
-    console.log(saldoAwalTransaksi)
+    // console.log(saldoAwalTransaksi)
     saldoAwalTransaksi.forEach((data) => {
       saldoAwalTransaksi.filter((value) => {
             if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
@@ -740,27 +860,32 @@ const GetAllRekapJurnal = async (req, res) => {
           })
     })
 
+    console.log(saldoAwalTransaksi)
     // return console.log(dataResponse)
 
     dataResponse.map((data, index) => {
       saldoAwalTransaksi.filter(value => {
-        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id == 1) {
-          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua Hanya Untuk Kas" )
+        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id == 1 && (value.statusTutupBuku === 0) ) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua Hanya Untuk Kas" )
           dataResponse[index].saldo += value.saldo
         }
-        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id === 2) {
-          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.id, "Kurang Debit dengan Kredit Semua Kas" )
+        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id === 2 && (value.statusTutupBuku === 0) ) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.id, "Kurang Debit dengan Kredit Semua Kas" )
           dataResponse[index].saldo -= value.saldo
         }
-        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP")) {
-          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, "Kurang Debit dengan Kredit Semua Kas" )
+        // else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP") && (value.statusTutupBuku === 0 && value.statusSaldoAwal === 0)) {
+        //   console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, value.statusTutupBuku === 0, value.statusSaldoAwal === 0, "Kurang Debit dengan Kredit Semua Kas" )
+        //   dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
+        // }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP") && (value.statusTutupBuku === 0)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, value.statusTutupBuku === 0, "Kurang Debit dengan Kredit Semua Kas" )
           dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
         }
-        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.statusTutupBuku === 0)) {
           console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
           dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
         }
-        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal)) {
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal) && (value.statusTutupBuku === 0)) {
           console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
           dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo
         }
@@ -893,6 +1018,7 @@ const updateSaldoAwal = async (req, res) => {
 };
 
 module.exports = {
+  tutupBuku,
   getNamaAkunByTipe,
   GetLaporanLabaRugi,
   GetAllRekapJurnal,

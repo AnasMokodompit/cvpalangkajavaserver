@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const postTransaksi = async (req, res) => {
   try {
 
-    const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah, bahanBaku } = req.body;
+    const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah, bahanBaku, tanggal } = req.body;
 
     const dataCreate = await prisma.transaksi.create({
       data: {
@@ -14,6 +14,7 @@ const postTransaksi = async (req, res) => {
         id_nama_akun_jenis_transaksi: Number(id_nama_akun_jenis_transaksi),
         keterangan,
         jumlah,
+        tanggal: new Date(tanggal).toISOString(),
       },
       select: {
         namaAkunTransaksiDalamJenisTransaksi: {

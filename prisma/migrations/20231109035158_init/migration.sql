@@ -74,13 +74,26 @@ CREATE TABLE `Orders` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nama_pemesan` VARCHAR(191) NOT NULL,
     `id_user` INTEGER NOT NULL,
+    `id_pajak_order` INTEGER NULL,
     `no_hp` VARCHAR(191) NOT NULL,
     `alamat` VARCHAR(191) NOT NULL,
-    `status` BOOLEAN NOT NULL,
+    `status` INTEGER NOT NULL DEFAULT 0,
     `Price` INTEGER NOT NULL,
     `jumlah` INTEGER NOT NULL,
     `IsPembayaranDP` BOOLEAN NULL DEFAULT false,
     `IsPembayaranLunas` BOOLEAN NULL DEFAULT false,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `Orders_id_pajak_order_key`(`id_pajak_order`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Pajak_Order` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `DPP` INTEGER NOT NULL,
+    `PPN` INTEGER NOT NULL,
+    `PPh_22` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -95,6 +108,9 @@ CREATE TABLE `Product_Orders` (
     `Price` INTEGER NOT NULL,
     `jumlah` INTEGER NOT NULL,
     `jumlah_meter` INTEGER NULL,
+    `tanggal_pengerjaan` DATETIME(3) NULL,
+    `pesan_status` VARCHAR(191) NULL,
+    `statusReview` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -165,6 +181,7 @@ CREATE TABLE `SaldoAkunTransaksi` (
     `tanggal` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `id_akun_transaksi` INTEGER NULL,
+    `statusTutupBuku` INTEGER NOT NULL DEFAULT 0,
     `statusSaldoAwal` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
@@ -265,6 +282,9 @@ ALTER TABLE `Product_images` ADD CONSTRAINT `Product_images_product_id_fkey` FOR
 
 -- AddForeignKey
 ALTER TABLE `Orders` ADD CONSTRAINT `Orders_id_user_fkey` FOREIGN KEY (`id_user`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Orders` ADD CONSTRAINT `Orders_id_pajak_order_fkey` FOREIGN KEY (`id_pajak_order`) REFERENCES `Pajak_Order`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Product_Orders` ADD CONSTRAINT `Product_Orders_id_orders_fkey` FOREIGN KEY (`id_orders`) REFERENCES `Orders`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

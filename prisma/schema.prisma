@@ -180,6 +180,7 @@ model SaldoAkunTransaksi {
   tanggal                DateTime           @default(now())
   updated_at                                DateTime @default(now()) @updatedAt
   id_akun_transaksi                         Int?
+  statusTutupBuku                           Int @default(0)
   statusSaldoAwal                           Boolean @default(false)
   namaAkunTransaksi                         NamaAkunTransaksi                         @relation(fields: [kode_nama_akun_transaksi], references: [kode])
   akunTransaksi                             AkunTransaksi?                            @relation(fields: [id_akun_transaksi], references: [id])
