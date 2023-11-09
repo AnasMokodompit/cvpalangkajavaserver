@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const getNamaAkunByTipe = async (req, res) => {
   try {
-    const {firstDate, lastDate } = req.query;
+    const {firstDate, lastDate, year } = req.query;
 
     const option = {
       where: {},
@@ -32,7 +32,16 @@ const getNamaAkunByTipe = async (req, res) => {
       };
     }
 
-    const cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+    let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+
+    if (year) {
+      const test = cekAkunTransaksi.filter(data => data.tanggal.getFullYear() == year)
+
+      cekAkunTransaksi = test
+    }
+
+    console.log(cekAkunTransaksi)
+
     const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
       select: {
         tanggal: true,
@@ -262,7 +271,7 @@ const getNamaAkunByTipe = async (req, res) => {
 
 const GetLaporanLabaRugi = async (req, res) => {
   try{
-    const {firstDate, lastDate} = req.query
+    const {firstDate, lastDate, year} = req.query
 
     const option = {
       where: {
@@ -294,7 +303,19 @@ const GetLaporanLabaRugi = async (req, res) => {
       };
     }
 
-    const cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+    let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+
+    
+
+    if (year) {
+      const test = cekAkunTransaksi.filter(data => data.tanggal.getFullYear() == year)
+
+      cekAkunTransaksi = test
+    }
+
+    console.log(cekAkunTransaksi)
+
+
 
     const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
       select: {
@@ -632,25 +653,27 @@ const GetLaporanLabaRugi = async (req, res) => {
 const GetAllRekapJurnal = async (req, res) => {
   try {
     const { firstDate, lastDate } = req.query;
+    let jumlahDebit = 0
+    let jumlahKredit = 0
 
     const option = {
       where: {
-        kode_nama_akun_transaksi: {
-          in: [
-            "1-1100",
-            "1-1400",
-            "1-1300",
-            "1-1900",
-            "3-1000",
-            "4-1000",
-            "5-1000",
-            "5-2000",
-            "5-3000",
-            "6-2000",
-            "6-7000",
-            "6-6000",
-          ],
-        },
+        // kode_nama_akun_transaksi: {
+        //   in: [
+        //     "1-1100",
+        //     "1-1400",
+        //     "1-1300",
+        //     "1-1900",
+        //     "3-1000",
+        //     "4-1000",
+        //     "5-1000",
+        //     "5-2000",
+        //     "5-3000",
+        //     "6-2000",
+        //     "6-7000",
+        //     "6-6000",
+        //   ],
+        // },
       },
       include: {
         namaAkunTransaksi: {
@@ -677,6 +700,8 @@ const GetAllRekapJurnal = async (req, res) => {
     }
 
     const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+
+ 
     const cekTanggal = await prisma.saldoAkunTransaksi.findMany({
       select: {
         tanggal: true,
@@ -697,6 +722,7 @@ const GetAllRekapJurnal = async (req, res) => {
 
 
     const dataResponse = []
+    console.log(saldoAwalTransaksi)
     saldoAwalTransaksi.forEach((data) => {
       saldoAwalTransaksi.filter((value) => {
             if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
@@ -714,32 +740,45 @@ const GetAllRekapJurnal = async (req, res) => {
           })
     })
 
-    // return console.log(saldoAwalTransaksi)
+    // return console.log(dataResponse)
 
     dataResponse.map((data, index) => {
       saldoAwalTransaksi.filter(value => {
-        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.id === 1 && value.akunTransaksi?.kategori_akun?.id == 1) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua" )
+        if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id == 1) {
+          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id ,value.akunTransaksi?.kategori_akun?.id, "Tambah Debit Semua Hanya Untuk Kas" )
           dataResponse[index].saldo += value.saldo
         }
-        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.id === 1 && value.akunTransaksi?.kategori_akun?.id === 2) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id,value.namaAkunTransaksi.id, "Kurang Debit dengan Kredit Semua Kas" )
+        else if (data.namaAkunTransaksi === value.namaAkunTransaksi.nama && value.namaAkunTransaksi.kode === "1-1100" && value.akunTransaksi?.kategori_akun?.id === 2) {
+          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.id, "Kurang Debit dengan Kredit Semua Kas" )
           dataResponse[index].saldo -= value.saldo
         }
         else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP")) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama ,value.akunTransaksi?.kategori_akun?.id,value.namaAkunTransaksi.id, "Kurang Debit dengan Kredit Semua Kas" )
+          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, "Kurang Debit dengan Kredit Semua Kas" )
           dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
         }
         else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
-          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
           dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
+        }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo
         }
       })
     })
         
-    // return console.log(dataResponse)
+    console.log(dataResponse)
+    dataResponse.map(data => {
+      if (data.keteranganAkun.saldoNormal === "Debit") {
+        jumlahDebit += data.saldo
+      }else{
+        jumlahKredit += data.saldo
+      }
+    })
     dataResponse.push({
       oldestDate: oldestDate,
+      jumlahDebit,
+      jumlahKredit
     },)
 
     res.status(200).json(response.success(200, dataResponse));
@@ -754,10 +793,14 @@ const GetAllRekapJurnal = async (req, res) => {
 
 const getAllSaldoAwal = async (req, res) => {
   try {
-    const dataAllSaldoAwal = await prisma.saldoAkunTransaksi.findMany({
+    let jumlahDebit = 0
+    let jumlahKredit = 0
+
+    let dataAllSaldoAwal = await prisma.saldoAkunTransaksi.findMany({
       where: {
         statusSaldoAwal: true,
       },
+      
       include: {
         namaAkunTransaksi: {
           include: {
@@ -768,7 +811,26 @@ const getAllSaldoAwal = async (req, res) => {
       }
     })
 
-    res.status(200).json(response.success(200, dataAllSaldoAwal));
+    dataAllSaldoAwal.sort((dataAwal, dataAkhir) => dataAwal.namaAkunTransaksi.id - dataAkhir.namaAkunTransaksi.id)
+    dataAllSaldoAwal.map(data => {
+      if (data.namaAkunTransaksi.keteranganNamaAkunTransaksi.saldoNormal === "Debit") {
+        jumlahDebit += data.saldo
+      }else{
+        jumlahKredit += data.saldo
+      }
+    })
+
+    
+    // dataAllSaldoAwal.push({"Debit": jumlahDebit, "Kredit": jumlahKredit})
+    const data = {
+      "SaldoAwal": dataAllSaldoAwal,
+      "Total": {
+        "Debit": jumlahDebit, 
+        "Kredit": jumlahKredit
+      }
+    }
+
+    res.status(200).json(response.success(200, data));
   } catch (err) {
     // menampilkan error di console log
     console.log(err);

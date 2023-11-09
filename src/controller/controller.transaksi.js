@@ -83,6 +83,7 @@ const listTransaksi = async (req, res) => {
     const rowKirim = req.query.row;
     const { page, row } = pagination(req.query.page, req.query.row);
     const idNamaAkunDalamJenisTransaksiInSearch = [];
+    let jumlah = 0
 
     if (search) {
       const dataSearch = await prisma.namaAkunTransaksiDalamJenisTransaksi.findMany({
@@ -154,6 +155,15 @@ const listTransaksi = async (req, res) => {
     }
 
     const listTransaksi = await prisma.transaksi.findMany(option);
+
+    listTransaksi.map(data => {
+      if (data.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP") {
+        jumlah += data.jumlah
+        jumlah += data.jumlah / 0.3
+      }else{
+        jumlah += data.jumlah
+      }
+    })
     const listTanggalTransaksi = await prisma.transaksi.findMany({ select: { tanggal: true } });
 
     let tanggalArray = [];
@@ -174,6 +184,7 @@ const listTransaksi = async (req, res) => {
       data: {
         listTransaksi,
         oldestDate,
+        jumlah
       },
     });
   } catch (error) {
