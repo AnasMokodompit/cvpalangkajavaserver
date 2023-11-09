@@ -143,7 +143,18 @@ const getNamaAkunByTipe = async (req, res) => {
       };
     }
 
+    // if ((firstDate !== undefined || lastDate !== undefined) || (firstDate !== undefined && lastDate !== undefined) || year !== undefined) {
+    //   console.log("Masuk Search") 
+    //   option.where.statusSaldoAwal = false
+    // }else{
+    //   console.log("Not Masuk") 
+    //   option.where.statusTutupBuku = 0
+    //   option.where.statusSaldoAwal = false
+    // }
+
     let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+
+    // return console.log(cekAkunTransaksi)
 
     if (year) {
       const test = cekAkunTransaksi.filter(data => data.tanggal.getFullYear() == year)
@@ -386,9 +397,9 @@ const GetLaporanLabaRugi = async (req, res) => {
 
     const option = {
       where: {
-        NOT: {
-          id: {in: [3, 4]}
-        }
+        // NOT: {
+        //   kode_nama_akun_transaksi: {in: ["1-1400", "1-1300"]}
+        // }
       },
       include: {
         namaAkunTransaksi: {
@@ -414,9 +425,42 @@ const GetLaporanLabaRugi = async (req, res) => {
       };
     }
 
-    let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
+    // return console.log(year?.length)
+    if ((firstDate !== undefined || lastDate !== undefined) || (firstDate !== undefined && lastDate !== undefined) || year !== undefined) {
+      option.where.statusSaldoAwal = false
+    }else{
+      option.where.statusTutupBuku = 0
+       option.where.statusSaldoAwal = false
+    }
+    // {
+    //   where: {
+    //     NOT: {
+    //       kode_nama_akun_transaksi: {in: ["1-1400", "1-1300"]},
+    //       AND: [
+    //         {
+    //           statusSaldoAwal: true
+    //         },
+    //       ]
+    //     },
+    //   }, include: {
+    //     namaAkunTransaksi: {
+    //       include: {
+    //         tipe_akun_transaksi: true,
+    //       },
+    //     },
+    //     akunTransaksi: {
+    //       include: {
+    //         kategori_akun: true,
+    //         nama_akun_jenis_transaksi: true,
+    //       },
+    //     },
+    //   },
+    // }
 
-    
+    let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
+    // return
+
+    // return console.log(cekAkunTransaksi)
 
     if (year) {
       const test = cekAkunTransaksi.filter(data => data.tanggal.getFullYear() == year)
@@ -464,9 +508,21 @@ const GetLaporanLabaRugi = async (req, res) => {
       return totalSaldo;
     }
 
-    const getPersediaanBahanBakuSaldoAwal = await prisma.saldoAkunTransaksi.findUnique({
+    const getPersediaanBahanBakuSaldoAwal = await prisma.saldoAkunTransaksi.findMany({
       where: {
-        id: 3
+        kode_nama_akun_transaksi: "1-1400",
+        statusSaldoAwal: true
+      },
+      select: {
+        saldo: true
+      }
+    })
+    
+    
+    const getPersediaanBahanJadiSaldoAwal = await prisma.saldoAkunTransaksi.findMany({
+      where: {
+        kode_nama_akun_transaksi: "1-1300",
+        statusSaldoAwal: true
       },
       select: {
         saldo: true
@@ -474,16 +530,9 @@ const GetLaporanLabaRugi = async (req, res) => {
     })
 
 
-    const getPersediaanBahanJadiSaldoAwal = await prisma.saldoAkunTransaksi.findUnique({
-      where: {
-        id: 4
-      },
-      select: {
-        saldo: true
-      }
-    })
+    // console.log(getPersediaanBahanJadiSaldoAwal[0].saldo)
 
-
+    // return
     // const getPersediaanBahanBakuBiayaProduksi = await prisma.saldoAkunTransaksi.findUnique(option.where.NOT = {id:3})
 
     // const getPersediaanBahanJadiBiayaProduksi = await prisma.saldoAkunTransaksi.findUnique(option.where.NOT = {id:4})
@@ -640,11 +689,11 @@ const GetLaporanLabaRugi = async (req, res) => {
         akun: [
           {
             namaAkunTransaksi: "Persediaan Bahan Baku",
-            saldo: getPersediaanBahanBakuSaldoAwal?.saldo,
+            saldo: getPersediaanBahanBakuSaldoAwal[0].saldo,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
-            saldo: getPersediaanBahanJadiSaldoAwal?.saldo,
+            saldo: getPersediaanBahanJadiSaldoAwal[0].saldo,
           },
         ]
       },
@@ -877,7 +926,7 @@ const GetAllRekapJurnal = async (req, res) => {
         //   console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, value.statusTutupBuku === 0, value.statusSaldoAwal === 0, "Kurang Debit dengan Kredit Semua Kas" )
         //   dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
         // }
-        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP") && (value.statusTutupBuku === 0)) {
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP") && (value.statusTutupBuku === 0 )) {
           console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, value.statusTutupBuku === 0, "Kurang Debit dengan Kredit Semua Kas" )
           dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
         }
