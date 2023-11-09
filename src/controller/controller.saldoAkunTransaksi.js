@@ -8,7 +8,9 @@ const tutupBuku = async (req, res) => {
     const tahun = new Date().getFullYear()
 
     const option = {
-      where: {},
+      where: {
+        statusTutupBuku : 0
+      },
       include: {
         namaAkunTransaksi: {
           include: {
@@ -23,7 +25,6 @@ const tutupBuku = async (req, res) => {
         },
       },
     };
-
 
     const dataSaldoAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
 
@@ -64,7 +65,11 @@ const tutupBuku = async (req, res) => {
         }
         else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal) && (value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP")) {
           // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, "Kurang Debit dengan Kredit Semua Kas" )
-          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
+          if (value.statusSaldoAwal !== true) {
+            dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3
+          }else{
+            dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
+          }
         }
         else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
           console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
