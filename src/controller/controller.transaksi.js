@@ -8,14 +8,19 @@ const postTransaksi = async (req, res) => {
 
     const { id_jenis_transaksi, id_nama_akun_jenis_transaksi, keterangan, jumlah, bahanBaku, tanggal } = req.body;
 
-    const dataCreate = await prisma.transaksi.create({
-      data: {
+    const option = {
         id_jenis_transaksi: Number(id_jenis_transaksi),
         id_nama_akun_jenis_transaksi: Number(id_nama_akun_jenis_transaksi),
         keterangan,
         jumlah,
-        tanggal: new Date(tanggal).toISOString(),
-      },
+    }
+
+    if (tanggal) {
+      option.tanggal = new Date(tanggal).toISOString()
+    }
+
+    const dataCreate = await prisma.transaksi.create({
+      data: option,
       select: {
         namaAkunTransaksiDalamJenisTransaksi: {
           select: {
