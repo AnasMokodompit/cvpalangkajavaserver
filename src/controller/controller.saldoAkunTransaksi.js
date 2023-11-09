@@ -424,7 +424,7 @@ const GetLaporanLabaRugi = async (req, res) => {
     }
 
     // return console.log(year?.length)
-    if ((!firstDate || !lastDate) || (!firstDate && !lastDate) || !year ) {
+    if ((firstDate !== undefined || lastDate !== undefined) || (firstDate !== undefined && lastDate !== undefined) || year !== undefined ) {
       option.where.statusSaldoAwal = false
     }else{
       option.where.statusTutupBuku = 0
