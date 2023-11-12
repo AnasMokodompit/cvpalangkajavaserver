@@ -362,7 +362,8 @@ const getNamaAkunByTipe = async (req, res) => {
           },
           {
             namaAkunTransaksi: "Piutang",
-            saldo: saldoPiutangKredit - saldoPiutangDebit,
+            // saldo: saldoPiutangKredit - saldoPiutangDebit,
+            saldo: saldoPiutangDebit - saldoPiutangKredit,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
@@ -985,7 +986,8 @@ const GetAllRekapJurnal = async (req, res) => {
         }
         else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.kode !== "1-1100" && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal) && (value.statusTutupBuku === 0)) {
           // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.kode, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
-          dataResponse[index].saldo = value.saldo -= dataResponse[index].saldo
+          // dataResponse[index].saldo = value.saldo -= dataResponse[index].saldo
+          dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo 
         }
       })
     })
