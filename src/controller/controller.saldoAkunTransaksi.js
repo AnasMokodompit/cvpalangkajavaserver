@@ -362,7 +362,7 @@ const getNamaAkunByTipe = async (req, res) => {
           },
           {
             namaAkunTransaksi: "Piutang",
-            saldo: saldoPiutangDebit - saldoPiutangKredit,
+            saldo: saldoPiutangKredit - saldoPiutangDebit,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
@@ -957,7 +957,7 @@ const GetAllRekapJurnal = async (req, res) => {
           })
     })
 
-    console.log(saldoAwalTransaksi)
+    console.log(saldoAwalTransaksi[0].namaAkunTransaksi.keteranganNamaAkunTransaksi.saldoNormal)
     // return console.log(dataResponse)
 
     dataResponse.map((data, index) => {
@@ -985,12 +985,12 @@ const GetAllRekapJurnal = async (req, res) => {
         }
         else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.kode !== "1-1100" && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal) && (value.statusTutupBuku === 0)) {
           // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.kode, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
-          dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo
+          dataResponse[index].saldo = value.saldo -= dataResponse[index].saldo
         }
       })
     })
         
-    console.log(dataResponse)
+    // console.log(dataResponse)
     dataResponse.map(data => {
       if (data.keteranganAkun.saldoNormal === "Debit") {
         jumlahDebit += data.saldo
