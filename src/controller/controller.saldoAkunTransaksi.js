@@ -507,7 +507,7 @@ const GetLaporanLabaRugi = async (req, res) => {
       console.log(firstDate, lastDate, idPeriode)
       option.where.statusSaldoAwal = false
     }else{
-      // option.where.statusTutupBuku = 0
+      option.where.statusTutupBuku = 0
        option.where.statusSaldoAwal = false
     }
 
