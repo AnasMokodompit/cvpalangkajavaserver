@@ -159,12 +159,18 @@ const getNamaAkunByTipe = async (req, res) => {
     const option = {
       where: {
         NOT: {
-          kode_nama_akun_transaksi: {
-            in: ["1-1300", "1-1400", "1-1500"]
+          // kode_nama_akun_transaksi: {
+          //   in: ["1-1300", "1-1400", "1-1500"]
+          // },
+          // AND: [
+          //   {statusSaldoAwal: true},
+          // ],
+          id_akun_transaksi: {
+            in: [50, 46, 48]
           },
-          AND: [
-            {statusSaldoAwal: true}
-          ]
+          // AND: [
+          //   {statusSaldoAwal: false}
+          // ]
         }
       },
       include: {
@@ -176,6 +182,7 @@ const getNamaAkunByTipe = async (req, res) => {
         akunTransaksi: {
           include: {
             kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
           },
         },
       },
@@ -227,7 +234,14 @@ const getNamaAkunByTipe = async (req, res) => {
         );
       });
 
+
       const totalSaldo = filteredTransactions.reduce((total, transaction) => {
+        console.log(transaction)
+        if (transaction.akunTransaksi?.nama_akun_jenis_transaksi?.nama === "Pendapatan DP" && transaction.akunTransaksi?.kategori_akun.nama == "Debit" && transaction.namaAkunTransaksi.kode == "9-3000") {
+          return total + (transaction.saldo / 0.3);
+        }else{
+          return total + transaction.saldo;
+        }
         return total + transaction.saldo;
       }, 0);
 
@@ -241,6 +255,18 @@ const getNamaAkunByTipe = async (req, res) => {
       "Piutang Usaha",
       "Debit",
     );
+    const saldoPiutangDebit = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Piutang",
+      "Debit",
+    );
+    const saldoPiutangKredit = filterTransactionsAndCalculateTotal(
+      cekAkunTransaksi,
+      "Piutang",
+      "Kredit",
+    );
+
+    // return console.log(saldoPiutangDebit, saldoPiutangKredit)
     const saldoPersediaanBarangJadi = filterTransactionsAndCalculateTotal(
       cekAkunTransaksi,
       "Persediaan Barang Jadi",
@@ -333,6 +359,10 @@ const getNamaAkunByTipe = async (req, res) => {
           {
             namaAkunTransaksi: "Piutang Usaha",
             saldo: saldoPiutangUsaha,
+          },
+          {
+            namaAkunTransaksi: "Piutang",
+            saldo: saldoPiutangDebit - saldoPiutangKredit,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
