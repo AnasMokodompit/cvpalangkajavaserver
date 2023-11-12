@@ -138,11 +138,13 @@ model Transaksi {
   id                     Int                @id @default(autoincrement())
   id_jenis_transaksi     Int
   id_nama_akun_jenis_transaksi  Int
+  id_tutup_buku          Int?
   keterangan             String             @db.Text
   jumlah                 Int
   tanggal                DateTime           @default(now())
   jenis_transaksi        JenisTransaksi?    @relation(fields: [id_jenis_transaksi], references: [id])
   namaAkunTransaksiDalamJenisTransaksi        NamaAkunTransaksiDalamJenisTransaksi?    @relation(fields: [id_nama_akun_jenis_transaksi], references: [id])
+  tutupBuku             TutupBuku?           @relation(fields: [id_tutup_buku], references: [id])
 }
 
 model JenisTransaksi {
@@ -180,10 +182,12 @@ model SaldoAkunTransaksi {
   tanggal                DateTime           @default(now())
   updated_at                                DateTime @default(now()) @updatedAt
   id_akun_transaksi                         Int?
+  id_tutup_buku                             Int?
   statusTutupBuku                           Int @default(0)
   statusSaldoAwal                           Boolean @default(false)
   namaAkunTransaksi                         NamaAkunTransaksi                         @relation(fields: [kode_nama_akun_transaksi], references: [kode])
   akunTransaksi                             AkunTransaksi?                            @relation(fields: [id_akun_transaksi], references: [id])
+  tutupBuku                                 TutupBuku?                                 @relation(fields: [id_tutup_buku], references: [id])
 }
 
 
@@ -250,4 +254,11 @@ model PersediaanBahanBaku {
   id_bahan_baku Int
   jumlah        Int
   satuan        String
+}
+
+model TutupBuku {
+  id                    Int       @id @default(autoincrement())
+  tanggal               DateTime  @default(now())
+  transaksi             Transaksi[] 
+  saldoAkunTransaksi    SaldoAkunTransaksi[]
 }

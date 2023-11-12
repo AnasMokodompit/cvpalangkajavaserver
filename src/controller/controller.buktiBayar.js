@@ -12,6 +12,8 @@ const createBuktiBayar = async (req, res) => {
     let productOrder = [];
     const statusTransaksi = JSON.parse(req.body.statusTransaksi);
 
+
+    // return console.log(statusTransaksi)
     if (req.file) {
       const cekBuktiBayarByIdOrder = await prisma.buktiBayar.findMany({
         where: {

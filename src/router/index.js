@@ -23,6 +23,7 @@ const keteranganNamaAkunTransaksi = require('./keteranganNamaAkunTransaksi')
 const tipeAkunTransaksi = require('./tipeAkunTransaksi')
 const laporanPajak = require('./laporanPajak')
 const pengadaanMeubel = require('./pengadaanMeubel')
+const tutupBuku = require('./tutupBuku')
 
 router.use(`${process.env.URL_ROUTER_USER}`, user);
 router.use(`${process.env.URL_ROUTER_PRODUCT}`, product);
@@ -46,6 +47,7 @@ router.use(`${process.env.URL_ROUTER_TIPE_AKUN_TRANSAKSI}`, tipeAkunTransaksi);
 router.use(`${process.env.URL_ROUTER_KETERANGAN_NAMA_AKUN_TRANSAKSI}`, keteranganNamaAkunTransaksi);
 router.use(`${process.env.URL_ROUTER_LAPORAN_PAJAK}`, laporanPajak);
 router.use(`${process.env.URL_ROUTER_PENGADAAN_MEUBEL}`, pengadaanMeubel);
+router.use(`${process.env.URL_ROUTER_TUTUP_BUKU}`, tutupBuku);
 
 router.all("*", (req, res) => {
   res.status(404).json({ message: "Sorry, page not found" });

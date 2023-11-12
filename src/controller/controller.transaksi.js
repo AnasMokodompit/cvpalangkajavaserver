@@ -1,5 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const pagination = require("../utility/pagination");
+const response = require("../utility/responModel");
+
 
 const prisma = new PrismaClient();
 
@@ -83,6 +85,32 @@ const postTransaksi = async (req, res) => {
   }
 };
 
+
+const updateTransaksi = async (req, res) => {
+  try{
+    const { keterangan, jumlah, tanggal } = req.body;
+    const idTransaksi = req.params.id;
+
+    const option = {
+      keterangan,
+      jumlah,
+      tanggal: new Date(tanggal).toISOString()
+    }
+
+    const dataTransaksiUpdate = await prisma.transaksi.update({
+      where: {
+        id: Number(idTransaksi)
+      },
+      data: option
+    })
+
+    return res.status(200).json(response.success(200, dataTransaksiUpdate)); 
+
+  }catch(error){
+    console.log(error);
+  }
+}
+
 const listTransaksi = async (req, res) => {
   try {
     const { search, firstDate, lastDate } = req.query;
@@ -97,6 +125,19 @@ const listTransaksi = async (req, res) => {
           nama: {
             contains: search,
           },
+          NOT: {
+            OR: [
+              {
+                id: 23
+              },
+              {
+                id: 24
+              },
+              {
+                id: 25
+              }
+            ]
+          }
         },
         select: {
           id: true,
@@ -107,7 +148,22 @@ const listTransaksi = async (req, res) => {
     }
 
     const option = {
-      where: {},
+      where: {
+        id_tutup_buku: null,
+        NOT: {
+          OR: [
+            {
+              id_nama_akun_jenis_transaksi: 23,
+            },
+            {
+              id_nama_akun_jenis_transaksi: 24
+            },
+            {
+              id_nama_akun_jenis_transaksi: 25
+            }
+          ]
+        }
+      },
       orderBy: {
         // id: "asc",
         id: "desc",
@@ -116,6 +172,7 @@ const listTransaksi = async (req, res) => {
         id: true,
         keterangan: true,
         jumlah: true,
+        id_tutup_buku: true,
         jenis_transaksi: {
           select: {
             nama: true,
@@ -160,7 +217,7 @@ const listTransaksi = async (req, res) => {
       };
     }
 
-    const listTransaksi = await prisma.transaksi.findMany(option);
+    let listTransaksi = await prisma.transaksi.findMany(option);
 
     listTransaksi.map(data => {
       if (data.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP") {
@@ -198,7 +255,26 @@ const listTransaksi = async (req, res) => {
   }
 };
 
+const deleteTransaksi = async (req, res) => {
+  try{
+    const idTransaksi = req.params.id;
+
+    const dataDeleteTransaksi = await prisma.transaksi.delete({
+      where: {
+        id: Number(idTransaksi)
+      }
+    }) 
+    
+    return res.status(200).json(response.success(200, dataDeleteTransaksi)); 
+
+  }catch(error){
+    console.log(error);
+  }
+}
+
 module.exports = {
   postTransaksi,
   listTransaksi,
+  updateTransaksi,
+  deleteTransaksi
 };

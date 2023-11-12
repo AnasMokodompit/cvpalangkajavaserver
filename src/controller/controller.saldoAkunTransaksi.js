@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 const tutupBuku = async (req, res) => {
   try{
-    const tahun = new Date().getFullYear()
 
     const option = {
       where: {
@@ -82,7 +81,7 @@ const tutupBuku = async (req, res) => {
       })
     })
 
-    console.log(dataResponse)
+    // console.log(dataResponse)
 
     dataResponse.map(data => {
       delete data.namaAkunTransaksi
@@ -95,12 +94,44 @@ const tutupBuku = async (req, res) => {
       }
     })
 
+    const dataTutupBuku = await prisma.tutupBuku.create({
+      data: {
+        tanggal: new Date()
+      }
+    })
+
+    const cekTransaksiBelumTutupBuku = await prisma.transaksi.findMany({
+      where: {
+        id_tutup_buku: null
+      }
+    })
+
+    if (dataTutupBuku && cekTransaksiBelumTutupBuku) {
+      const idTransaksiBelumTutupBuku = []
+
+      cekTransaksiBelumTutupBuku.map(data => idTransaksiBelumTutupBuku.push(data.id))
+  
+      await prisma.transaksi.updateMany({
+        where: {
+          id: {
+            in: idTransaksiBelumTutupBuku
+          }
+        },
+        data: {
+          id_tutup_buku: dataTutupBuku.id
+        }
+      })
+    }
+
+
     await prisma.saldoAkunTransaksi.updateMany({
       where: {
-        statusSaldoAwal: false
+        statusSaldoAwal: false,
+        id_tutup_buku: null
       },
       data: {
-        statusTutupBuku: 1
+        statusTutupBuku: 1,
+        id_tutup_buku: dataTutupBuku.id
       } 
     })
 
@@ -121,12 +152,21 @@ const tutupBuku = async (req, res) => {
 
 const getNamaAkunByTipe = async (req, res) => {
   try {
-    let {firstDate, lastDate, year } = req.query;
+    let {firstDate, lastDate, idPeriode } = req.query;
     // return console.log(firstDate)
 
 
     const option = {
-      where: {},
+      where: {
+        NOT: {
+          kode_nama_akun_transaksi: {
+            in: ["1-1300", "1-1400", "1-1500"]
+          },
+          AND: [
+            {statusSaldoAwal: true}
+          ]
+        }
+      },
       include: {
         namaAkunTransaksi: {
           include: {
@@ -150,20 +190,24 @@ const getNamaAkunByTipe = async (req, res) => {
       };
     }
 
-    if ((!firstDate || !lastDate) || (!firstDate && !lastDate) || !year) {
-    //   console.log("Not Masuk") 
+    if (((!firstDate || !lastDate) || (!firstDate && !lastDate)) && !idPeriode) {
+      console.log("Not Masuk", !firstDate, !lastDate, !idPeriode, ((!firstDate || !lastDate) || (!firstDate && !lastDate)&& !idPeriode)) 
       option.where.statusTutupBuku = 0
     }
+
+    
+    if (idPeriode) {
+      console.log(idPeriode)
+      option.where.id_tutup_buku = Number(idPeriode)
+    }
+
+    console.log(option)
+
 
     let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
 
     // return console.log(cekAkunTransaksi)
 
-    if (year) {
-      const test = cekAkunTransaksi.filter(data => data.tanggal.getFullYear() == year)
-
-      cekAkunTransaksi = test
-    }
 
     // return console.log(cekAkunTransaksi)
 
@@ -396,7 +440,7 @@ const getNamaAkunByTipe = async (req, res) => {
 
 const GetLaporanLabaRugi = async (req, res) => {
   try{
-    const {firstDate, lastDate, year} = req.query
+    const {firstDate, lastDate, idPeriode} = req.query
 
     const option = {
       where: {
@@ -429,49 +473,27 @@ const GetLaporanLabaRugi = async (req, res) => {
     }
 
     // return console.log(year?.length)
-    if ((firstDate !== undefined || lastDate !== undefined) || (firstDate !== undefined && lastDate !== undefined) || year !== undefined ) {
+    if ((firstDate !== undefined || lastDate !== undefined) || (firstDate !== undefined && lastDate !== undefined) || idPeriode !== undefined ) {
+      console.log(firstDate, lastDate, idPeriode)
       option.where.statusSaldoAwal = false
     }else{
       option.where.statusTutupBuku = 0
        option.where.statusSaldoAwal = false
     }
-    // {
-    //   where: {
-    //     NOT: {
-    //       kode_nama_akun_transaksi: {in: ["1-1400", "1-1300"]},
-    //       AND: [
-    //         {
-    //           statusSaldoAwal: true
-    //         },
-    //       ]
-    //     },
-    //   }, include: {
-    //     namaAkunTransaksi: {
-    //       include: {
-    //         tipe_akun_transaksi: true,
-    //       },
-    //     },
-    //     akunTransaksi: {
-    //       include: {
-    //         kategori_akun: true,
-    //         nama_akun_jenis_transaksi: true,
-    //       },
-    //     },
-    //   },
-    // }
+
+    if (idPeriode) {
+      option.where.id_tutup_buku = Number(idPeriode)
+      // delete 
+    }
+    console.log(option)
+
 
     let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
     // return
 
     // return console.log(cekAkunTransaksi)
 
-    if (year) {
-      const test = cekAkunTransaksi.filter(data => data.tanggal.getFullYear() == year)
 
-      cekAkunTransaksi = test
-    }
-
-    console.log(cekAkunTransaksi)
 
 
 
@@ -819,29 +841,17 @@ const GetAllRekapJurnal = async (req, res) => {
     let jumlahDebit = 0
     let jumlahKredit = 0
 
-    console.log(firstDate)
-
 
     const option = {
       where: {
-        // statusTutupBuku : 0
-
-        // kode_nama_akun_transaksi: {
-        //   in: [
-        //     "1-1100",
-        //     "1-1400",
-        //     "1-1300",
-        //     "1-1900",
-        //     "3-1000",
-        //     "4-1000",
-        //     "5-1000",
-        //     "5-2000",
-        //     "5-3000",
-        //     "6-2000",
-        //     "6-7000",
-        //     "6-6000",
-        //   ],
-        // },
+        NOT: {
+          id_akun_transaksi: {
+            in: [49, 50, 45, 46, 47, 48]
+          },
+          AND: [
+            {statusSaldoAwal: false}
+          ]
+        }
       },
       include: {
         namaAkunTransaksi: {
@@ -873,7 +883,9 @@ const GetAllRekapJurnal = async (req, res) => {
 
     const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
 
-    // return console.log(saldoAwalTransaksi)
+    // return res.status(200).json(response.success(200, saldoAwalTransaksi));
+
+    // return console.log(saldoAwalTransaksi) 
 
     console.log(saldoAwalTransaksi)
  
