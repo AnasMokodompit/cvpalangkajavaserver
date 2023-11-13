@@ -251,4 +251,25 @@
         "id_keterangan": 1,
         "id_tipe_akun_transaksi": 2
     }
+    ,{
+        "id": 37,
+        "kode": "9-4000",
+        "nama": "Hutang DPP",
+        "id_keterangan": 1,
+        "id_tipe_akun_transaksi": 2
+    }
+    ,{
+        "id": 38,
+        "kode": "9-5000",
+        "nama": "Hutang PPN",
+        "id_keterangan": 1,
+        "id_tipe_akun_transaksi": 2
+    }
+    ,{
+        "id": 39,
+        "kode": "9-6000",
+        "nama": "Hutang PPh 22",
+        "id_keterangan": 1,
+        "id_tipe_akun_transaksi": 2
+    }
 ]

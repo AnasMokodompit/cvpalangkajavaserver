@@ -148,5 +148,15 @@
     "id": 30,
     "nama": "Biaya Lain-Lain",
     "id_jenis_transaksi": 2
+  },
+  {
+    "id": 31,
+    "nama": "Pendapatan DP Meubel",
+    "id_jenis_transaksi": 1
+  },
+  {
+    "id": 32,
+    "nama": "Pendapatan Meubel",
+    "id_jenis_transaksi": 1
   }
 ]

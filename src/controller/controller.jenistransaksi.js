@@ -93,6 +93,14 @@ const listNamaAkunTransaksiByJenisTransaksi = async (req, res) => {
         id: true,
         nama: true,
         nama_akun_transaksi_dalam_jenis_transaksi: {
+          where: {
+            NOT: {
+              OR: [
+                {id: 31},
+                {id: 32}
+              ]
+            }
+          },
           select: {
             id: true,
             nama: true,

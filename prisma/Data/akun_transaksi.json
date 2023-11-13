@@ -370,5 +370,96 @@
     "id_nama_akun_jenis_transaksi": 2,
     "kode_nama_akun_transaksi": "9-3000",
     "id_kategori_akun": 2
+  },
+  {
+    "id": 63,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-3000",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 64,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "4-1000",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 65,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-4000",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 66,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-5000",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 67,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-6000",
+    "id_kategori_akun": 2
+  },
+
+  {
+    "id": 68,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 69,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-3000",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 70,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-5000",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 71,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "9-6000",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 72,
+    "id_nama_akun_jenis_transaksi": 31,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 68,
+    "id_nama_akun_jenis_transaksi": 32,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 69,
+    "id_nama_akun_jenis_transaksi": 32,
+    "kode_nama_akun_transaksi": "9-3000",
+    "id_kategori_akun": 2
+  },
+  {
+    "id": 70,
+    "id_nama_akun_jenis_transaksi": 32,
+    "kode_nama_akun_transaksi": "9-5000",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 71,
+    "id_nama_akun_jenis_transaksi": 32,
+    "kode_nama_akun_transaksi": "9-6000",
+    "id_kategori_akun": 1
+  },
+  {
+    "id": 72,
+    "id_nama_akun_jenis_transaksi": 32,
+    "kode_nama_akun_transaksi": "1-1100",
+    "id_kategori_akun": 2
   }
 ]
