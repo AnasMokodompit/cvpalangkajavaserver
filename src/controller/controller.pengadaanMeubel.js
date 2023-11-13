@@ -7,6 +7,8 @@ const createPengadaanMeubel = async (req, res) => {
     try{
         const {user, order} = req.body
 
+        // return console.log( user, order)
+
         // return console.log(user, order[1].bahanBakuProduk)
 
         const optionsCreateOrder = {
@@ -52,7 +54,7 @@ const createPengadaanMeubel = async (req, res) => {
 
         order.map((data) => {
             optionsCreateOrder.jumlah += data.jumlah
-            optionsCreateOrder.Price += data.jumlahHarga
+            optionsCreateOrder.Price += Number(data.jumlahHarga)
         })
 
         const optionPajakOrder = {
@@ -83,7 +85,7 @@ const createPengadaanMeubel = async (req, res) => {
             const dataProductCreate = {
                 name: data.name,
                 ukuran: data.ukuran,
-                harga: data.harga,
+                harga: Number(data.harga),
                 Deskripsi_produk: data.Deskripsi_produk,
                 categoriesId: data.kategoryId,
                 IsProductCustom: true 
@@ -102,7 +104,7 @@ const createPengadaanMeubel = async (req, res) => {
                     data: {
                         id_produk: createProduct.id,
                         id_bahan_baku: Number(dataBahanBaku.id_bahan_baku),
-                        jumlah: Number(dataBahanBaku.jumlah) * data.jumlah,
+                        jumlah: Number(dataBahanBaku.jumlah) * Number(data.jumlah),
                         satuan: dataBahanBaku.satuan
                     }
                 })
@@ -125,7 +127,7 @@ const createPengadaanMeubel = async (req, res) => {
                     id_product: createProduct.id,
                     id_user: optionsCreateOrder.id_user,
                     status: 0,
-                    Price: data.jumlahHarga,
+                    Price: Number(data.jumlahHarga),
                     jumlah: data.jumlah,
                     jumlah_meter: data.jumlah_meter
                 }

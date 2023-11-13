@@ -213,6 +213,69 @@ const getNamaAkunByTipe = async (req, res) => {
 
     let cekAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
 
+    const getPersediaanBahanBakuBerlangsung = await prisma.saldoAkunTransaksi.findMany({
+      where: {
+        kode_nama_akun_transaksi: "1-1400",
+        statusTutupBuku: 0,
+        statusSaldoAwal: false
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            tipe_akun_transaksi: true,
+          },
+        },
+        akunTransaksi: {
+          include: {
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    })
+    
+    const getPersediaanBahanJadiBerlangsung = await prisma.saldoAkunTransaksi.findMany({
+      where: {
+        kode_nama_akun_transaksi: "1-1300",
+        statusTutupBuku: 0,
+        statusSaldoAwal: false
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            tipe_akun_transaksi: true,
+          },
+        },
+        akunTransaksi: {
+          include: {
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    })
+
+    const getPersediaanBahanPembantuBerlangsung = await prisma.saldoAkunTransaksi.findMany({
+      where: {
+        kode_nama_akun_transaksi: "1-1500",
+        statusTutupBuku: 0,
+        statusSaldoAwal: false
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            tipe_akun_transaksi: true,
+          },
+        },
+        akunTransaksi: {
+          include: {
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    })
+
     // return console.log(cekAkunTransaksi)
 
 
@@ -268,17 +331,17 @@ const getNamaAkunByTipe = async (req, res) => {
 
     // return console.log(saldoPiutangDebit, saldoPiutangKredit)
     const saldoPersediaanBarangJadi = filterTransactionsAndCalculateTotal(
-      cekAkunTransaksi,
+      getPersediaanBahanJadiBerlangsung,
       "Persediaan Barang Jadi",
       "Debit",
     );
     const saldoPersediaanBahanBaku = filterTransactionsAndCalculateTotal(
-      cekAkunTransaksi,
+      getPersediaanBahanBakuBerlangsung,
       "Persediaan Bahan Baku",
       "Debit",
     );
     const saldoPersediaanBahanPembantu = filterTransactionsAndCalculateTotal(
-      cekAkunTransaksi,
+      getPersediaanBahanPembantuBerlangsung,
       "Persediaan Bahan Pembantu",
       "Debit",
     );

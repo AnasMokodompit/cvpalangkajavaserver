@@ -145,6 +145,7 @@ model Transaksi {
   jenis_transaksi        JenisTransaksi?    @relation(fields: [id_jenis_transaksi], references: [id])
   namaAkunTransaksiDalamJenisTransaksi        NamaAkunTransaksiDalamJenisTransaksi?    @relation(fields: [id_nama_akun_jenis_transaksi], references: [id])
   tutupBuku             TutupBuku?           @relation(fields: [id_tutup_buku], references: [id])
+  saldoAkunTransaksi    SaldoAkunTransaksi[]
 }
 
 model JenisTransaksi {
@@ -183,11 +184,13 @@ model SaldoAkunTransaksi {
   updated_at                                DateTime @default(now()) @updatedAt
   id_akun_transaksi                         Int?
   id_tutup_buku                             Int?
+  id_transaksi                              Int?
   statusTutupBuku                           Int @default(0)
   statusSaldoAwal                           Boolean @default(false)
   namaAkunTransaksi                         NamaAkunTransaksi                         @relation(fields: [kode_nama_akun_transaksi], references: [kode])
   akunTransaksi                             AkunTransaksi?                            @relation(fields: [id_akun_transaksi], references: [id])
-  tutupBuku                                 TutupBuku?                                 @relation(fields: [id_tutup_buku], references: [id])
+  tutupBuku                                 TutupBuku?                                @relation(fields: [id_tutup_buku], references: [id])
+  transaksi                                 Transaksi?                                @relation(fields: [id_transaksi], references: [id])
 }
 
 

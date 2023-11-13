@@ -24,6 +24,7 @@ const postTransaksi = async (req, res) => {
     const dataCreate = await prisma.transaksi.create({
       data: option,
       select: {
+        id: true,
         namaAkunTransaksiDalamJenisTransaksi: {
           select: {
             akunTransaksi: {
@@ -36,6 +37,8 @@ const postTransaksi = async (req, res) => {
         },
       },
     });
+
+    console.log(dataCreate)
 
 
     if (bahanBaku?.length !== 0 && bahanBaku !== undefined && Number(id_nama_akun_jenis_transaksi) == 3) {
@@ -69,6 +72,7 @@ const postTransaksi = async (req, res) => {
             saldo: jumlah,
             kode_nama_akun_transaksi: data.kode_nama_akun_transaksi,
             id_akun_transaksi: data.id,
+            id_transaksi: dataCreate.id
           },
         });
       });
@@ -93,7 +97,7 @@ const updateTransaksi = async (req, res) => {
 
     const option = {
       keterangan,
-      jumlah,
+      jumlah: Number(jumlah),
       tanggal: new Date(tanggal).toISOString()
     }
 
@@ -102,6 +106,15 @@ const updateTransaksi = async (req, res) => {
         id: Number(idTransaksi)
       },
       data: option
+    })
+
+    await prisma.saldoAkunTransaksi.updateMany({
+      where: {
+        id_transaksi: Number(idTransaksi)
+      },
+      data: {
+        saldo: Number(jumlah)
+      }
     })
 
     return res.status(200).json(response.success(200, dataTransaksiUpdate)); 
@@ -259,11 +272,19 @@ const deleteTransaksi = async (req, res) => {
   try{
     const idTransaksi = req.params.id;
 
+    await prisma.saldoAkunTransaksi.deleteMany({
+      where: {
+        id_transaksi: Number(idTransaksi)
+      }
+    })
+
+    
     const dataDeleteTransaksi = await prisma.transaksi.delete({
       where: {
         id: Number(idTransaksi)
       }
     }) 
+
     
     return res.status(200).json(response.success(200, dataDeleteTransaksi)); 
 
