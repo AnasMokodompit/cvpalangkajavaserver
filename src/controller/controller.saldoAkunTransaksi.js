@@ -977,9 +977,9 @@ const GetAllRekapJurnal = async (req, res) => {
 
     const saldoAwalTransaksi = await prisma.saldoAkunTransaksi.findMany(option);
 
+    // return console.log(saldoAwalTransaksi) 
     // return res.status(200).json(response.success(200, saldoAwalTransaksi));
 
-    // return console.log(saldoAwalTransaksi) 
 
     console.log(saldoAwalTransaksi)
  

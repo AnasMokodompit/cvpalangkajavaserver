@@ -30,6 +30,7 @@ const postTransaksi = async (req, res) => {
             akunTransaksi: {
               select: {
                 id: true,
+                nama_akun_jenis_transaksi: true,
                 kode_nama_akun_transaksi: true,
               },
             },
@@ -38,7 +39,7 @@ const postTransaksi = async (req, res) => {
       },
     });
 
-    console.log(dataCreate)
+    // console.log(dataCreate)
 
 
     if (bahanBaku?.length !== 0 && bahanBaku !== undefined && Number(id_nama_akun_jenis_transaksi) == 3) {
@@ -64,16 +65,53 @@ const postTransaksi = async (req, res) => {
         
       })
     }
+    // console.log(dataCreate.namaAkunTransaksiDalamJenisTransaksi)
+    // return console.log(dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi[0].nama_akun_jenis_transaksi.nama)
 
     if (dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi) {
       dataCreate.namaAkunTransaksiDalamJenisTransaksi.akunTransaksi.map(async (data) => {
+
+        const options = {
+          saldo: 0,
+          kode_nama_akun_transaksi: data.kode_nama_akun_transaksi,
+          id_akun_transaksi: data.id,
+          id_transaksi: dataCreate.id
+        }
+        
+        if (data.nama_akun_jenis_transaksi.id == 31) {
+          if (data.id == 63) {
+            options.saldo = Number(jumlah) / 0.7
+          }else if (data.id == 64) {
+            options.saldo = (Number(jumlah) / 0.7) / 1.125
+          }else if (data.id == 65) {
+            options.saldo = (Number(jumlah) / 0.7) / 1.125
+          }else if (data.id == 66) {
+            options.saldo = ((Number(jumlah) / 0.7) / 1.125) * 0.11
+          }else if (data.id == 67) {
+            options.saldo = ((Number(jumlah) / 0.7) / 1.125) * 0.015
+          }
+
+          else if (data.id == 70) {
+            options.saldo = (((Number(jumlah) / 0.7) / 1.125) * 0.11) * 0.30
+          }else if (data.id == 71) {
+            options.saldo = (((Number(jumlah) / 0.7) / 1.125) * 0.015) * 0.30
+          }else if (data.id == 72) {
+            options.saldo = ((((Number(jumlah) / 0.7) / 1.125) * 0.11) * 0.30) + ((((Number(jumlah) / 0.7) / 1.125) * 0.015) * 0.30)
+          }
+        }else if (data.nama_akun_jenis_transaksi.id == 32) {
+          if (data.id == 75) {
+            options.saldo = (Number(jumlah) / 1.125) * 0.11
+          }else if (data.id == 76) {
+            options.saldo = (Number(jumlah) / 1.125) * 0.015
+          }else if (data.id == 75) {
+            options.saldo = ((Number(jumlah) / 1.125) * 0.11) + ((Number(jumlah) / 1.125) * 0.015)
+          }
+        }else{
+          options.saldo = Number(jumlah)
+        }
+
         await prisma.saldoAkunTransaksi.create({
-          data: {
-            saldo: jumlah,
-            kode_nama_akun_transaksi: data.kode_nama_akun_transaksi,
-            id_akun_transaksi: data.id,
-            id_transaksi: dataCreate.id
-          },
+          data: options
         });
       });
     }
