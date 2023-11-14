@@ -80,23 +80,23 @@ const postTransaksi = async (req, res) => {
         
         if (data.nama_akun_jenis_transaksi.id == 31) {
           if (data.id == 63) {
-            options.saldo = Number(jumlah) / 0.7
+            options.saldo = Number(jumlah) / 0.3
           }else if (data.id == 64) {
-            options.saldo = (Number(jumlah) / 0.7) / 1.125
+            options.saldo = (Number(jumlah) / 0.3) / 1.125
           }else if (data.id == 65) {
-            options.saldo = (Number(jumlah) / 0.7) / 1.125
+            options.saldo = (Number(jumlah) / 0.3) / 1.125
           }else if (data.id == 66) {
-            options.saldo = ((Number(jumlah) / 0.7) / 1.125) * 0.11
+            options.saldo = ((Number(jumlah) / 0.3) / 1.125) * 0.11
           }else if (data.id == 67) {
-            options.saldo = ((Number(jumlah) / 0.7) / 1.125) * 0.015
+            options.saldo = ((Number(jumlah) / 0.3) / 1.125) * 0.015
           }
 
           else if (data.id == 70) {
-            options.saldo = (((Number(jumlah) / 0.7) / 1.125) * 0.11) * 0.30
+            options.saldo = (((Number(jumlah) / 0.3) / 1.125) * 0.11) * 0.30
           }else if (data.id == 71) {
-            options.saldo = (((Number(jumlah) / 0.7) / 1.125) * 0.015) * 0.30
+            options.saldo = (((Number(jumlah) / 0.3) / 1.125) * 0.015) * 0.30
           }else if (data.id == 72) {
-            options.saldo = ((((Number(jumlah) / 0.7) / 1.125) * 0.11) * 0.30) + ((((Number(jumlah) / 0.7) / 1.125) * 0.015) * 0.30)
+            options.saldo = ((((Number(jumlah) / 0.3) / 1.125) * 0.11) * 0.30) + ((((Number(jumlah) / 0.3) / 1.125) * 0.015) * 0.30)
           }
         }else if (data.nama_akun_jenis_transaksi.id == 32) {
           if (data.id == 75) {
