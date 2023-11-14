@@ -83,40 +83,40 @@ const postTransaksi = async (req, res) => {
         
         if (data.nama_akun_jenis_transaksi.id == 31) {
           if (data.id == 63) {
-            options.saldo = Number(jumlah) / 0.3
+            options.saldo = Math.round(Number(jumlah) / 0.3)
           }else if (data.id == 64) {
-            options.saldo = Number(jumlah) / 0.3 / 1.125
+            options.saldo = Math.round(Number(jumlah) / 0.3 / 1.125)
           }
-          // else if (data.id == 65) {
-          //   options.saldo = (Number(jumlah) / 0.3) / 1.125
-          // }
+          else if (data.id == 65) {
+            options.saldo = (Number(jumlah) / 0.3) / 1.125
+          } 
           else if (data.id == 66) {
-            options.saldo = (Number(jumlah) / 0.3 / 1.125) * 0.11
+            options.saldo = Math.round((Number(jumlah) / 0.3 / 1.125) * 0.11)
           }else if (data.id == 67) {
-            options.saldo = (Number(jumlah) / 0.3 / 1.125) * 0.015
+            options.saldo = Math.round((Number(jumlah) / 0.3 / 1.125) * 0.015)
           }
 
           else if (data.id == 70) {
-            options.saldo = (Number(jumlah) / 0.3 / 1.125) * 0.11 * 0.3
+            options.saldo = Math.round((Number(jumlah) / 0.3 / 1.125) * 0.11 * 0.3)
           }else if (data.id == 71) {
-            options.saldo = (Number(jumlah) / 0.3 / 1.125) * 0.015 * 0.3
+            options.saldo = Math.round((Number(jumlah) / 0.3 / 1.125) * 0.015 * 0.3)
           }else if (data.id == 72) {
-            options.saldo = (Number(jumlah) / 0.3 / 1.125) * 0.11 * 0.3 + (Number(jumlah) / 0.3 / 1.125) * 0.015 * 0.3
+            options.saldo = Math.round((Number(jumlah) / 0.3 / 1.125) * 0.11 * 0.3 + (Number(jumlah) / 0.3 / 1.125) * 0.015 * 0.3)
           }else{
-            options.saldo = Number(jumlah)
+            options.saldo = Math.round(Number(Number(jumlah)))
           }
         }else if (data.nama_akun_jenis_transaksi.id == 32) {
           if (data.id == 75) {
-            options.saldo = (Number(jumlah) / 1.125) * 0.11
+            options.saldo = Math.round((Number(jumlah) / 1.125) * 0.11)
           }else if (data.id == 76) {
-            options.saldo = (Number(jumlah) / 1.125) * 0.015
+            options.saldo = Math.round((Number(jumlah) / 1.125) * 0.015)
           }else if (data.id == 77) {
-            options.saldo = (Number(jumlah) / 1.125) * 0.11 + (Number(jumlah) / 1.125) * 0.015
+            options.saldo = Math.round((Number(jumlah) / 1.125) * 0.11 + (Number(jumlah) / 1.125) * 0.015)
           }else{
-            options.saldo = Number(jumlah)
+            options.saldo = Number(Number(jumlah))
           }
         }else{
-          options.saldo = Number(jumlah)
+          options.saldo = Number(Number(jumlah))
         }
 
         console.log(options)
