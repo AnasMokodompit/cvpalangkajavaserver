@@ -217,7 +217,7 @@ const getNamaAkunByTipe = async (req, res) => {
       where: {
         kode_nama_akun_transaksi: "1-1400",
         statusTutupBuku: 0,
-        statusSaldoAwal: true
+        statusSaldoAwal: false
       },
       include: {
         namaAkunTransaksi: {
@@ -238,7 +238,7 @@ const getNamaAkunByTipe = async (req, res) => {
       where: {
         kode_nama_akun_transaksi: "1-1300",
         statusTutupBuku: 0,
-        statusSaldoAwal: true
+        statusSaldoAwal: false
       },
       include: {
         namaAkunTransaksi: {
@@ -259,7 +259,7 @@ const getNamaAkunByTipe = async (req, res) => {
       where: {
         kode_nama_akun_transaksi: "1-1500",
         statusTutupBuku: 0,
-        statusSaldoAwal: true
+        statusSaldoAwal: false
       },
       include: {
         namaAkunTransaksi: {
