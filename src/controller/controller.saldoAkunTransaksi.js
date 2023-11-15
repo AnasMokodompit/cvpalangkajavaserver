@@ -940,7 +940,7 @@ const GetAllRekapJurnal = async (req, res) => {
       where: {
         NOT: {
           id_akun_transaksi: {
-            in: [49, 50, 45, 46, 47, 48]
+            in: [49, 50, 45, 46, 47, 48, 65]
           },
           AND: [
             {statusSaldoAwal: false}
