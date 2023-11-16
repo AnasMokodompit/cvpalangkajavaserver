@@ -54,7 +54,7 @@ const createOrder = async (req, res) => {
           rolesId: 2,
           nomor_hp: req.body.noHp,
           alamat: req.body.alamat,
-          password: "customers1234",
+          password: "cs1234",
         },
       });
 

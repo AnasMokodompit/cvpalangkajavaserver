@@ -41,7 +41,7 @@ const createPesananCustom = async (req, res) => {
                 rolesId: 2,
                 nomor_hp: user.nomor,
                 alamat: user.alamat,
-                password: "customers1234",
+                password: "cs1234",
                 },
             });
     

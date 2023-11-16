@@ -8,7 +8,16 @@ const tutupBuku = async (req, res) => {
 
     const option = {
       where: {
-        statusTutupBuku : 0
+        statusTutupBuku : 0,
+        AND: [
+          {
+            NOT: {
+              kode_nama_akun_transaksi: {
+                in: ["9-4000"]
+              }
+            }
+          }
+        ]
       },
       include: {
         namaAkunTransaksi: {
