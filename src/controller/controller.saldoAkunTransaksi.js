@@ -9,12 +9,15 @@ const tutupBuku = async (req, res) => {
     const option = {
       where: {
         statusTutupBuku : 0,
+        kode_nama_akun_transaksi: {
+          in: ["1-1100", "9-3000", "1-1600", "1-1700", "1-1710", "1-1800", "1-1810", "1-1900", "1-1910", "1-2000", "1-2010", "1-1200", "2-1100", "2-1200"]
+        },
         AND: [
           {
             NOT: {
-              kode_nama_akun_transaksi: {
-                in: ["9-4000"]
-              }
+              id_akun_transaksi: {
+                in: [50, 46, 48]
+              },
             }
           }
         ]
@@ -35,6 +38,30 @@ const tutupBuku = async (req, res) => {
     };
 
     const dataSaldoAkunTransaksi = await prisma.saldoAkunTransaksi.findMany(option)
+
+    // Persediaan Baru
+    const getPersediaanBahanBakuBerlangsung = await prisma.saldoAkunTransaksi.findMany({
+      where: {
+        kode_nama_akun_transaksi: {
+          in: ["1-1300", "1-1400", "1-1500"]
+        },
+        statusTutupBuku: 0,
+        statusSaldoAwal: false
+      },
+      include: {
+        namaAkunTransaksi: {
+          include: {
+            keteranganNamaAkunTransaksi: true,
+          },
+        },
+        akunTransaksi: {
+          include: {
+            kategori_akun: true,
+            nama_akun_jenis_transaksi: true,
+          },
+        },
+      },
+    })
 
     const dataResponse = []
     // return console.log(dataSaldoAkunTransaksi)
@@ -58,6 +85,28 @@ const tutupBuku = async (req, res) => {
             }
           })
     })
+
+    // Persediaan Baru
+    getPersediaanBahanBakuBerlangsung.forEach((data) => {
+      getPersediaanBahanBakuBerlangsung.filter((value) => {
+            if (data.namaAkunTransaksi.nama === value.namaAkunTransaksi.nama) {
+              const cekIndexData = dataResponse.findIndex((dataa) => dataa.namaAkunTransaksi == data.namaAkunTransaksi.nama)
+              
+              if (cekIndexData < 0) {
+                dataResponse.push({
+                  namaAkunTransaksi: data.namaAkunTransaksi.nama,
+                  kode_nama_akun_transaksi: data.namaAkunTransaksi.kode,
+                  saldo: 0,
+                  keteranganAkun: data.namaAkunTransaksi.keteranganNamaAkunTransaksi,
+                  id_akun_transaksi: data.akunTransaksi.id,
+                  statusSaldoAwal: true
+                })
+              }     
+            }
+          })
+    })
+
+    
 
     // return console.log(dataResponse)
 
@@ -90,13 +139,40 @@ const tutupBuku = async (req, res) => {
       })
     })
 
-    // console.log(dataResponse)
 
+    // Persediaan Baru
+    dataResponse.map((data, index) => {
+      getPersediaanBahanBakuBerlangsung.filter(value => {
+        if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          dataResponse[index].saldo = dataResponse[index].saldo += value.saldo
+        }
+        else if ((data.namaAkunTransaksi === value.namaAkunTransaksi.nama) && value.namaAkunTransaksi.id !== 1 && (value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal)) {
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.id, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo
+        }
+      })
+    })
+  
+    
     dataResponse.map(data => {
       delete data.namaAkunTransaksi
       delete data.keteranganAkun
     })
 
+    
+    // Persediaan Baru
+    dataResponse.push(
+      {
+        "saldo": req.body.data.modalPemilik,
+        "kode_nama_akun_transaksi": "3-1000",
+        "statusSaldoAwal": true,
+        "id_akun_transaksi": 42
+      }
+    )
+
+
+    
     await prisma.saldoAkunTransaksi.deleteMany({
       where: {
         statusSaldoAwal: true
@@ -132,6 +208,7 @@ const tutupBuku = async (req, res) => {
       })
     }
 
+  
 
     await prisma.saldoAkunTransaksi.updateMany({
       where: {
