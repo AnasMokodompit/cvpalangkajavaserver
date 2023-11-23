@@ -6,12 +6,15 @@ const prisma = new PrismaClient();
 
 const getAllPersediaanBahanBaku = async (req, res) => {
   try {
+    const { page, row } = pagination(req.query.page, req.query.row);
     const { id_bahan_baku, search } = req.query;
 
     // return console.log(id_bahan_baku)
 
     const options = {
       where: {},
+      skip: page,
+      take: row,
       include: {
         bahanBaku: true,
       },

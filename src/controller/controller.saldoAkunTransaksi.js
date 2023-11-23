@@ -894,11 +894,11 @@ const GetLaporanLabaRugi = async (req, res) => {
         akun: [
           {
             namaAkunTransaksi: "Persediaan Bahan Baku",
-            saldo: getPersediaanBahanBakuSaldoAwal[0].saldo,
+            saldo: getPersediaanBahanBakuSaldoAwal[0]?.saldo == undefined ? 0 : getPersediaanBahanBakuSaldoAwal[0].saldo,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
-            saldo: getPersediaanBahanJadiSaldoAwal[0].saldo,
+            saldo: getPersediaanBahanJadiSaldoAwal[0]?.saldo == undefined ? 0 : getPersediaanBahanBakuSaldoAwal[0].saldo,
           },
         ]
       },

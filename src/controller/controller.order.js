@@ -111,9 +111,9 @@ const getAllOrder = async (req, res) => {
   try {
     const { page, row } = pagination(req.query.page, req.query.row);
     const searchByNameQuery = req.query.search;
-    const { id_user } = req.query;
+    const { id_user, isDelete } = req.query;
 
-    // return console.log(id_user)
+    // return console.log(searchByNameQuery)
 
     const options = {
       where: {},
@@ -143,6 +143,10 @@ const getAllOrder = async (req, res) => {
       };
     }
 
+    if (isDelete) {
+      options.where.IsDelete = false
+    }
+
     if (id_user) {
       options.where.id_user = Number(id_user);
     }
@@ -164,95 +168,114 @@ const getAllOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const { statusTransaksi } = req.body;
+    const { statusTransaksi, isDelete } = req.body;
 
-    console.log(id, statusTransaksi);
+    // return console.log(id, statusTransaksi, isDelete);
 
-    const options = {
-      where: {
-        id: Number(id),
-      },
-      data: {},
-    };
-
-    // Cek Produk Order dengan Id Oder yang sama
-    const produk_order = await prisma.product_Orders.findMany({
-      where: {
-        id_orders: Number(id),
-        status: 2
-      },
-      include: {
-        products: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-
-    produk_order.map(async (data, key) => {
-
-      const cekBahanBakuProduk = await prisma.bahanBakuProduk.findMany({
+    if (isDelete == true) {
+      const updateIsPemabayaran = await prisma.orders.update({
         where: {
-          id_produk: data.id_product,
+          id: Number(id)
         },
-      });
-
-      cekBahanBakuProduk.map(async (dataa, key) => {
-
-
-        dataa.jumlah = data.jumlah * dataa.jumlah;
-        
-        if (data.jumlah_meter?.length !== 0 && data.jumlah_meter !== null) {
-          console.log('tes')
-          dataa.jumlah = dataa.jumlah * data.jumlah_meter
+        data: {
+          IsDelete: isDelete
         }
-        
-        // return console.log(data, dataa)
-        // console.log(dataa.jumlah, "Order")
-
-        const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
-          where: {
-            id_bahan_baku: dataa.id_bahan_baku,
-            satuan: dataa.satuan,
-          },
-          include: {
-            bahanBaku: {
-              select: {
-                nama: true,
-              },
+      })
+      
+      if (updateIsPemabayaran) {
+        res.status(200).json(response.success(200, updateIsPemabayaran));
+      }
+    }else{
+      console.log("tes")
+  
+      const options = {
+        where: {
+          id: Number(id),
+        },
+        data: {},
+      };
+  
+      // Cek Produk Order dengan Id Oder yang sama
+      const produk_order = await prisma.product_Orders.findMany({
+        where: {
+          id_orders: Number(id),
+          status: 2
+        },
+        include: {
+          products: {
+            select: {
+              id: true,
             },
           },
-        });
-
-        const resultJumlah = cekPersediaanBahanBaku[0].jumlah - dataa.jumlah;
-
-        // console.log(resultJumlah)
-
-        console.log(cekPersediaanBahanBaku[0].jumlah - resultJumlah, dataa.jumlah)
-
-        await prisma.persediaanBahanBaku.update({
+        },
+      });
+  
+      produk_order.map(async (data, key) => {
+  
+        const cekBahanBakuProduk = await prisma.bahanBakuProduk.findMany({
           where: {
-            id: cekPersediaanBahanBaku[0].id,
+            id_produk: data.id_product,
           },
-          data: {
-            jumlah: resultJumlah,
-          },
+        });
+  
+        cekBahanBakuProduk.map(async (dataa, key) => {
+  
+  
+          dataa.jumlah = data.jumlah * dataa.jumlah;
+          
+          if (data.jumlah_meter?.length !== 0 && data.jumlah_meter !== null) {
+            console.log('tes')
+            dataa.jumlah = dataa.jumlah * data.jumlah_meter
+          }
+          
+          // return console.log(data, dataa)
+          // console.log(dataa.jumlah, "Order")
+  
+          const cekPersediaanBahanBaku = await prisma.persediaanBahanBaku.findMany({
+            where: {
+              id_bahan_baku: dataa.id_bahan_baku,
+              satuan: dataa.satuan,
+            },
+            include: {
+              bahanBaku: {
+                select: {
+                  nama: true,
+                },
+              },
+            },
+          });
+  
+          const resultJumlah = cekPersediaanBahanBaku[0].jumlah - dataa.jumlah;
+  
+          // console.log(resultJumlah)
+  
+          console.log(cekPersediaanBahanBaku[0].jumlah - resultJumlah, dataa.jumlah)
+  
+          await prisma.persediaanBahanBaku.update({
+            where: {
+              id: cekPersediaanBahanBaku[0].id,
+            },
+            data: {
+              jumlah: resultJumlah,
+            },
+          });
         });
       });
-    });
+  
+      // return
+  
+      if (statusTransaksi == true) {
+        options.data.IsPembayaranLunas = true;
+      } else {
+        options.data.IsPembayaranDP = true;
+      }
+  
+      const updateIsPemabayaran = await prisma.orders.update(options);
+  
+      res.status(200).json(response.success(200, updateIsPemabayaran));
 
-    // return
-
-    if (statusTransaksi == true) {
-      options.data.IsPembayaranLunas = true;
-    } else {
-      options.data.IsPembayaranDP = true;
     }
 
-    const updateIsPemabayaran = await prisma.orders.update(options);
-
-    res.status(200).json(response.success(200, updateIsPemabayaran));
   } catch (err) {
     // menampilkan error di console log
     console.log(err);

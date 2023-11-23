@@ -85,6 +85,7 @@ model Orders {
   no_hp             String
   alamat            String
   status            Int @default(0)
+  IsDelete          Boolean         @default(false)
   Price             Int
   jumlah            Int
   IsPembayaranDP    Boolean?         @default(false)
