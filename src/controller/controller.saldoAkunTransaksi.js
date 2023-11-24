@@ -386,7 +386,7 @@ const getNamaAkunByTipe = async (req, res) => {
 
       const totalSaldo = filteredTransactions.reduce((total, transaction) => {
         console.log(transaction)
-        if (transaction.akunTransaksi?.nama_akun_jenis_transaksi?.nama === "Pendapatan DP" && transaction.akunTransaksi?.kategori_akun.nama == "Debit" && transaction.namaAkunTransaksi.kode == "9-3000") {
+        if (transaction.akunTransaksi?.nama_akun_jenis_transaksi?.nama === "Pendapatan DP" && transaction.akunTransaksi?.kategori_akun.nama == "Debit" && transaction.namaAkunTransaksi.kode == "9-3000" && transaction.statusSaldoAwal == false) {
           return total + (transaction.saldo / 0.3);
         }else{
           return total + transaction.saldo;
@@ -396,6 +396,7 @@ const getNamaAkunByTipe = async (req, res) => {
 
       return totalSaldo;
     }
+    
 
     const saldoKasDebit = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Kas", "Debit");
     const saldoKasKredit = filterTransactionsAndCalculateTotal(cekAkunTransaksi, "Kas", "Kredit");
