@@ -555,6 +555,8 @@ const getNamaAkunByTipe = async (req, res) => {
     const oldestDate = new Date(Math.min.apply(null, parsedDates));
     oldestDate.setHours(0, 0, 0, 0);
 
+    // return console.log(saldoPiutangDebit, saldoPiutangKredit)
+
     const posisiKeuangan = [
       {
         tipeAkunTransaksi: "Aktiva Lancar",
@@ -570,7 +572,7 @@ const getNamaAkunByTipe = async (req, res) => {
           {
             namaAkunTransaksi: "Piutang",
             // saldo: saldoPiutangKredit - saldoPiutangDebit,
-            saldo: saldoPiutangDebit - saldoPiutangKredit,
+            saldo: saldoPiutangDebit == 0 ? saldoPiutangKredit - saldoPiutangDebit : saldoPiutangDebit - saldoPiutangKredit,
           },
           {
             namaAkunTransaksi: "Persediaan Barang Jadi",
@@ -1162,12 +1164,12 @@ const GetAllRekapJurnal = async (req, res) => {
 
     dataResponse.map((data, index) => {
       saldoAwalTransaksi.filter((value) => {
-        console.log(
-          data.namaAkunTransaksi,
-          value.namaAkunTransaksi.nama,
-          value.akunTransaksi?.kategori_akun?.nama,
-          value.akunTransaksi?.kategori_akun?.nama,
-        );
+        // console.log(
+        //   data.namaAkunTransaksi,
+        //   value.namaAkunTransaksi.nama,
+        //   value.akunTransaksi?.kategori_akun?.nama,
+        //   value.akunTransaksi?.kategori_akun?.nama,
+        // );
         if (
           data.namaAkunTransaksi === value.namaAkunTransaksi.nama &&
           value.namaAkunTransaksi.kode === "1-1100" &&
@@ -1190,14 +1192,14 @@ const GetAllRekapJurnal = async (req, res) => {
           value.akunTransaksi?.kategori_akun?.nama === data.keteranganAkun.saldoNormal &&
           value.akunTransaksi?.nama_akun_jenis_transaksi.nama === "Pendapatan DP"
         ) {
-          console.log(
-            data.namaAkunTransaksi,
-            value.namaAkunTransaksi.nama,
-            value.namaAkunTransaksi.kode,
-            value.akunTransaksi?.kategori_akun?.nama,
-            value.statusTutupBuku === 0,
-            "Kurang Debit dengan Kredit Semua Kas",
-          );
+          // console.log(
+          //   data.namaAkunTransaksi,
+          //   value.namaAkunTransaksi.nama,
+          //   value.namaAkunTransaksi.kode,
+          //   value.akunTransaksi?.kategori_akun?.nama,
+          //   value.statusTutupBuku === 0,
+          //   "Kurang Debit dengan Kredit Semua Kas",
+          // );
           if (value.statusSaldoAwal !== true) {
             dataResponse[index].saldo = dataResponse[index].saldo += value.saldo / 0.3;
           } else {
@@ -1217,7 +1219,7 @@ const GetAllRekapJurnal = async (req, res) => {
           value.akunTransaksi?.kategori_akun?.nama !== data.keteranganAkun.saldoNormal &&
           value.statusTutupBuku === 0
         ) {
-          // console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.kode, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
+          console.log(data.namaAkunTransaksi, value.namaAkunTransaksi.nama, value.namaAkunTransaksi.kode, value.akunTransaksi?.kategori_akun?.nama, data.keteranganAkun.saldoNormal)
           // dataResponse[index].saldo = value.saldo -= dataResponse[index].saldo
           dataResponse[index].saldo = dataResponse[index].saldo -= value.saldo;
         }
