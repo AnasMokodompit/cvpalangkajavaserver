@@ -7,9 +7,11 @@
     "seed": "node ./prisma/seed.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "npm install": "npm install",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "prisma db push": "npx prisma db push",
+    "prisma db seed": "npx prisma seed"
   },
   "keywords": [],
   "author": "",
